@@ -15,7 +15,7 @@ import GroupsView from "../views/GroupsView.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/home",
     name: "home",
     component: HomeView,
   },
@@ -60,7 +60,7 @@ const routes = [
     component: TestView,
   },
   {
-    path: "/game",
+    path: "/",
     name: "game",
     component: GameView,
   },

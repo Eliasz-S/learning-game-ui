@@ -1,6 +1,7 @@
 <template>
   <nav>
-    <router-link to="/">Home</router-link> |
+    <router-link to="/">Game</router-link> |
+    <router-link to="/home">Home</router-link> |
     <router-link to="/sign_up">Sign Up</router-link> |
     <router-link to="/sign_in">Sign In</router-link> |
     <router-link to="/profile">Profile</router-link>
