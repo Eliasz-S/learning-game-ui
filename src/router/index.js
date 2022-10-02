@@ -4,7 +4,6 @@ import HomeView from "../views/HomeView.vue";
 import SignInView from "../views/SignInView.vue";
 import SignUpView from "../views/SignUpView.vue";
 import ProfileView from "../views/ProfileView.vue";
-import DashboardView from "../views/DashboardView.vue";
 import LanguageView from "../views/LanguageView.vue";
 import CreateView from "../views/CreateView.vue";
 import TestListView from "../views/TestListView.vue";
@@ -28,11 +27,6 @@ const routes = [
     path: "/sign_in",
     name: "sign_in",
     component: SignInView,
-  },
-  {
-    path: "/dashboard",
-    name: "dashboard",
-    component: DashboardView,
   },
   {
     path: "/profile",

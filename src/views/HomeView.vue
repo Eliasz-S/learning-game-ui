@@ -5,10 +5,6 @@
     <p>How it works ("about" on initial screen)</p>
     <p>Carousel component (on initial screen)</p>
     <p>
-      <router-link to="/dashboard">Dashboard view</router-link>
-      (for ALL users)
-    </p>
-    <p>
       <router-link to="/game">Game view</router-link>
       (test for student, starts with PIN)
     </p>
