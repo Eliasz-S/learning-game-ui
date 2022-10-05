@@ -1,6 +1,9 @@
 <template>
   <div class="home">
     <h1>Kahoot Home Page</h1>
+    <div>
+      <router-link to="/game">Game view</router-link>
+    </div>
     <div class="profileNav">
       <FavouritesComponent />
       <LibraryComponent />
@@ -13,7 +16,7 @@
 // @ is an alias to /src
 import FavouritesComponent from "@/components/FavouritesComponent.vue";
 import LibraryComponent from "@/components/LibraryComponent.vue";
-import ReportsComponent from "@/components/LibraryComponent.vue";
+import ReportsComponent from "@/components/ReportsComponent.vue";
 
 export default {
   name: "HomeView",
