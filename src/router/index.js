@@ -8,8 +8,8 @@ import GameView from "../views/GameView.vue";
 const routes = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "game",
+    component: GameView,
   },
   {
     path: "/sign-up",
@@ -22,9 +22,9 @@ const routes = [
     component: LoginView,
   },
   {
-    path: "/game",
-    name: "game",
-    component: GameView,
+    path: "/home",
+    name: "home",
+    component: HomeView,
   },
   {
     path: "/test-creator",

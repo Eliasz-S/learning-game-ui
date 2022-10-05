@@ -1,9 +1,6 @@
 <template>
   <div class="home">
     <h1>Kahoot Home Page</h1>
-    <div>
-      <router-link to="/game">Game view</router-link>
-    </div>
     <div class="profileNav">
       <FavouritesComponent />
       <LibraryComponent />
