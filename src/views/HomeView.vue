@@ -1,18 +1,32 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <h1>Kahoot Home Page</h1>
+    <div class="profileNav">
+      <FavouritesComponent />
+      <LibraryComponent />
+      <ReportsComponent />
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import FavouritesComponent from "@/components/FavouritesComponent.vue";
+import LibraryComponent from "@/components/LibraryComponent.vue";
+import ReportsComponent from "@/components/LibraryComponent.vue";
 
 export default {
   name: "HomeView",
-  components: {
-    HelloWorld,
-  },
+  components: { FavouritesComponent, LibraryComponent, ReportsComponent },
 };
 </script>
+
+<style>
+.profileNav {
+  display: flex;
+  justify-content: center;
+}
+.home-nav {
+  margin: 0 10px 0 10px;
+}
+</style>
