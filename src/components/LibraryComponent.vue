@@ -1,5 +1,5 @@
 <template>
-  <div class="home-nav test-library">
+  <div class="profile-nav test-library">
     <p>Library component</p>
   </div>
 </template>

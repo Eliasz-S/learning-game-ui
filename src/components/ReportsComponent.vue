@@ -1,5 +1,5 @@
 <template>
-  <div class="home-nav reports">
+  <div class="profile-nav reports">
     <p>Reports component</p>
   </div>
 </template>

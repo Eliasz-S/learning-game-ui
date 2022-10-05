@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import ProfileView from "../views/ProfileView.vue";
 import SignUpView from "../views/SignUpView.vue";
 import LoginView from "../views/LoginView.vue";
 import TestCreatorView from "../views/TestCreatorView.vue";
@@ -22,9 +22,9 @@ const routes = [
     component: LoginView,
   },
   {
-    path: "/home",
-    name: "home",
-    component: HomeView,
+    path: "/profile",
+    name: "profile",
+    component: ProfileView,
   },
   {
     path: "/test-creator",

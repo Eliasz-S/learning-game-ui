@@ -1,5 +1,5 @@
 <template>
-  <div class="home-nav favourites">
+  <div class="profile-nav favourites">
     <p>Favourites component</p>
   </div>
 </template>

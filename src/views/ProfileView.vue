@@ -1,6 +1,6 @@
 <template>
-  <div class="home">
-    <h1>Kahoot Home Page</h1>
+  <div class="profile">
+    <h1>Kahoot Profile Page</h1>
     <div class="profileNav">
       <FavouritesComponent />
       <LibraryComponent />
@@ -16,7 +16,7 @@ import LibraryComponent from "@/components/LibraryComponent.vue";
 import ReportsComponent from "@/components/ReportsComponent.vue";
 
 export default {
-  name: "HomeView",
+  name: "ProfileView",
   components: { FavouritesComponent, LibraryComponent, ReportsComponent },
 };
 </script>
@@ -26,7 +26,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.home-nav {
+.profile-nav {
   margin: 0 10px 0 10px;
 }
 </style>
