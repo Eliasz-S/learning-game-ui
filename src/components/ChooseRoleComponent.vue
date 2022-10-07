@@ -1,7 +1,13 @@
 <template>
   <div class="choose-role">
-    <div @click="handleClick" class="square">Teacher</div>
-    <div @click="handleClick" class="square">Student</div>
+    <div
+      v-for="(role, idx) in roles"
+      :key="idx"
+      @click="handleClick"
+      class="square"
+    >
+      {{ role }}
+    </div>
   </div>
 </template>
 
@@ -10,7 +16,7 @@ export default {
   name: "ChooseRoleComponent",
   data() {
     return {
-      role: this.roleChosen,
+      roles: ["Teacher", "Student"],
     };
   },
   methods: {
