@@ -1,15 +1,16 @@
 <template>
-  <div class="profile-nav test-library">
-    <p>Library component</p>
+  <div class="profile-nav reports">
+    <p>Reports component</p>
+    <ProfileTopMenuUI :swapComponent="swapComponent" />
   </div>
 </template>
 
 <script>
+import ProfileTopMenuUI from "../UI/ProfileTopMenuUI.vue";
 export default {
-  name: "LibraryComponent",
-  props: {
-    msg: String,
-  },
+  name: "ReportsComponent",
+  props: ["swapComponent"],
+  components: { ProfileTopMenuUI },
 };
 </script>
 

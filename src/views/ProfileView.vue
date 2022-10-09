@@ -1,23 +1,18 @@
 <template>
   <div class="profile">
     <h1>Kahoot Profile Page</h1>
-    <div class="profileNav">
-      <FavouritesComponent />
-      <LibraryComponent />
-      <ReportsComponent />
-    </div>
+    <ProfileTopMenuUI />
+    <router-view />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import FavouritesComponent from "@/components/FavouritesComponent.vue";
-import LibraryComponent from "@/components/LibraryComponent.vue";
-import ReportsComponent from "@/components/ReportsComponent.vue";
+import ProfileTopMenuUI from "@/components/UI/ProfileTopMenuUI.vue";
 
 export default {
   name: "ProfileView",
-  components: { FavouritesComponent, LibraryComponent, ReportsComponent },
+  components: { ProfileTopMenuUI },
 };
 </script>
 
