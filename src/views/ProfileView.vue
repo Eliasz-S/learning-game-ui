@@ -1,32 +1,61 @@
 <template>
   <div class="profile">
-    <h1>Kahoot Profile Page</h1>
-    <div class="profileNav">
-      <FavouritesComponent />
-      <LibraryComponent />
-      <ReportsComponent />
-    </div>
+    <h1>Profile page</h1>
+    <component :is="currentComponent" :swap-component="swapComponent" />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import FavouritesComponent from "@/components/FavouritesComponent.vue";
-import LibraryComponent from "@/components/LibraryComponent.vue";
-import ReportsComponent from "@/components/ReportsComponent.vue";
+import GroupsComponentVue from "@/components/Library/GroupsComponent.vue";
+import HomeComponentVue from "@/components/Library/HomeComponent.vue";
+import LibraryComponentVue from "@/components/Library/LibraryComponent.vue";
+import ReportsComponentVue from "@/components/Library/ReportsComponent.vue";
+import ProfileTopMenuUI from "../components/UI/ProfileTopMenuUI.vue";
 
 export default {
-  name: "ProfileView",
-  components: { FavouritesComponent, LibraryComponent, ReportsComponent },
+  name: "TestView",
+  data: function () {
+    return {
+      currentComponent: "home-component",
+    };
+  },
+  components: {
+    "library-component": LibraryComponentVue,
+    "home-component": HomeComponentVue,
+    "reports-component": ReportsComponentVue,
+    "groups-component": GroupsComponentVue,
+    ProfileTopMenuUI,
+  },
+  methods: {
+    swapComponent: function (component) {
+      this.currentComponent = component;
+    },
+  },
 };
 </script>
-
-<style>
-.profileNav {
-  display: flex;
-  justify-content: center;
+<style scoped>
+button#view1 {
+  position: absolute;
+  background-color: yellow;
+  left: 50%;
+  top: 50%;
+  color: #000;
+  cursor: pointer;
+  font-size: 2rem;
+  height: 10rem;
+  width: 20rem;
+  transform: translate(-50%, -50%);
 }
-.profile-nav {
-  margin: 0 10px 0 10px;
+button#view2 {
+  position: absolute;
+  background-color: green;
+  left: 50%;
+  top: 50%;
+  color: #000;
+  cursor: pointer;
+  font-size: 2rem;
+  height: 10rem;
+  width: 20rem;
+  transform: translate(-50%, -50%);
 }
 </style>
