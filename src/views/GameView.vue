@@ -1,21 +1,154 @@
 <template>
-  <div class="authNav">
-    <router-link to="/sign-up" class="auth-nav sign-up-link">
-      Sign Up
-    </router-link>
-    <router-link to="/login" class="auth-nav login-link">Login</router-link>
-  </div>
-  <div class="game">
-    <h1>Game Page</h1>
+  <div class="screen">
+    <object
+      class="bg_objects bg_objects__square"
+      data="svg/square.svg"
+      width="500"
+      height="500"
+    ></object>
+    <object
+      class="bg_objects bg_objects__circle"
+      data="svg/circle.svg"
+      width="500"
+      height="500"
+    ></object>
+    <div class="screen_main">
+      <div class="logo">
+        <img src="img/maven-logo.png" />
+      </div>
+      <p>**Game (player side) - game pin. nickname. Score+**</p>
+      <form class="input_pin" action="#">
+        <input
+          @keydown.enter="handlePin"
+          v-model="pin"
+          class="input_pin_child"
+          type="text"
+          id="pin"
+          name="pin"
+          placeholder="Game PIN"
+        />
+        <button @click="handlePin" class="input_pin_child" type="submit">
+          Enter
+        </button>
+      </form>
+    </div>
+    <div class="screen_footer">
+      <p class="screen_footer__info">
+        Create your own
+        <router-link to="/home">maven for FREE</router-link>
+      </p>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "GameView",
+  data() {
+    return {
+      pin: "",
+    };
+  },
+  methods: {
+    handlePin() {
+      alert(`You entered the game pin ${this.pin}`);
+      this.pin = "";
+    },
+  },
+};
+</script>
+
 <style>
-.authNav {
+.screen {
+  background-color: #5626a3;
+  color: #fff;
   display: flex;
-  justify-content: flex-end;
-  margin: 0 10px 0 10px;
+  flex-direction: column;
+  height: 100%;
+  flex: 1 1 0%;
+  height: 100vh;
 }
-.auth-nav {
-  margin: 0 10px 0 10px;
+.screen_main {
+  z-index: 999;
+  display: flex;
+  flex: 1 1 0%;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.screen_footer {
+  z-index: 999;
+  justify-self: flex-end;
+  flex: 0 0 auto;
+}
+.input_pin {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 15px;
+}
+.input_pin_child {
+  text-align: center;
+  margin: 5px 0;
+  padding: 5px 3px;
+  font-size: 1.2em;
+}
+button.input_pin_child {
+  background-color: #222;
+  color: #fff;
+  cursor: pointer;
+}
+input.input_pin_child {
+  border: 2px solid #c3c3c3;
+  border-radius: 5px;
+}
+.screen_footer__info {
+  margin: 20px 0 40px 0;
+}
+.screen_footer__info > a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 800;
+  color: #6cd36c;
+  font-family: cursive;
+  font-size: 13px;
+}
+object.bg_objects {
+  z-index: 0;
+  position: fixed;
+  transform: rotate(45deg);
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate-reverse;
+}
+.bg_objects__square {
+  animation-name: moveSquare;
+}
+.bg_objects__circle {
+  animation-name: moveCircle;
+}
+@keyframes moveSquare {
+  0% {
+    left: 0px;
+    top: -120px;
+  }
+  100% {
+    left: -180px;
+    top: -50px;
+  }
+}
+@keyframes moveCircle {
+  0% {
+    right: -180px;
+    bottom: -180px;
+  }
+  100% {
+    right: -80px;
+    bottom: -140px;
+  }
 }
 </style>

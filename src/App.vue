@@ -1,9 +1,4 @@
 <template>
-  <nav>
-    <router-link to="/">Game</router-link>
-    <router-link to="/profile">Profile</router-link>
-    <router-link to="/test-creator">Test Creator</router-link>
-  </nav>
   <router-view />
 </template>
 
