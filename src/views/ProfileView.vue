@@ -6,11 +6,11 @@
 </template>
 
 <script>
-import GroupsComponentVue from "@/components/Library/GroupsComponent.vue";
-import HomeComponentVue from "@/components/Library/HomeComponent.vue";
-import LibraryComponentVue from "@/components/Library/LibraryComponent.vue";
-import ReportsComponentVue from "@/components/Library/ReportsComponent.vue";
-import ProfileTopMenuUI from "../components/UI/ProfileTopMenuUI.vue";
+import GroupsComponentVue from "@/components/Profile/GroupsComponent.vue";
+import HomeComponentVue from "@/components/Profile/HomeComponent.vue";
+import LibraryComponentVue from "@/components/Profile/LibraryComponent.vue";
+import ReportsComponentVue from "@/components/Profile/ReportsComponent.vue";
+import ProfileTopMenuUI from "@/components/UI/ProfileTopMenuUI.vue";
 
 export default {
   name: "TestView",
