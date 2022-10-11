@@ -4,6 +4,7 @@ import SignUpView from "../views/SignUpView.vue";
 import LoginView from "../views/LoginView.vue";
 import TestCreatorView from "../views/TestCreatorView.vue";
 import GameView from "../views/GameView.vue";
+import HomeView from "../views/HomeView.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/test-creator",
     name: "test-creator",
     component: TestCreatorView,
+  },
+  {
+    path: "/home",
+    name: "home",
+    component: HomeView,
   },
 ];
 
