@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import LoginFormComponent from "@/components/LoginFormComponent.vue";
+import LoginFormComponent from "@/components/Auth/LoginFormComponent.vue";
 
 export default {
   name: "LoginView",
@@ -15,9 +15,14 @@ export default {
 
 <style scoped>
 .login {
+  border-radius: 4px;
+  box-shadow: rgb(0 0 0 / 15%) 0px 2px 4px 0px;
+  color: inherit;
+  padding: 2rem;
   position: absolute;
-  width: 320px;
-  left: 40%;
-  top: 40%;
+  min-width: 23rem;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 </style>
