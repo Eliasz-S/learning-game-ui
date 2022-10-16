@@ -28,8 +28,13 @@
 </style>
 
 <script>
+import { ElCarousel, ElCarouselItem } from "element-plus";
 // @ is an alias to /src
 export default {
   name: "HomeView",
+  components: {
+    ElCarousel,
+    ElCarouselItem,
+  },
 };
 </script>
