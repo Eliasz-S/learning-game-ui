@@ -6,7 +6,8 @@
       :rules="rules"
       label-position="top"
       label-width="small"
-      @keydown.enter="handleData"
+      status-icon
+      @keydown.enter="handleSubmit"
     >
       <el-form-item>
         <el-col>
@@ -25,16 +26,32 @@
       <el-form-item label="Email" prop="email">
         <el-input v-model="form.email" label-position="top" />
       </el-form-item>
-      <el-form-item>
-        <el-button
-          type="success"
-          size="large"
-          style="width: 100%"
-          @click="handleData"
-        >
-          Sign up
-        </el-button>
-      </el-form-item>
+      <el-row :gutter="10">
+        <el-col :span="12">
+          <el-form-item>
+            <el-button
+              type="success"
+              size="large"
+              style="width: 100%"
+              @click="handleSubmit"
+            >
+              Sign up
+            </el-button>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item>
+            <el-button
+              type="info"
+              size="large"
+              style="width: 100%"
+              @click="handleReset"
+            >
+              Reset
+            </el-button>
+          </el-form-item>
+        </el-col>
+      </el-row>
     </el-form>
     <el-row>
       <el-col>
@@ -113,14 +130,39 @@ export default {
     };
   },
   methods: {
-    handleData() {
-      this.$emit("save-data", this.form);
+    handleSubmit() {
+      if (!this.$refs.formRef) return;
+      this.$refs.formRef.validate((valid) => {
+        if (valid) {
+          this.$emit("save-data", this.form);
+          this.$refs.formRef.resetFields(); // очистка формы после передачи данных из формы,
+          // потом можно будет убрать/заменить на редирект
+          this.$swal.fire({
+            title: "Good job!",
+            text: "You are a member now!",
+            icon: "success",
+            allowEnterKey: false,
+          }); // тест sweetalerts2
+        } else {
+          return false;
+        }
+      });
+    },
+
+    handleReset() {
+      if (!this.$refs.formRef) return;
+      this.$refs.formRef.resetFields();
+      this.$swal.fire({
+        title: "Done!",
+        text: "All fields have been reset!",
+        icon: "info",
+      }); // тест sweetalerts2
     },
 
     validateConfirm(rule, value, callback) {
       if (value === "" && this.form.password.length) {
         callback(new Error("Please input the password again"));
-      } else if (value !== this.form.password) {
+      } else if (value !== this.form.password && this.form.password.length) {
         callback(new Error("Two inputs don't match!"));
       } else {
         callback();
