@@ -1,14 +1,20 @@
 <template>
-  <el-form :model="form" label-position="top" label-width="small">
+  <el-form
+    ref="formRef"
+    :model="form"
+    label-position="top"
+    label-width="small"
+    @keydown.enter="handleLogin"
+  >
     <el-form-item>
       <el-col>
         <h2>Log in</h2>
       </el-col>
     </el-form-item>
-    <el-form-item label="Username or email">
-      <el-input v-model="form.input" label-position="top" />
+    <el-form-item label="Username or email" prop="name">
+      <el-input v-model="form.name" label-position="top" />
     </el-form-item>
-    <el-form-item label="Password">
+    <el-form-item label="Password" prop="password">
       <el-input v-model="form.password" type="password" show-password />
     </el-form-item>
     <el-form-item>
@@ -20,7 +26,12 @@
       </div>
     </el-form-item>
     <el-form-item>
-      <el-button type="success" size="large" style="width: 100%">
+      <el-button
+        type="success"
+        size="large"
+        style="width: 100%"
+        @click="handleLogin"
+      >
         Log in
       </el-button>
     </el-form-item>
@@ -60,10 +71,23 @@ export default {
   data() {
     return {
       form: {
-        input: "",
+        name: "",
         password: "",
       },
     };
+  },
+  methods: {
+    handleLogin() {
+      if (this.form.name.trim()) {
+        this.$swal.fire({
+          title: "Success!",
+          text: `You've logged in as ${this.form.name}`,
+          icon: "success",
+          allowEnterKey: false,
+        });
+      } // sweetalert2 test
+      this.$refs.formRef.resetFields();
+    },
   },
 };
 </script>
