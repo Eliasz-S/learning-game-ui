@@ -12,6 +12,8 @@
 <script>
 import SignUpFormComponent from "@/components/Auth/SignUpFormComponent.vue";
 import ChooseRoleComponent from "@/components/Auth/ChooseRoleComponent.vue";
+import { http } from "@/utils/axios";
+import { mapActions } from "vuex";
 
 export default {
   name: "SignUpView",
@@ -32,6 +34,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions("user", ["fetchUser"]),
     swapComponent(component) {
       this.currentComponent = component;
     },
@@ -41,9 +44,15 @@ export default {
     handleData(formData) {
       this.userData.name = formData.name;
       this.userData.password = formData.password;
+      this.userData.password_confirmation = formData.checkPassword;
       this.userData.email = formData.email;
 
-      console.log(this.userData);
+      http.post("register", this.userData).then((response) => {
+        const CREATED = 201;
+        if ((response.status = CREATED)) {
+          this.fetchUser();
+        }
+      });
     },
   },
 };
