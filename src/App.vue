@@ -2,6 +2,20 @@
   <router-view />
 </template>
 
+<script>
+import { http } from "@/utils/axios";
+import { mapActions } from "vuex";
+
+export default {
+  created() {
+    this.fetchUser();
+  },
+  methods: {
+    ...mapActions("user", ["fetchUser"]),
+  },
+};
+</script>
+
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
