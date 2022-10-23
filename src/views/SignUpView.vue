@@ -42,7 +42,7 @@ export default {
       this.userData.role = roleData.role;
     },
     handleData(formData) {
-      this.userData.name = formData.name;
+      this.userData.login = formData.name;
       this.userData.password = formData.password;
       this.userData.password_confirmation = formData.checkPassword;
       this.userData.email = formData.email;
