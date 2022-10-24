@@ -8,7 +8,7 @@
       </el-col>
     </el-row>
     <el-table
-      :data="SearchedPosts"
+      :data="searchedPosts"
       style="width: 100%; margin-top: 10px"
       type="primary"
     >
@@ -67,11 +67,29 @@ import { ref } from "vue";
 import ProfileTopMenuUI from "../UI/ProfileTopMenuUI.vue";
 import InputUI from "../UI/InputUI.vue";
 import AnimatedBtnUI from "../UI/AnimatedBtnUI.vue";
+import {
+  ElCol,
+  ElTable,
+  ElButton,
+  ElRow,
+  ElTableColumn,
+  ElDialog,
+} from "element-plus";
 
 export default {
   name: "LibraryComponent",
   props: ["swapComponent"],
-  components: { ProfileTopMenuUI, InputUI, AnimatedBtnUI },
+  components: {
+    ProfileTopMenuUI,
+    InputUI,
+    AnimatedBtnUI,
+    ElButton,
+    ElRow,
+    ElCol,
+    ElTable,
+    ElTableColumn,
+    ElDialog,
+  },
   data() {
     return {
       search: "",
@@ -126,7 +144,7 @@ export default {
     },
   },
   computed: {
-    SearchedPosts() {
+    searchedPosts() {
       return this.games.filter((game) =>
         game.title.toLowerCase().includes(this.search.toLowerCase())
       );
