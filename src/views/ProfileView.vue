@@ -13,7 +13,7 @@ import ReportsComponentVue from "@/components/Profile/ReportsComponent.vue";
 import ProfileTopMenuUI from "@/components/UI/ProfileTopMenuUI.vue";
 
 export default {
-  name: "TestView",
+  name: "ProfileView",
   data: function () {
     return {
       currentComponent: "home-component",
