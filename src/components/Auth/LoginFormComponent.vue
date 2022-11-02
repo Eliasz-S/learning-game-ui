@@ -12,7 +12,7 @@
       </el-col>
     </el-form-item>
     <el-form-item label="Username or email" prop="name">
-      <el-input v-model="form.name" label-position="top" />
+      <el-input v-model="form.login" label-position="top" />
     </el-form-item>
     <el-form-item label="Password" prop="password">
       <el-input v-model="form.password" type="password" show-password />
@@ -56,6 +56,7 @@ import {
   ElInput,
   ElLink,
 } from "element-plus";
+import { http } from "@/utils/axios";
 
 export default {
   name: "LoginComponent",
@@ -71,17 +72,20 @@ export default {
   data() {
     return {
       form: {
-        name: "",
+        login: "",
         password: "",
       },
     };
   },
   methods: {
     handleLogin() {
-      if (this.form.name.trim()) {
+      http.post("login", this.form).then(() => {
+        this.$router.push("profile");
+      });
+      if (this.form.login.trim()) {
         this.$swal.fire({
           title: "Success!",
-          text: `You've logged in as ${this.form.name}`,
+          text: `You've logged in as ${this.form.login}`,
           icon: "success",
           allowEnterKey: false,
         });

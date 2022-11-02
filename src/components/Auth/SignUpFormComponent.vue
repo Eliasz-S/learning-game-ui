@@ -15,7 +15,7 @@
         </el-col>
       </el-form-item>
       <el-form-item label="Create login" prop="name">
-        <el-input v-model="form.name" label-position="top" />
+        <el-input v-model="form.login" label-position="top" />
       </el-form-item>
       <el-form-item label="Create password" prop="password">
         <el-input v-model="form.password" type="password" show-password />
@@ -87,13 +87,13 @@ export default {
   data() {
     return {
       form: {
-        name: "",
+        login: "",
         password: "",
         checkPassword: "",
         email: "",
       },
       rules: {
-        name: [
+        login: [
           {
             required: true,
             whitespace: true,
@@ -143,6 +143,7 @@ export default {
             icon: "success",
             allowEnterKey: false,
           }); // тест sweetalerts2
+          this.$router.push("profile");
         } else {
           return false;
         }

@@ -4,8 +4,13 @@ export default {
   namespaced: true,
   state() {
     return {
-      data: null,
+      data: {},
     };
+  },
+  getters: {
+    userData(state) {
+      return state.data;
+    },
   },
   mutations: {
     setUser(state, payload) {
@@ -13,11 +18,11 @@ export default {
     },
   },
   actions: {
-    async fetchUser({ commit }) {
+    async fetchUser(ctx) {
       try {
         const response = await http.get("/api/user");
         if (response.data) {
-          commit("setUser", response.data);
+          ctx.commit("setUser", response.data);
         }
       } catch (e) {
         const UNAUTHORIZED = 401;
@@ -25,6 +30,9 @@ export default {
           console.error("Ошибка при получении данных пользователя", e);
         }
       }
+    },
+    logout() {
+      http.post("logout");
     },
   },
 };
