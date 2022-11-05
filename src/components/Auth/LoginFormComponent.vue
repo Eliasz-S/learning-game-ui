@@ -11,7 +11,12 @@
         <h2>Log in</h2>
       </el-col>
     </el-form-item>
-    <el-form-item label="Username or email" prop="name">
+    <template v-if="error">
+      <el-col>
+        <el-alert :title="error" type="error" show-icon />
+      </el-col>
+    </template>
+    <el-form-item label="Username or email" prop="login">
       <el-input v-model="form.login" label-position="top" />
     </el-form-item>
     <el-form-item label="Password" prop="password">
@@ -55,8 +60,9 @@ import {
   ElCol,
   ElInput,
   ElLink,
+  ElAlert,
 } from "element-plus";
-import { http } from "@/utils/axios";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "LoginComponent",
@@ -68,6 +74,10 @@ export default {
     ElCol,
     ElInput,
     ElLink,
+    ElAlert,
+  },
+  created() {
+    this.setError(null);
   },
   data() {
     return {
@@ -77,20 +87,17 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters("user", ["error"]),
+  },
   methods: {
+    ...mapMutations("user", ["setError"]),
+
+    ...mapActions("user", ["login"]),
+
     handleLogin() {
-      http.post("login", this.form).then(() => {
-        this.$router.push("profile");
-      });
-      if (this.form.login.trim()) {
-        this.$swal.fire({
-          title: "Success!",
-          text: `You've logged in as ${this.form.login}`,
-          icon: "success",
-          allowEnterKey: false,
-        });
-      } // sweetalert2 test
-      this.$refs.formRef.resetFields();
+      this.setError(null);
+      this.login(this.form);
     },
   },
 };

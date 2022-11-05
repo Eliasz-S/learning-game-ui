@@ -2,7 +2,7 @@
   <div>
     <h2>Choose your account type</h2>
     <el-row :gutter="10">
-      <el-col :span="12" v-for="(role, idx) in roles" :key="idx">
+      <el-col :span="12" v-for="(role, idx) in userRoles" :key="idx">
         <el-button
           @click="swapComponent(nextSignUpStep), handleRole(role)"
           class="square"
@@ -16,6 +16,8 @@
 
 <script>
 import { ElRow, ElCol, ElButton } from "element-plus";
+import { USER_ROLES } from "@/utils/misc";
+import { mapMutations } from "vuex";
 
 export default {
   name: "ChooseRoleComponent",
@@ -24,19 +26,28 @@ export default {
     ElCol,
     ElButton,
   },
+  created() {
+    this.setError(null);
+  },
   data() {
     return {
-      roles: ["Teacher", "Student"],
       nextSignUpStep: "sign-up-form-component",
       selectedRole: "",
     };
   },
+  computed: {
+    userRoles() {
+      return Object.values(USER_ROLES);
+    },
+  },
   methods: {
+    ...mapMutations("user", ["setError"]),
+
     handleRole(userRole) {
-      const selectedRole = this.roles.find((role) => role === userRole);
+      const selectedRole = this.userRoles.find((role) => role === userRole);
       this.selectedRole = selectedRole;
       this.$emit("save-role", {
-        role: this.selectedRole,
+        role: this.selectedRole.toLowerCase(),
       });
     },
   },

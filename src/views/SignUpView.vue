@@ -12,7 +12,6 @@
 <script>
 import SignUpFormComponent from "@/components/Auth/SignUpFormComponent.vue";
 import ChooseRoleComponent from "@/components/Auth/ChooseRoleComponent.vue";
-import { http } from "@/utils/axios";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -21,16 +20,24 @@ export default {
     "sign-up-form-component": SignUpFormComponent,
     "choose-role-component": ChooseRoleComponent,
   },
-  computed: {
-    ...mapGetters("user", ["userData"]),
-  },
   data() {
     return {
       currentComponent: "choose-role-component",
+      userData: {
+        role: "",
+        login: "",
+        password: "",
+        checkPassword: "",
+        password_confirmation: "",
+        email: "",
+      },
     };
   },
+  computed: {
+    ...mapGetters("user", ["error"]),
+  },
   methods: {
-    ...mapActions("user", ["fetchUser"]),
+    ...mapActions("user", ["registerUser"]),
     swapComponent(component) {
       this.currentComponent = component;
     },
@@ -43,12 +50,7 @@ export default {
       this.userData.password_confirmation = formData.checkPassword;
       this.userData.email = formData.email;
 
-      http.post("register", this.userData).then((response) => {
-        const CREATED = 201;
-        if (response.status === CREATED) {
-          this.fetchUser();
-        }
-      });
+      this.registerUser(this.userData);
     },
   },
 };
