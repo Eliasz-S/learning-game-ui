@@ -23,7 +23,6 @@ export default {
     ...mapActions("user", ["logout"]),
     signOut() {
       this.logout();
-      this.$router.push("login");
     },
   },
 };

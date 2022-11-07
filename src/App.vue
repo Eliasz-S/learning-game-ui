@@ -7,7 +7,7 @@ import { http } from "@/utils/axios";
 import { mapActions } from "vuex";
 
 export default {
-  mounted() {
+  created() {
     http.get("/sanctum/csrf-cookie");
     this.fetchUser();
   },

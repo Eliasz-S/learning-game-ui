@@ -25,9 +25,7 @@
     <el-form-item>
       <div>
         Forgot password?
-        <el-link type="primary" href="#" :underline="false">
-          Reset your password
-        </el-link>
+        <router-link to="forgot-password"> Reset your password </router-link>
       </div>
     </el-form-item>
     <el-form-item>
@@ -59,7 +57,6 @@ import {
   ElRow,
   ElCol,
   ElInput,
-  ElLink,
   ElAlert,
 } from "element-plus";
 import { mapActions, mapGetters, mapMutations } from "vuex";
@@ -73,7 +70,6 @@ export default {
     ElRow,
     ElCol,
     ElInput,
-    ElLink,
     ElAlert,
   },
   created() {

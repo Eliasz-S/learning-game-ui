@@ -1,12 +1,10 @@
 <template>
-  <div class="sign-up">
-    <component
-      :is="currentComponent"
-      :swap-component="swapComponent"
-      @save-role="handleRole"
-      @save-data="handleData"
-    />
-  </div>
+  <component
+    :is="currentComponent"
+    :swap-component="swapComponent"
+    @save-role="handleRole"
+    @save-data="handleData"
+  />
 </template>
 
 <script>
@@ -55,17 +53,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.sign-up {
-  border-radius: 4px;
-  box-shadow: rgb(0 0 0 / 15%) 0px 2px 4px 0px;
-  color: inherit;
-  padding: 2rem;
-  position: absolute;
-  min-width: 23rem;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-</style>

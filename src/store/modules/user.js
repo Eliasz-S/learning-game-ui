@@ -17,6 +17,9 @@ export default {
     error(state) {
       return state.error;
     },
+    isAuth(state) {
+      return state.data !== null;
+    },
   },
   mutations: {
     setUser(state, payload) {
@@ -32,7 +35,7 @@ export default {
         .post("login", payload)
         .then(() => {
           dispatch("fetchUser");
-          router.push("profile");
+          // router.push("profile");
         })
         .catch((error) => {
           commit("setError", error.response.data.message);
@@ -64,9 +67,11 @@ export default {
           commit("setError", error.response.data.errors);
         });
     },
-    logout({ commit }) {
+    logout({ commit, dispatch }) {
       http.post("logout").then(() => {
-        commit("setUser", {});
+        commit("setUser", null);
+        dispatch("fetchUser");
+        // router.push("login");
       });
     },
   },
