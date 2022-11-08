@@ -16,7 +16,7 @@
 
 <script>
 import { ElRow, ElCol, ElButton } from "element-plus";
-import { USER_ROLES } from "@/utils/misc";
+import { USER_ROLES } from "@/utils/constants";
 import { mapMutations } from "vuex";
 
 export default {

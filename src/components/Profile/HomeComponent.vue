@@ -2,7 +2,7 @@
   <p>Home</p>
   <ProfileTopMenuUI :swapComponent="swapComponent" />
   <template v-if="userData">
-    <h2>Hello, {{ userData.login }}</h2>
+    <h2>Logged in as {{ userData.login }}</h2>
     <form @submit.prevent="signOut">
       <button type="submit">Log out</button>
     </form>

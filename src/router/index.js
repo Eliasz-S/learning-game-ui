@@ -62,7 +62,11 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
+  if (!store.getters["user/isFetched"]) {
+    await store.dispatch("user/fetchUser");
+  }
+
   if (to.meta.requiresAuth && !store.getters["user/isAuth"]) {
     next({ name: "login" });
   } else if (to.meta.isGuest && store.getters["user/isAuth"]) {
@@ -71,17 +75,5 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
-
-// router.beforeEach((to) => {
-//   if (to.meta.isGuest && store.getters["user/isAuth"]) {
-//     return { name: "profile" };
-//   }
-// });
-
-// router.beforeEach((to) => {
-//   if (to.meta.requiresAuth && !store.getters["user/isAuth"]) {
-//     return { name: "login" };
-//   }
-// });
 
 export default router;

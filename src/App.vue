@@ -9,7 +9,6 @@ import { mapActions } from "vuex";
 export default {
   created() {
     http.get("/sanctum/csrf-cookie");
-    this.fetchUser();
   },
   methods: {
     ...mapActions("user", ["fetchUser"]),
