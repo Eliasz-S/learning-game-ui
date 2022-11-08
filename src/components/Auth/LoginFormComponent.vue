@@ -11,8 +11,13 @@
         <h2>Log in</h2>
       </el-col>
     </el-form-item>
-    <el-form-item label="Username or email" prop="name">
-      <el-input v-model="form.name" label-position="top" />
+    <template v-if="error">
+      <el-col>
+        <el-alert :title="error" type="error" show-icon />
+      </el-col>
+    </template>
+    <el-form-item label="Username or email" prop="login">
+      <el-input v-model="form.login" label-position="top" />
     </el-form-item>
     <el-form-item label="Password" prop="password">
       <el-input v-model="form.password" type="password" show-password />
@@ -20,9 +25,7 @@
     <el-form-item>
       <div>
         Forgot password?
-        <el-link type="primary" href="#" :underline="false">
-          Reset your password
-        </el-link>
+        <router-link to="forgot-password"> Reset your password </router-link>
       </div>
     </el-form-item>
     <el-form-item>
@@ -54,8 +57,9 @@ import {
   ElRow,
   ElCol,
   ElInput,
-  ElLink,
+  ElAlert,
 } from "element-plus";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "LoginComponent",
@@ -66,27 +70,30 @@ export default {
     ElRow,
     ElCol,
     ElInput,
-    ElLink,
+    ElAlert,
+  },
+  created() {
+    this.setError(null);
   },
   data() {
     return {
       form: {
-        name: "",
+        login: "",
         password: "",
       },
     };
   },
+  computed: {
+    ...mapGetters("user", ["error"]),
+  },
   methods: {
+    ...mapMutations("user", ["setError"]),
+
+    ...mapActions("user", ["login"]),
+
     handleLogin() {
-      if (this.form.name.trim()) {
-        this.$swal.fire({
-          title: "Success!",
-          text: `You've logged in as ${this.form.name}`,
-          icon: "success",
-          allowEnterKey: false,
-        });
-      } // sweetalert2 test
-      this.$refs.formRef.resetFields();
+      this.setError(null);
+      this.login(this.form);
     },
   },
 };

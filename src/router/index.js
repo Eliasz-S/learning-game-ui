@@ -1,9 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
-import ProfileView from "../views/ProfileView.vue";
-import SignUpView from "../views/SignUpView.vue";
-import LoginView from "../views/LoginView.vue";
-import TestCreatorView from "../views/TestCreatorView.vue";
-import GameView from "../views/GameView.vue";
+import store from "@/store";
+import ProfileView from "@/views/ProfileView.vue";
+import TestCreatorView from "@/views/TestCreatorView.vue";
+import GameView from "@/views/GameView.vue";
+import AuthView from "@/views/AuthView.vue";
+import ForgotPasswordComponent from "@/components/Auth/ForgotPasswordComponent.vue";
+import ResetPasswordComponent from "@/components/Auth/ResetPasswordComponent.vue";
+import LoginFormComponent from "@/components/Auth/LoginFormComponent.vue";
+import SignUpComponent from "@/components/Auth/SignUpComponent.vue";
 
 const routes = [
   {
@@ -12,30 +16,64 @@ const routes = [
     component: GameView,
   },
   {
-    path: "/sign-up",
-    name: "sign-up",
-    component: SignUpView,
-  },
-  {
-    path: "/login",
-    name: "login",
-    component: LoginView,
+    path: "/test-creator",
+    name: "test-creator",
+    component: TestCreatorView,
   },
   {
     path: "/profile",
     name: "profile",
+    meta: { requiresAuth: true },
     component: ProfileView,
   },
+  // роуты для гостя
   {
-    path: "/test-creator",
-    name: "test-creator",
-    component: TestCreatorView,
+    path: "/auth",
+    name: "auth",
+    meta: { isGuest: true },
+    component: AuthView,
+    children: [
+      {
+        path: "/login",
+        name: "login",
+        component: LoginFormComponent,
+      },
+      {
+        path: "/sign-up",
+        name: "sign-up",
+        component: SignUpComponent,
+      },
+      {
+        path: "/forgot-password",
+        name: "forgot-password",
+        component: ForgotPasswordComponent,
+      },
+      {
+        path: "/reset-password",
+        name: "reset-password",
+        component: ResetPasswordComponent,
+      },
+    ],
   },
 ];
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach(async (to, from, next) => {
+  if (!store.getters["user/isFetched"]) {
+    await store.dispatch("user/fetchUser");
+  }
+
+  if (to.meta.requiresAuth && !store.getters["user/isAuth"]) {
+    next({ name: "login" });
+  } else if (to.meta.isGuest && store.getters["user/isAuth"]) {
+    next({ name: "profile" });
+  } else {
+    next();
+  }
 });
 
 export default router;

@@ -14,8 +14,13 @@
           <h2>Sign up</h2>
         </el-col>
       </el-form-item>
-      <el-form-item label="Create login" prop="name">
-        <el-input v-model="form.name" label-position="top" />
+      <template v-if="error">
+        <el-col v-for="(errorMsg, idx) in error" :key="idx">
+          <el-alert :title="errorMsg[0]" type="error" show-icon />
+        </el-col>
+      </template>
+      <el-form-item label="Create login" prop="login">
+        <el-input v-model="form.login" label-position="top" />
       </el-form-item>
       <el-form-item label="Create password" prop="password">
         <el-input v-model="form.password" type="password" show-password />
@@ -72,7 +77,9 @@ import {
   ElRow,
   ElCol,
   ElInput,
+  ElAlert,
 } from "element-plus";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "SignUpFormComponent",
@@ -83,17 +90,18 @@ export default {
     ElRow,
     ElCol,
     ElInput,
+    ElAlert,
   },
   data() {
     return {
       form: {
-        name: "",
+        login: "",
         password: "",
         checkPassword: "",
         email: "",
       },
       rules: {
-        name: [
+        login: [
           {
             required: true,
             whitespace: true,
@@ -129,34 +137,23 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapGetters("user", ["error"]),
+  },
   methods: {
+    ...mapMutations("user", ["setError"]),
+
     handleSubmit() {
-      if (!this.$refs.formRef) return;
       this.$refs.formRef.validate((valid) => {
         if (valid) {
           this.$emit("save-data", this.form);
-          this.$refs.formRef.resetFields(); // очистка формы после передачи данных из формы,
-          // потом можно будет убрать/заменить на редирект
-          this.$swal.fire({
-            title: "Good job!",
-            text: "You are a member now!",
-            icon: "success",
-            allowEnterKey: false,
-          }); // тест sweetalerts2
-        } else {
-          return false;
         }
       });
     },
 
     handleReset() {
-      if (!this.$refs.formRef) return;
       this.$refs.formRef.resetFields();
-      this.$swal.fire({
-        title: "Done!",
-        text: "All fields have been reset!",
-        icon: "info",
-      }); // тест sweetalerts2
+      this.setError(null);
     },
 
     validateConfirm(rule, value, callback) {
