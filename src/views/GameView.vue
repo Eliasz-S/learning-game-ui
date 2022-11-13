@@ -1,17 +1,17 @@
 <template>
   <div class="screen">
-    <object
+    <img
       class="bg_objects bg_objects__square"
-      data="svg/square.svg"
+      src="svg/square.svg"
       width="500"
       height="500"
-    ></object>
-    <object
+    />
+    <img
       class="bg_objects bg_objects__circle"
-      data="svg/circle.svg"
+      src="svg/circle.svg"
       width="500"
       height="500"
-    ></object>
+    />
     <div class="screen_main">
       <div class="logo">
         <img src="img/maven-logo.png" />
@@ -117,7 +117,7 @@ input.input_pin_child {
   font-family: cursive;
   font-size: 13px;
 }
-object.bg_objects {
+.bg_objects {
   z-index: 0;
   position: fixed;
   transform: rotate(45deg);
