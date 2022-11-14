@@ -14,13 +14,9 @@
           <h2>Sign up</h2>
         </el-col>
       </el-form-item>
-      <template v-if="error">
-        <el-col v-for="(errorMsg, idx) in error" :key="idx">
-          <el-alert :title="errorMsg[0]" type="error" show-icon />
-        </el-col>
-      </template>
+      <UserDataErrorComponent />
       <el-form-item label="Create login" prop="login">
-        <el-input v-model="form.login" label-position="top" />
+        <el-input v-model="form.login" />
       </el-form-item>
       <el-form-item label="Create password" prop="password">
         <el-input v-model="form.password" type="password" show-password />
@@ -29,7 +25,7 @@
         <el-input v-model="form.checkPassword" type="password" show-password />
       </el-form-item>
       <el-form-item label="Email" prop="email">
-        <el-input v-model="form.email" label-position="top" />
+        <el-input v-model="form.email" />
       </el-form-item>
       <el-row :gutter="10">
         <el-col :span="12">
@@ -62,7 +58,7 @@
       <el-col>
         <div class="grid-content">
           Already have an account?
-          <router-link to="/login">Sign in</router-link>
+          <router-link to="/auth/login">Sign in</router-link>
         </div>
       </el-col>
     </el-row>
@@ -70,6 +66,7 @@
 </template>
 
 <script>
+import UserDataErrorComponent from "@/components/Errors/UserDataErrorComponent.vue";
 import {
   ElForm,
   ElFormItem,
@@ -77,9 +74,8 @@ import {
   ElRow,
   ElCol,
   ElInput,
-  ElAlert,
 } from "element-plus";
-import { mapGetters, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
   name: "SignUpFormComponent",
@@ -90,7 +86,7 @@ export default {
     ElRow,
     ElCol,
     ElInput,
-    ElAlert,
+    UserDataErrorComponent,
   },
   data() {
     return {
@@ -136,9 +132,6 @@ export default {
         ],
       },
     };
-  },
-  computed: {
-    ...mapGetters("user", ["error"]),
   },
   methods: {
     ...mapMutations("user", ["setError"]),

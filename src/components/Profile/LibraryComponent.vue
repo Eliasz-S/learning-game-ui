@@ -1,7 +1,6 @@
 <template>
   <div class="profile-nav test-library">
     <p>Library component</p>
-    <ProfileTopMenuUI :swapComponent="swapComponent" />
     <el-row :gutter="20" class="search">
       <el-col :span="6">
         <InputUI v-model="search" placeholder="Search by title..." />
@@ -12,7 +11,7 @@
       style="width: 100%; margin-top: 10px"
       type="primary"
     >
-      <el-table-column type="index" :index="indexMethod" width="50" />
+      <el-table-column type="index" width="50" />
       <el-table-column label="Date" prop="date"> </el-table-column>
       <el-table-column label="Title">
         <template #default="scope">
@@ -64,7 +63,6 @@
 
 <script>
 import { ref } from "vue";
-import ProfileTopMenuUI from "../UI/ProfileTopMenuUI.vue";
 import InputUI from "../UI/InputUI.vue";
 import AnimatedBtnUI from "../UI/AnimatedBtnUI.vue";
 import {
@@ -80,7 +78,6 @@ export default {
   name: "LibraryComponent",
   props: ["swapComponent"],
   components: {
-    ProfileTopMenuUI,
     InputUI,
     AnimatedBtnUI,
     ElButton,
