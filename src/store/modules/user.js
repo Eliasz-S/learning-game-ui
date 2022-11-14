@@ -1,6 +1,7 @@
 import { http } from "@/utils/axios";
 import { RESPONSE_STATUS_CODES } from "@/utils/constants";
 import router from "@/router/index";
+import { ElMessage } from "element-plus";
 
 export default {
   namespaced: true,
@@ -42,7 +43,7 @@ export default {
         .post("login", payload)
         .then(() => {
           dispatch("fetchUser");
-          router.push("profile");
+          router.push("/profile/home");
         })
         .catch((error) => {
           commit("setError", error.response.data.message);
@@ -62,24 +63,56 @@ export default {
       }
     },
     registerUser({ commit, dispatch }, newUserData) {
+      commit("setError", null);
       http
         .post("register", newUserData)
         .then((response) => {
           if (response.status === RESPONSE_STATUS_CODES.CREATED) {
             dispatch("fetchUser");
             commit("setUser", newUserData);
-            router.push("profile");
+            router.push("/profile/home");
           }
         })
         .catch((error) => {
           commit("setError", error.response.data.errors);
         });
     },
-    logout({ commit }) {
+    updateUser({ commit, dispatch, state }, dataToUpdate) {
+      commit("setError", null);
+      http
+        .put(
+          "user/profile-information",
+          Object.assign(state.data, dataToUpdate)
+        )
+        .then(() => {
+          dispatch("fetchUser");
+        })
+        .catch((error) => {
+          commit("setError", error.response.data.errors);
+        });
+    },
+    updatePassword({ commit }, payload) {
+      commit("setError", null);
+      http
+        .put("user/password", payload)
+        .then((response) => {
+          if (response.statusText === "OK") {
+            ElMessage({
+              type: "success",
+              message: "Your password has been changed!",
+            });
+          }
+        })
+        .catch((error) => {
+          commit("setError", error.response.data.errors);
+        });
+    },
+    logout({ commit, dispatch }) {
       http.post("logout").then(() => {
         commit("setUser", null);
+        dispatch("fetchUser");
         // commit("setIsFethed", false);
-        router.push("login");
+        router.push("/auth/login");
       });
     },
   },
