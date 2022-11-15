@@ -16,6 +16,10 @@ import {
   faList,
   faChartColumn,
   faUsersLine,
+  faCircle,
+  faSquare,
+  faPlay,
+  faDiamond,
 } from "@fortawesome/free-solid-svg-icons";
 import "sweetalert2/dist/sweetalert2.min.css";
 
@@ -30,6 +34,10 @@ library.add([
   faList,
   faChartColumn,
   faUsersLine,
+  faCircle,
+  faSquare,
+  faPlay,
+  faDiamond,
 ]);
 
 createApp(App)

@@ -1,11 +1,18 @@
 <template>
   <div>LobbyComponent</div>
-  <div class="loading" v-if="loading">Loading...</div>
+  <div class="loadingui" v-if="loading">
+    <LoadingUi />
+  </div>
 </template>
 
 <script>
+import LoadingUi from "../UI/LoadingUI.vue";
+
 export default {
   name: "LobbyComponent",
+  components: {
+    LoadingUi,
+  },
   data() {
     return {
       loading: true,
@@ -14,4 +21,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="css" scoped></style>

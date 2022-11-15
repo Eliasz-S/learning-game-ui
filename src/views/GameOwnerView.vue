@@ -27,6 +27,9 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.content {
+  z-index: 100;
+}
 .screen {
   background-color: #5626a3;
   color: #fff;
