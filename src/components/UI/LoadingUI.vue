@@ -166,4 +166,20 @@
     left: 0;
   }
 }
+.loading_components::after {
+  content: "Loading...";
+  background: rgb(0 0 0 / 37%);
+  width: 80px;
+  height: 18px;
+  position: absolute;
+  bottom: -40px;
+  left: 38%;
+  border-radius: 50%;
+  transform: rotate(-15deg);
+  box-shadow: 0px 5px 26px 12px #00000069;
+  color: #ffffff;
+  font-family: cursive;
+  font-size: 19px;
+  line-height: 104px;
+}
 </style>
