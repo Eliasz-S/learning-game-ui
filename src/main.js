@@ -20,6 +20,8 @@ import {
   faSquare,
   faPlay,
   faDiamond,
+  faExpand,
+  faGamepad,
 } from "@fortawesome/free-solid-svg-icons";
 import "sweetalert2/dist/sweetalert2.min.css";
 
@@ -38,6 +40,8 @@ library.add([
   faSquare,
   faPlay,
   faDiamond,
+  faExpand,
+  faGamepad,
 ]);
 
 createApp(App)

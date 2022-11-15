@@ -170,13 +170,13 @@
   content: "Loading...";
   background: rgb(0 0 0 / 37%);
   width: 80px;
-  height: 18px;
+  height: 0;
   position: absolute;
   bottom: -40px;
   left: 38%;
   border-radius: 50%;
   transform: rotate(-15deg);
-  box-shadow: 0px 5px 26px 12px #00000069;
+  box-shadow: 1px 0 29px 9px #000000ad;
   color: #ffffff;
   font-family: cursive;
   font-size: 19px;
