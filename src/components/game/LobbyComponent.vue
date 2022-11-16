@@ -1,7 +1,7 @@
 <template>
   <div>
     <LoadingUi v-if="loading" />
-    <LobbyUi v-else />
+    <LobbyUi v-else :users="users" />
   </div>
 </template>
 
@@ -14,6 +14,9 @@ export default {
   components: {
     LoadingUi,
     LobbyUi,
+  },
+  props: {
+    users: [],
   },
   data() {
     return {

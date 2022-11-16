@@ -19,34 +19,14 @@
         </div>
         <div class="lobby_users_array">
           <div class="connected_users">
-            <div class="connected_user">
+            <div v-for="user in users" :key="user.id" class="connected_user">
               <p>
-                <span><font-awesome-icon icon="fa-solid fa-user" />: </span>
-                Nickname
-              </p>
-            </div>
-            <div class="connected_user">
-              <p>
-                <span><font-awesome-icon icon="fa-solid fa-user" />: </span>
-                Nickname
-              </p>
-            </div>
-            <div class="connected_user">
-              <p>
-                <span><font-awesome-icon icon="fa-solid fa-user" />: </span>
-                Nickname
-              </p>
-            </div>
-            <div class="connected_user">
-              <p>
-                <span><font-awesome-icon icon="fa-solid fa-user" />: </span>
-                NicknameNicknameNickname
-              </p>
-            </div>
-            <div class="connected_user">
-              <p>
-                <span><font-awesome-icon icon="fa-solid fa-user" />: </span>
-                Nickname
+                <span>
+                  {{ user.id }}
+                  <font-awesome-icon icon="fa-solid fa-user" />
+                  :
+                </span>
+                &nbsp; {{ user.nickname }}
               </p>
             </div>
           </div>
@@ -74,6 +54,9 @@ export default {
     return {
       pin: "123456",
     };
+  },
+  props: {
+    users: [],
   },
   methods: {
     handlecli() {

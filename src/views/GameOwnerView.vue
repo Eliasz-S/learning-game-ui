@@ -14,7 +14,7 @@
         height="500"
       />
       <div class="content">
-        <router-view />
+        <router-view :users="users" />
       </div>
     </div>
   </div>
@@ -23,6 +23,36 @@
 <script>
 export default {
   name: "GameOwnerView",
+  data() {
+    return {
+      users: [
+        {
+          id: "1",
+          nickname: "Nadja",
+        },
+        {
+          id: "2",
+          nickname: "Ilia",
+        },
+        {
+          id: "3",
+          nickname: "Max",
+        },
+        {
+          id: "4",
+          nickname: "Alex",
+        },
+        {
+          id: "5",
+          nickname: "Lana",
+        },
+        {
+          id: "6",
+          nickname: "Katja",
+        },
+      ],
+    };
+  },
 };
 </script>
 
