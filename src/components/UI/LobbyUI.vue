@@ -2,7 +2,7 @@
   <div class="lobby">
     <section class="information">
       <div class="lobby_header">
-        <p>Join at maven with Game PIN: 1584176</p>
+        <p>Join at maven with Game PIN: {{ pin }}</p>
       </div>
     </section>
     <section class="lobby_main">
@@ -11,7 +11,7 @@
           <div class="hidden_bl"></div>
           <img src="../../../public/img/maven-logo.png" alt="Maven" />
           <div class="start_game">
-            <button>
+            <button @click="handlecli">
               <font-awesome-icon icon="fa-solid fa-gamepad" />
               Start
             </button>
@@ -67,8 +67,19 @@
 </template>
 
 <script>
+import router from "@/router";
 export default {
   name: "LobbyUI",
+  data() {
+    return {
+      pin: "123456",
+    };
+  },
+  methods: {
+    handlecli() {
+      router.push({ path: "question" });
+    },
+  },
 };
 </script>
 
@@ -163,5 +174,17 @@ button.fullscreen {
   margin: 10px 15px;
   padding: 10px 10px;
   border-radius: 7px;
+  animation: connected-user 2.5s infinite;
+}
+@keyframes connected-user {
+  0% {
+    margin-top: 10px;
+  }
+  50% {
+    margin-top: 13px;
+  }
+  100% {
+    margin-top: 10px;
+  }
 }
 </style>
