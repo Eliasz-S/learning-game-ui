@@ -14,7 +14,12 @@
         height="500"
       />
       <div class="content">
-        <router-view :users="users" />
+        <router-view
+          :users="users"
+          :pin="pin"
+          :gameAnswers="gameAnswers"
+          :gameQuestions="gameQuestions"
+        />
       </div>
     </div>
   </div>
@@ -49,6 +54,59 @@ export default {
         {
           id: "6",
           nickname: "Katja",
+        },
+      ],
+      pin: "1238549",
+      gameQuestions: [
+        {
+          id: "1",
+          text: "First question",
+          question_type_id: "1",
+          time_limit: "30",
+        },
+        {
+          id: "1",
+          text: "Second question",
+          question_type_id: "1",
+          time_limit: "10",
+        },
+      ],
+      gameAnswers: [
+        {
+          id: "1",
+          question_id: "1",
+          text: "Some answer 1",
+          is_correct: "1",
+        },
+        {
+          id: "2",
+          question_id: "1",
+          text: "Some answer 2",
+          is_correct: "0",
+        },
+        {
+          id: "3",
+          question_id: "1",
+          text: "Some answer 3",
+          is_correct: "0",
+        },
+        {
+          id: "4",
+          question_id: "1",
+          text: "Some answer 4",
+          is_correct: "0",
+        },
+        {
+          id: "5",
+          question_id: "2",
+          text: "Some answer 1",
+          is_correct: "0",
+        },
+        {
+          id: "6",
+          question_id: "2",
+          text: "Some answer 2",
+          is_correct: "1",
         },
       ],
     };

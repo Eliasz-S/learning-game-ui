@@ -9,7 +9,7 @@
       <div class="lobby_users">
         <div class="lobby_users__logo">
           <div class="hidden_bl"></div>
-          <img src="../../../public/img/maven-logo.png" alt="Maven" />
+          <img src="../../public/img/maven-logo.png" alt="Maven" />
           <div class="start_game">
             <button @click="handlecli">
               <font-awesome-icon icon="fa-solid fa-gamepad" />
@@ -18,7 +18,7 @@
           </div>
         </div>
         <div class="lobby_users_array">
-          <div class="connected_users">
+          <div v-if="users.length > 0" class="connected_users">
             <div v-for="user in users" :key="user.id" class="connected_user">
               <p>
                 <span>
@@ -30,6 +30,7 @@
               </p>
             </div>
           </div>
+          <div v-else class="no-users">Waiting for players…</div>
         </div>
       </div>
       <div class="lobby_bottom">
@@ -49,14 +50,10 @@
 <script>
 import router from "@/router";
 export default {
-  name: "LobbyUI",
-  data() {
-    return {
-      pin: "123456",
-    };
-  },
+  name: "ConnectedUsersComponent",
   props: {
-    users: [],
+    users: Array,
+    pin: String,
   },
   methods: {
     handlecli() {
@@ -169,5 +166,18 @@ button.fullscreen {
   100% {
     margin-top: 10px;
   }
+}
+.no-users {
+  background: #2222229c;
+  width: fit-content;
+  padding: 10px 20px;
+  border-radius: 7px;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 27px;
+  font-family: "Mukta", "sans-serif";
 }
 </style>
