@@ -2,46 +2,63 @@
   <div class="test-creator">
     <el-header class="test-creator-header">
       <el-row justify="space-between">
-        <el-col :span="6">
-          <h1>Test Creator Page</h1>
+        <el-col :span="8">
+          <el-row justify="space-between">
+            <el-col :span="4">
+              <h1>Maven</h1>
+            </el-col>
+            <el-col :span="16">
+              <el-button
+                size="large"
+                style="width: 80%"
+                @click="dialogTableVisible = !dialogTableVisible"
+                plain
+              >
+                <el-row justify="space-between">
+                  <el-col :span="14" class="maven-title" v-if="!game.title">
+                    Enter maven title...
+                  </el-col>
+                  <el-col :span="14" class="maven-title" v-else>
+                    {{ game.title }}
+                  </el-col>
+                  <el-col :span="6">Settings</el-col>
+                </el-row>
+              </el-button>
+            </el-col>
+          </el-row>
         </el-col>
         <el-col :span="4">
-          <el-button type="info">Exit</el-button>
-          <el-button type="primary" @click="handleGameData">Save</el-button>
+          <el-button type="info" @click="redirectToProfile">Exit</el-button>
+          <el-button type="primary" @click="handleSaveGame">Save</el-button>
         </el-col>
       </el-row>
     </el-header>
+    <CreatorErrorComponent />
     <el-container height="100%">
-      <el-aside width="200px">
-        <button
-          v-for="question in questions"
-          :key="question?.questionKey"
-          @click="swapComponent(question.component)"
-        >
-          {{ question?.questionKey }}. Question
-        </button>
-        <el-button @click="saveQuestion()"> Add new question </el-button>
+      <el-aside>
+        <el-col>
+          <el-button
+            v-for="(question, idx) in questions"
+            :key="idx"
+            size="large"
+            text
+          >
+            <span class="slide-title">{{ question.title }}</span>
+          </el-button>
+        </el-col>
+        <el-button @click="saveQuestion"> Add new question </el-button>
       </el-aside>
       <el-main>
-        <el-form ref="gameForm">
-          <el-form-item>
-            <el-input v-model="game.title" placeholder="Game title" />
-          </el-form-item>
-          <el-form-item>
-            <el-input
-              v-model="game.description"
-              type="textarea"
-              :autosize="{ minRows: 2 }"
-              resize="none"
-              placeholder="Game description (optional)"
-            />
-          </el-form-item>
-        </el-form>
+        <GameDataDialogComponent
+          v-model="dialogTableVisible"
+          @handle-submit="handleGameData"
+          @handle-close="handleDialogClose"
+        />
         <keep-alive>
           <component
             :is="currentComponent"
             @save-question="handleQuestion"
-            :key="questionKey"
+            :key="questionId"
           />
         </keep-alive>
       </el-main>
@@ -72,7 +89,9 @@
 </template>
 
 <script>
-import QuestionCreatorComponent from "@/components/QuestionCreatorComponent.vue";
+import QuestionCreatorComponent from "@/components/Creator/QuestionCreatorComponent.vue";
+import GameDataDialogComponent from "@/components/Creator/GameDataDialogComponent.vue";
+import CreatorErrorComponent from "@/components/Errors/CreatorErrorComponent.vue";
 import {
   ElAside,
   ElMain,
@@ -86,13 +105,16 @@ import {
   ElCol,
   ElSelect,
   ElOption,
+  ElAlert,
 } from "element-plus";
-import { http } from "@/utils/axios";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "TestCreatorView",
   components: {
     "question-creator-component": QuestionCreatorComponent,
+    GameDataDialogComponent,
+    CreatorErrorComponent,
     ElAside,
     ElMain,
     ElContainer,
@@ -105,59 +127,64 @@ export default {
     ElCol,
     ElSelect,
     ElOption,
+    ElAlert,
   },
   data() {
     return {
+      dialogTableVisible: false,
       currentComponent: "question-creator-component",
-      questionKey: 1,
+      questionId: 1,
       game: {
         title: "",
         description: "",
       },
       timeLimit: "20 seconds",
-      questions: [],
-      newQuestion: null,
-      questionType: "Quiz",
-      games: null,
+      questionType: "Quiz", // только для v-model этого компонента, на бэк пока хардкодом
+      newQuestion: {},
     };
   },
+  computed: {
+    ...mapGetters("creator", ["questions"]),
+  },
   methods: {
+    ...mapActions("creator", ["createGame", "addNewQuestion"]),
+    ...mapMutations("creator", ["setError"]),
     swapComponent(component) {
       this.currentComponent = component;
     },
-    getGamesList() {
-      http.get("api/games").then((response) => {
-        this.games = response.data;
-        console.log(this.games);
-      });
-    },
-    handleGameData() {
+    handleSaveGame() {
       this.saveQuestion();
-      http
-        .post("api/games", {
-          game: this.game,
-          questions: this.questions,
-        })
-        .then(() => {
-          this.game = {};
-          this.questions = [];
-          this.getGamesList();
-        });
+      this.createGame({
+        game: this.game,
+        questions: this.questions,
+      }).then(() => {
+        this.game = {};
+      });
     },
     handleQuestion(data) {
       this.newQuestion = {
         component: "question-creator-component",
-        questionKey: this.questionKey,
+        questionId: this.questionId,
         title: data.title,
         timeLimit: this.timeLimit,
         answers: data.answers,
       };
     },
     saveQuestion() {
-      this.questions.push(this.newQuestion);
-      console.log(this.questions);
-      this.newQuestion = null;
-      this.questionKey += 1;
+      this.addNewQuestion(this.newQuestion);
+      this.newQuestion = {};
+      this.questionId += 1;
+    },
+    handleGameData(gameData) {
+      this.game.title = gameData.title;
+      this.game.description = gameData.description;
+    },
+    handleDialogClose() {
+      this.dialogTableVisible = false;
+    },
+    redirectToProfile() {
+      this.setError(null);
+      this.$router.push("/profile/home");
     },
   },
 };
@@ -171,5 +198,15 @@ export default {
   background-color: whitesmoke;
   box-shadow: rgb(0 0 0 / 10%) 0px 2px 4px 0px;
   margin-bottom: 2rem;
+}
+.slide-title {
+  width: 10rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.maven-title {
+  width: 170px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

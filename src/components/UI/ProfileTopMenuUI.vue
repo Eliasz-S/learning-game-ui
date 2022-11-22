@@ -18,18 +18,31 @@
         &nbsp; Groups
       </router-link>
     </div>
-    <div class="user-menu">
-      <UserMenuComponent />
+    <div class="nav-right">
+      <el-button type="success" size="large" @click="redirectToCreator">
+        Create
+      </el-button>
+      <div class="user-menu">
+        <UserMenuComponent />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import UserMenuComponent from "@/components/Profile/UserMenuComponent.vue";
+import { ElButton } from "element-plus";
+
 export default {
   name: "ProfileTopMenuComponent",
   components: {
     UserMenuComponent,
+    ElButton,
+  },
+  methods: {
+    redirectToCreator() {
+      this.$router.push("/test-creator");
+    },
   },
 };
 </script>
@@ -46,9 +59,14 @@ export default {
   display: flex;
   justify-content: center;
 }
-.user-menu {
+.nav-right {
+  display: flex;
+  align-items: center;
   position: absolute;
-  right: 3rem;
+  right: 1rem;
+}
+.user-menu {
+  margin: 2.5rem;
 }
 .top-nav-link {
   text-decoration: none;

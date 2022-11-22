@@ -2,7 +2,7 @@
   <div>
     <el-form @input="handleData">
       <el-form-item>
-        <h2>Question Creator</h2>
+        <h2>Add а question to your maven</h2>
       </el-form-item>
       <el-form-item>
         <el-input
