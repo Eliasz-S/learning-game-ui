@@ -1,35 +1,17 @@
 <template>
   <div class="profile">
-    <h1>Profile page</h1>
-    <component :is="currentComponent" :swap-component="swapComponent" />
+    <ProfileTopMenuUI />
+    <router-view />
   </div>
 </template>
 
 <script>
-import GroupsComponentVue from "@/components/Profile/GroupsComponent.vue";
-import HomeComponentVue from "@/components/Profile/HomeComponent.vue";
-import LibraryComponentVue from "@/components/Profile/LibraryComponent.vue";
-import ReportsComponentVue from "@/components/Profile/ReportsComponent.vue";
 import ProfileTopMenuUI from "@/components/UI/ProfileTopMenuUI.vue";
 
 export default {
   name: "ProfileView",
-  data: function () {
-    return {
-      currentComponent: "home-component",
-    };
-  },
   components: {
-    "library-component": LibraryComponentVue,
-    "home-component": HomeComponentVue,
-    "reports-component": ReportsComponentVue,
-    "groups-component": GroupsComponentVue,
     ProfileTopMenuUI,
-  },
-  methods: {
-    swapComponent: function (component) {
-      this.currentComponent = component;
-    },
   },
 };
 </script>

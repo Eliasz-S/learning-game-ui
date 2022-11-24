@@ -11,11 +11,7 @@
         <h2>Log in</h2>
       </el-col>
     </el-form-item>
-    <template v-if="error">
-      <el-col>
-        <el-alert :title="error" type="error" show-icon />
-      </el-col>
-    </template>
+    <LoginErrorComponent />
     <el-form-item label="Username or email" prop="login">
       <el-input v-model="form.login" label-position="top" />
     </el-form-item>
@@ -25,7 +21,9 @@
     <el-form-item>
       <div>
         Forgot password?
-        <router-link to="forgot-password"> Reset your password </router-link>
+        <router-link to="/auth/forgot-password">
+          Reset your password
+        </router-link>
       </div>
     </el-form-item>
     <el-form-item>
@@ -43,13 +41,14 @@
     <el-col>
       <div class="grid-content">
         Don't have an account?
-        <router-link to="/sign-up">Sign up</router-link>
+        <router-link to="/auth/sign-up">Sign up</router-link>
       </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
+import LoginErrorComponent from "@/components/Errors/LoginErrorComponent.vue";
 import {
   ElForm,
   ElFormItem,
@@ -57,20 +56,19 @@ import {
   ElRow,
   ElCol,
   ElInput,
-  ElAlert,
 } from "element-plus";
-import { mapActions, mapGetters, mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   name: "LoginComponent",
   components: {
+    LoginErrorComponent,
     ElForm,
     ElFormItem,
     ElButton,
     ElRow,
     ElCol,
     ElInput,
-    ElAlert,
   },
   created() {
     this.setError(null);
@@ -82,9 +80,6 @@ export default {
         password: "",
       },
     };
-  },
-  computed: {
-    ...mapGetters("user", ["error"]),
   },
   methods: {
     ...mapMutations("user", ["setError"]),

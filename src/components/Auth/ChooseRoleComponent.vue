@@ -26,6 +26,11 @@ export default {
     ElCol,
     ElButton,
   },
+  props: {
+    swapComponent: {
+      type: Function,
+    },
+  },
   created() {
     this.setError(null);
   },
@@ -51,7 +56,6 @@ export default {
       });
     },
   },
-  props: ["swapComponent"],
 };
 </script>
 

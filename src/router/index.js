@@ -8,6 +8,16 @@ import ForgotPasswordComponent from "@/components/Auth/ForgotPasswordComponent.v
 import ResetPasswordComponent from "@/components/Auth/ResetPasswordComponent.vue";
 import LoginFormComponent from "@/components/Auth/LoginFormComponent.vue";
 import SignUpComponent from "@/components/Auth/SignUpComponent.vue";
+import ProfileSettingsComponent from "@/components/Profile/ProfileSettingsComponent.vue";
+import GroupsComponent from "@/components/Profile/GroupsComponent.vue";
+import LibraryComponent from "@/components/Profile/LibraryComponent.vue";
+import ReportsComponent from "@/components/Profile/ReportsComponent.vue";
+import HomeComponent from "@/components/Profile/HomeComponent.vue";
+import GameOwnerView from "@/views/GameOwnerView.vue";
+import OwnerQuestionComponent from "@/components/game/OwnerQuestionComponent.vue";
+import LobbyComponent from "@/components/game/LobbyComponent.vue";
+import OwnerQuestionResultComponentVue from "@/components/game/OwnerQuestionResultComponent.vue";
+import AllResultsComponentVue from "@/components/game/AllResultsComponent.vue";
 
 const routes = [
   {
@@ -15,6 +25,36 @@ const routes = [
     name: "game",
     component: GameView,
   },
+  // Game pages (Only for owner)
+  {
+    path: "/game-owner",
+    redirect: { name: "lobby" },
+    name: "gameowner",
+    component: GameOwnerView,
+    children: [
+      {
+        path: "lobby",
+        name: "lobby",
+        component: LobbyComponent,
+      },
+      {
+        path: "question",
+        name: "question",
+        component: OwnerQuestionComponent,
+      },
+      {
+        path: "question-result",
+        name: "questionresult",
+        component: OwnerQuestionResultComponentVue,
+      },
+    ],
+  },
+  {
+    path: "/game-result",
+    name: "gameresult",
+    component: AllResultsComponentVue,
+  },
+  // End game pages
   {
     path: "/test-creator",
     name: "test-creator",
@@ -22,34 +62,63 @@ const routes = [
   },
   {
     path: "/profile",
+    redirect: { name: "profile-home" },
     name: "profile",
     meta: { requiresAuth: true },
     component: ProfileView,
+    children: [
+      {
+        path: "settings",
+        name: "profile-settings",
+        component: ProfileSettingsComponent,
+      },
+      {
+        path: "groups",
+        name: "profile-groups",
+        component: GroupsComponent,
+      },
+      {
+        path: "library",
+        name: "profile-library",
+        component: LibraryComponent,
+      },
+      {
+        path: "reports",
+        name: "profile-reports",
+        component: ReportsComponent,
+      },
+      {
+        path: "home",
+        name: "profile-home",
+        component: HomeComponent,
+      },
+    ],
   },
   // роуты для гостя
   {
     path: "/auth",
+    redirect: { name: "login" },
     name: "auth",
     meta: { isGuest: true },
     component: AuthView,
     children: [
       {
-        path: "/login",
+        path: "login",
         name: "login",
         component: LoginFormComponent,
       },
       {
-        path: "/sign-up",
+        path: "sign-up",
         name: "sign-up",
         component: SignUpComponent,
       },
       {
-        path: "/forgot-password",
+        path: "forgot-password",
         name: "forgot-password",
         component: ForgotPasswordComponent,
       },
       {
-        path: "/reset-password",
+        path: "reset-password",
         name: "reset-password",
         component: ResetPasswordComponent,
       },
@@ -70,7 +139,7 @@ router.beforeEach(async (to, from, next) => {
   if (to.meta.requiresAuth && !store.getters["user/isAuth"]) {
     next({ name: "login" });
   } else if (to.meta.isGuest && store.getters["user/isAuth"]) {
-    next({ name: "profile" });
+    next({ name: "profile-home" });
   } else {
     next();
   }
