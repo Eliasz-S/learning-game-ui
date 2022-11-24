@@ -13,6 +13,11 @@ import GroupsComponent from "@/components/Profile/GroupsComponent.vue";
 import LibraryComponent from "@/components/Profile/LibraryComponent.vue";
 import ReportsComponent from "@/components/Profile/ReportsComponent.vue";
 import HomeComponent from "@/components/Profile/HomeComponent.vue";
+import GameOwnerView from "@/views/GameOwnerView.vue";
+import OwnerQuestionComponent from "@/components/game/OwnerQuestionComponent.vue";
+import LobbyComponent from "@/components/game/LobbyComponent.vue";
+import OwnerQuestionResultComponentVue from "@/components/game/OwnerQuestionResultComponent.vue";
+import AllResultsComponentVue from "@/components/game/AllResultsComponent.vue";
 
 const routes = [
   {
@@ -20,6 +25,36 @@ const routes = [
     name: "game",
     component: GameView,
   },
+  // Game pages (Only for owner)
+  {
+    path: "/game-owner",
+    redirect: { name: "lobby" },
+    name: "gameowner",
+    component: GameOwnerView,
+    children: [
+      {
+        path: "lobby",
+        name: "lobby",
+        component: LobbyComponent,
+      },
+      {
+        path: "question",
+        name: "question",
+        component: OwnerQuestionComponent,
+      },
+      {
+        path: "question-result",
+        name: "questionresult",
+        component: OwnerQuestionResultComponentVue,
+      },
+    ],
+  },
+  {
+    path: "/game-result",
+    name: "gameresult",
+    component: AllResultsComponentVue,
+  },
+  // End game pages
   {
     path: "/test-creator",
     name: "test-creator",
