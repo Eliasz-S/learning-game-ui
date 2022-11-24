@@ -58,6 +58,7 @@ const routes = [
   {
     path: "/test-creator",
     name: "test-creator",
+    meta: { requiresAuth: true },
     component: TestCreatorView,
   },
   {
