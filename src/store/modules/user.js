@@ -1,4 +1,4 @@
-import { http } from "@/utils/axios";
+import { api } from "@/utils/axios";
 import { RESPONSE_STATUS_CODES } from "@/utils/constants";
 import router from "@/router/index";
 import { ElMessage } from "element-plus";
@@ -39,7 +39,7 @@ export default {
   },
   actions: {
     login({ commit, dispatch }, payload) {
-      http
+      api
         .post("login", payload)
         .then(() => {
           dispatch("fetchUser");
@@ -51,7 +51,7 @@ export default {
     },
     async fetchUser({ commit }) {
       try {
-        const response = await http.get("/api/user");
+        const response = await api.get("user");
         if (response.data) {
           commit("setUser", response.data);
           // commit("setIsFetched", true);
@@ -64,7 +64,7 @@ export default {
     },
     registerUser({ commit, dispatch }, newUserData) {
       commit("setError", null);
-      http
+      api
         .post("register", newUserData)
         .then((response) => {
           if (response.status === RESPONSE_STATUS_CODES.CREATED) {
@@ -79,7 +79,7 @@ export default {
     },
     updateUser({ commit, dispatch, state }, dataToUpdate) {
       commit("setError", null);
-      http
+      api
         .put(
           "user/profile-information",
           Object.assign(state.data, dataToUpdate)
@@ -93,7 +93,7 @@ export default {
     },
     updatePassword({ commit }, payload) {
       commit("setError", null);
-      http
+      api
         .put("user/password", payload)
         .then((response) => {
           if (response.statusText === "OK") {
@@ -108,7 +108,7 @@ export default {
         });
     },
     logout({ commit, dispatch }) {
-      http.post("logout").then(() => {
+      api.post("logout").then(() => {
         commit("setUser", null);
         dispatch("fetchUser");
         // commit("setIsFethed", false);

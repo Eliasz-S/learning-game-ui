@@ -1,4 +1,4 @@
-import { http } from "@/utils/axios";
+import { api } from "@/utils/axios";
 import { ElMessage } from "element-plus";
 
 export default {
@@ -31,8 +31,8 @@ export default {
   actions: {
     createGame({ commit, state }, payload) {
       commit("setError", null);
-      http
-        .post("api/games", payload)
+      api
+        .post("games", payload)
         .then((response) => {
           console.log(response);
           state.questions = [];
