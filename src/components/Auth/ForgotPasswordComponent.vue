@@ -21,7 +21,7 @@
 
 <script>
 import { ElForm, ElFormItem, ElButton, ElInput, ElCol } from "element-plus";
-import { http } from "@/utils/axios";
+import { api } from "@/utils/axios";
 export default {
   name: "ForgotPasswordComponent",
   components: {
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
     handleReset() {
-      http.post("forgot-password", this.form);
+      api.post("forgot-password", this.form);
     },
   },
 };
