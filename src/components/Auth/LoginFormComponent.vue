@@ -11,8 +11,9 @@
         <h2>Log in</h2>
       </el-col>
     </el-form-item>
-    <el-form-item label="Username or email" prop="name">
-      <el-input v-model="form.name" label-position="top" />
+    <LoginErrorComponent />
+    <el-form-item label="Username or email" prop="login">
+      <el-input v-model="form.login" label-position="top" />
     </el-form-item>
     <el-form-item label="Password" prop="password">
       <el-input v-model="form.password" type="password" show-password />
@@ -20,9 +21,9 @@
     <el-form-item>
       <div>
         Forgot password?
-        <el-link type="primary" href="#" :underline="false">
+        <router-link to="/auth/forgot-password">
           Reset your password
-        </el-link>
+        </router-link>
       </div>
     </el-form-item>
     <el-form-item>
@@ -40,13 +41,14 @@
     <el-col>
       <div class="grid-content">
         Don't have an account?
-        <router-link to="/sign-up">Sign up</router-link>
+        <router-link to="/auth/sign-up">Sign up</router-link>
       </div>
     </el-col>
   </el-row>
 </template>
 
 <script>
+import LoginErrorComponent from "@/components/Errors/LoginErrorComponent.vue";
 import {
   ElForm,
   ElFormItem,
@@ -54,39 +56,39 @@ import {
   ElRow,
   ElCol,
   ElInput,
-  ElLink,
 } from "element-plus";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   name: "LoginComponent",
   components: {
+    LoginErrorComponent,
     ElForm,
     ElFormItem,
     ElButton,
     ElRow,
     ElCol,
     ElInput,
-    ElLink,
+  },
+  created() {
+    this.setError(null);
   },
   data() {
     return {
       form: {
-        name: "",
+        login: "",
         password: "",
       },
     };
   },
   methods: {
+    ...mapMutations("user", ["setError"]),
+
+    ...mapActions("user", ["login"]),
+
     handleLogin() {
-      if (this.form.name.trim()) {
-        this.$swal.fire({
-          title: "Success!",
-          text: `You've logged in as ${this.form.name}`,
-          icon: "success",
-          allowEnterKey: false,
-        });
-      } // sweetalert2 test
-      this.$refs.formRef.resetFields();
+      this.setError(null);
+      this.login(this.form);
     },
   },
 };

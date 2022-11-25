@@ -1,20 +1,17 @@
 <template>
-  <div class="login">
-    <LoginFormComponent />
+  <div class="auth">
+    <router-view />
   </div>
 </template>
 
 <script>
-import LoginFormComponent from "@/components/Auth/LoginFormComponent.vue";
-
 export default {
-  name: "LoginView",
-  components: { LoginFormComponent },
+  name: "AuthView",
 };
 </script>
 
 <style scoped>
-.login {
+.auth {
   border-radius: 4px;
   box-shadow: rgb(0 0 0 / 15%) 0px 2px 4px 0px;
   color: inherit;
