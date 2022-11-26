@@ -5,14 +5,8 @@
     <router-link to="/"
       ><el-menu-item index="1">GAME</el-menu-item></router-link
     >
-    <router-link to="/login"
-      ><el-menu-item index="2">LOGIN</el-menu-item></router-link
-    >
-    <router-link to="/sign-up"
-      ><el-menu-item index="3">SIGN UP</el-menu-item></router-link
-    >
     <router-link to="/profile"
-      ><el-menu-item index="4">PROFILE</el-menu-item></router-link
+      ><el-menu-item index="2">PROFILE</el-menu-item></router-link
     >
   </el-menu>
   <el-carousel type="card" height="50vh">

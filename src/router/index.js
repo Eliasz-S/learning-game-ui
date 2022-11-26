@@ -4,6 +4,7 @@ import ProfileView from "@/views/ProfileView.vue";
 import TestCreatorView from "@/views/TestCreatorView.vue";
 import GameView from "@/views/GameView.vue";
 import AuthView from "@/views/AuthView.vue";
+import HomeView from "@/views/HomeView.vue";
 import ForgotPasswordComponent from "@/components/Auth/ForgotPasswordComponent.vue";
 import ResetPasswordComponent from "@/components/Auth/ResetPasswordComponent.vue";
 import LoginFormComponent from "@/components/Auth/LoginFormComponent.vue";
