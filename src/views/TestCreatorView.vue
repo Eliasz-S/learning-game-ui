@@ -75,10 +75,10 @@
           <el-row justify="center">
             <el-form-item label="Time limit">
               <el-select v-model="timeLimit">
-                <el-option value="5 seconds" />
-                <el-option value="10 seconds" />
-                <el-option value="15 seconds" />
-                <el-option value="20 seconds" />
+                <el-option value="5" label="5 seconds" />
+                <el-option value="10" label="10 seconds" />
+                <el-option value="15" label="15 seconds" />
+                <el-option value="20" label="20 seconds" />
               </el-select>
             </el-form-item>
           </el-row>
@@ -138,7 +138,7 @@ export default {
         title: "",
         description: "",
       },
-      timeLimit: "20 seconds",
+      timeLimit: "20",
       questionType: "Quiz", // только для v-model этого компонента, на бэк пока хардкодом
       newQuestion: {},
     };

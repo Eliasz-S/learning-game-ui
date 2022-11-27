@@ -49,7 +49,6 @@
       <div class="item">
         <p>Author: {{ games[dialogItem].author }}</p>
         <p>Date: {{ games[dialogItem].date }}</p>
-        <p>Plays: {{ games[dialogItem].plays }}</p>
         <p>Questions: {{ games[dialogItem].questions }}</p>
       </div>
       <template #footer>
@@ -63,8 +62,10 @@
 
 <script>
 import { ref } from "vue";
+import { api } from "@/utils/axios";
 import InputUI from "../UI/InputUI.vue";
 import AnimatedBtnUI from "../UI/AnimatedBtnUI.vue";
+
 import {
   ElCol,
   ElTable,
@@ -93,45 +94,21 @@ export default {
       test: "",
       dialogItem: ref([]),
       dialogVisible: ref(false),
-      games: [
-        {
-          id: 1,
-          date: "2016-05-03",
-          author: "Tom",
-          title: "Some first test",
-          questions: 5,
-          plays: 6,
-        },
-        {
-          id: 2,
-          date: "2017-05-03",
-          author: "Jess",
-          title: "Some sec test",
-          questions: 16,
-          plays: 5,
-        },
-        {
-          id: 3,
-          date: "2018-05-03",
-          author: "Laura",
-          title: "Some three test",
-          questions: 10,
-          plays: 4,
-        },
-        {
-          id: 4,
-          date: "2018-06-03",
-          author: "Jemmy",
-          title: "Some fourth test",
-          questions: 9,
-          plays: 2,
-        },
-      ],
+      games: [],
     };
+  },
+  computed: {
+    searchedPosts() {
+      return this.games.filter((game) =>
+        game.title.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
+  },
+  created() {
+    this.fetchGames();
   },
   methods: {
     handleDialogOpen(item) {
-      console.log(item);
       this.dialogItem = ref(item);
       this.dialogItemTitle = ref(item);
       this.dialogVisible = ref(true);
@@ -139,12 +116,9 @@ export default {
     handleDialogClose() {
       this.dialogVisible = ref(false);
     },
-  },
-  computed: {
-    searchedPosts() {
-      return this.games.filter((game) =>
-        game.title.toLowerCase().includes(this.search.toLowerCase())
-      );
+    async fetchGames() {
+      const response = await api.get("games/user");
+      this.games = response.data;
     },
   },
 };
