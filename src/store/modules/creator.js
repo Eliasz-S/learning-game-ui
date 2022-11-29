@@ -1,14 +1,16 @@
 import { api } from "@/utils/axios";
 import { ElMessage } from "element-plus";
 
+const getDefaultState = () => {
+  return {
+    questions: [{ questionId: 1 }],
+    error: null,
+  };
+};
+
 export default {
   namespaced: true,
-  state() {
-    return {
-      questions: [],
-      error: null,
-    };
-  },
+  state: getDefaultState(),
   getters: {
     questions(state) {
       return state.questions;
@@ -18,14 +20,23 @@ export default {
     },
   },
   mutations: {
-    setQuestion(state, question) {
-      state.questions.push(question);
+    setQuestion(state, payload) {
+      const currentQuestion = state.questions.find(
+        (question) => question.questionId === payload.questionId
+      );
+      Object.assign(currentQuestion, payload);
+    },
+    addQuestion(state, payload) {
+      state.questions.push(payload);
     },
     removeQuestion(state, question) {
       state.questions.splice(state.questions.indexOf(question), 1);
     },
     setError(state, error) {
       state.error = error;
+    },
+    resetState(state) {
+      Object.assign(state, getDefaultState());
     },
   },
   actions: {
@@ -47,11 +58,17 @@ export default {
           commit("setError", error.response.data.errors);
         });
     },
-    addNewQuestion({ commit }, questionData) {
+    editQuestion({ commit }, questionData) {
       commit("setQuestion", questionData);
     },
-    deleteQuestion({ commit }, questionId) {
-      commit("removeQuestion", questionId);
+    addQuestion({ commit }, defaultQuestionData) {
+      commit("addQuestion", defaultQuestionData);
+    },
+    deleteQuestion({ commit }, question) {
+      commit("removeQuestion", question);
+    },
+    resetState({ state, commit }) {
+      commit("resetState", state);
     },
   },
 };
