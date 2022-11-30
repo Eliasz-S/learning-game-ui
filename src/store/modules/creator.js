@@ -3,7 +3,7 @@ import { ElMessage } from "element-plus";
 
 const getDefaultState = () => {
   return {
-    questions: [{ questionId: 1 }],
+    questions: [{ questionId: 1, timeLimit: "20" }],
     error: null,
   };
 };

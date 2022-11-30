@@ -38,10 +38,15 @@
       <el-aside>
         <el-col>
           <el-row
-            class="question-link"
             v-for="(question, idx) in questions"
-            :key="idx"
+            class="question-link"
             size="large"
+            :key="idx"
+            :style="
+              currentQuestionId === question.questionId
+                ? 'background-color: wheat;'
+                : 'background-color: whitesmoke;'
+            "
             @click="selectQuestion(question.questionId)"
           >
             <span class="slide-title">{{ question.title }}</span>
@@ -253,5 +258,8 @@ export default {
   justify-content: space-around;
   margin: 2rem;
   cursor: pointer;
+}
+.question-link:hover {
+  opacity: 80%;
 }
 </style>
