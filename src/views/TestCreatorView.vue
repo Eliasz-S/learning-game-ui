@@ -167,7 +167,6 @@ export default {
     ...mapMutations("creator", ["setError", "setQuestions"]),
 
     handleSaveGame() {
-      this.saveQuestion();
       this.createGame({
         game: this.game,
         questions: this.questions,
