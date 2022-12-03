@@ -6,7 +6,7 @@
     :show-close="false"
   >
     <template #header>
-      <el-form label-position="top">
+      <el-form label-position="top" @keydown.enter.prevent="handleSubmit">
         <el-form-item>
           <h1>Maven summary</h1>
         </el-form-item>
@@ -70,6 +70,9 @@ export default {
     dialogTableVisible: {
       type: Boolean,
     },
+    gameData: {
+      type: Object,
+    },
   },
   data() {
     return {
@@ -89,6 +92,11 @@ export default {
     },
     handleDialogClose() {
       this.$emit("handle-close");
+    },
+  },
+  watch: {
+    gameData(value) {
+      Object.assign(this.game, value);
     },
   },
 };

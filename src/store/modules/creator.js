@@ -3,7 +3,7 @@ import { ElMessage } from "element-plus";
 
 const getDefaultState = () => {
   return {
-    questions: [{ questionId: 1, timeLimit: "20" }],
+    questions: [{ questionId: Date.now(), timeLimit: "20" }],
     error: null,
   };
 };
@@ -40,13 +40,12 @@ export default {
     },
   },
   actions: {
-    createGame({ commit, state }, payload) {
+    async createGame({ commit }, payload) {
       commit("setError", null);
-      api
+      await api
         .post("games", payload)
         .then((response) => {
           console.log(response);
-          state.questions = [];
           if (response.statusText === "OK") {
             ElMessage({
               type: "success",
@@ -67,8 +66,8 @@ export default {
     deleteQuestion({ commit }, question) {
       commit("removeQuestion", question);
     },
-    resetState({ state, commit }) {
-      commit("resetState", state);
+    async resetState({ state, commit }) {
+      await commit("resetState", state);
     },
   },
 };
