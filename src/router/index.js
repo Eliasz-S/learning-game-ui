@@ -50,6 +50,7 @@ const routes = [
       },
     ],
   },
+  // END Game pages (Only for owner)
   {
     path: "/game-result",
     name: "gameresult",
