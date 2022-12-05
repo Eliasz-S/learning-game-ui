@@ -21,7 +21,7 @@
           </el-button>
         </el-dropdown-item>
         <el-dropdown-item divided>
-          <el-form @submit="signOut">
+          <el-form @click.prevent="signOut">
             <el-button class="link" native-type="submit" link>
               <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
               &nbsp; Log out

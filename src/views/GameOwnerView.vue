@@ -210,4 +210,9 @@ input.input_pin_child {
     bottom: -140px;
   }
 }
+@media only screen and (max-width: 900px) {
+  .bg_objects {
+    display: none;
+  }
+}
 </style>
