@@ -14,9 +14,11 @@
         height="500"
       />
       <div class="content">
+        <LoadingUi v-if="loading" />
         <router-view
+          v-else
           :users="users"
-          :pin="pin"
+          :pin="lobby.pincode.toString()"
           :gameAnswers="gameAnswers"
           :gameQuestions="gameQuestions"
         />
@@ -26,37 +28,20 @@
 </template>
 
 <script>
+import { api } from "@/utils/axios";
+import LoadingUi from "@/components/UI/LoadingUI.vue";
+
 export default {
   name: "GameOwnerView",
+  components: {
+    LoadingUi,
+  },
   data() {
     return {
-      users: [
-        {
-          id: "1",
-          nickname: "Nadja",
-        },
-        {
-          id: "2",
-          nickname: "Ilia",
-        },
-        {
-          id: "3",
-          nickname: "Max",
-        },
-        {
-          id: "4",
-          nickname: "Alex",
-        },
-        {
-          id: "5",
-          nickname: "Lana",
-        },
-        {
-          id: "6",
-          nickname: "Katja",
-        },
-      ],
-      pin: "1238549",
+      loading: true,
+      lobby: {},
+      users: [],
+      pin: "",
       gameQuestions: [
         {
           id: "1",
@@ -110,6 +95,24 @@ export default {
         },
       ],
     };
+  },
+
+  created() {
+    this.createLobby();
+  },
+
+  methods: {
+    async createLobby() {
+      try {
+        this.loading = true;
+        const response = await api.post(`lobby/${this.$route.params.gameId}`);
+        if (response.status === 201) {
+          this.lobby = response.data;
+        }
+      } finally {
+        this.loading = false;
+      }
+    },
   },
 };
 </script>
