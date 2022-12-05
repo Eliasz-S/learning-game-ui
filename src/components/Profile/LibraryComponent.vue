@@ -26,9 +26,16 @@
       </el-table-column>
       <el-table-column label="Plays" prop="plays" width="100">
       </el-table-column>
-      <el-table-column label="Operations" fixed="right">
+      <el-table-column label="Operations">
         <template #default="scope">
           <AnimatedBtnUI @click="handleDialogOpen(scope.$index)" />
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" width="200">
+        <template #default="scope">
+          <el-button type="primary" plain @click="startGame(scope.row.id)">
+            Start
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -120,6 +127,9 @@ export default {
       const response = await api.get("games/user");
       this.games = response.data;
     },
+    startGame(gameId) {
+      this.$router.push({ name: "lobbyUser", params: { gameId } });
+    },
   },
 };
 </script>
@@ -139,6 +149,7 @@ li {
 }
 a,
 .link {
+  padding: 0;
   color: #5d73d8 !important;
 }
 a,

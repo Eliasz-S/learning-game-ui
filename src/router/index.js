@@ -62,7 +62,7 @@ const routes = [
     component: GameOwnerView,
     children: [
       {
-        path: "lobby",
+        path: "lobby/:gameId",
         name: "lobbyUser",
         component: LobbyComponentUser,
       },
