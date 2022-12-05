@@ -1,66 +1,25 @@
 <template>
   <LoadingUi v-if="loading" />
   <div v-else class="results">
-    <div class="question_bl">Какой-то вопрос?</div>
-    <button @click="handleNext" class="next_btn">Next</button>
-    <div class="result_info">
-      <div class="result_bls">
-        <div class="circle_result item_result">
-          <font-awesome-icon icon="fa-solid fa-circle" />
-          <!-- Кол-во ответов -->
-          2
-          <!-- Сделать проверку, если ответ верный -->
-          <font-awesome-icon icon="fa-solid fa-check" />
-          <!-- --- -->
-        </div>
-        <div class="square_result item_result">
-          <font-awesome-icon icon="fa-solid fa-square" />
-          1
-        </div>
-        <div class="rhombus_result item_result">
-          <font-awesome-icon icon="fa-solid fa-diamond" />
-          0
-        </div>
-        <div class="triangle_result item_result">
-          <font-awesome-icon icon="fa-solid fa-play" />
-          0
-        </div>
+    <!-- Если ответ игрока неверный
+
+    <div class="result">
+      <div class="result_text">Incorrect</div>
+      <div class="incorrect_icon">
+        <font-awesome-icon icon="fa-solid fa-face-sad-tear" />
       </div>
-      <div class="answers_bl row">
-        <div class="circle_answer item">
-          <span class="circle item_icon">
-            <font-awesome-icon icon="fa-solid fa-circle" />
-          </span>
-          <p class="item_text">Answer 1</p>
-        </div>
-        <div class="square_answer item">
-          <!-- Сделать проверку, если ответ НЕверный, то показать блок uncorrect_answer -->
-          <div class="uncorrect_answer"></div>
-          <!-- --- -->
-          <span class="square item_icon">
-            <font-awesome-icon icon="fa-solid fa-square" />
-          </span>
-          <p class="item_text">Answer 2</p>
-        </div>
-        <div class="rhombus_answer item">
-          <!-- Сделать проверку, если ответ НЕверный, то показать блок uncorrect_answer -->
-          <div class="uncorrect_answer"></div>
-          <!-- --- -->
-          <span class="rhombus item_icon">
-            <font-awesome-icon icon="fa-solid fa-diamond" />
-          </span>
-          <p class="item_text">Answer 3</p>
-        </div>
-        <div class="triangle_answer item">
-          <!-- Сделать проверку, если ответ НЕверный, то показать блок uncorrect_answer -->
-          <div class="uncorrect_answer"></div>
-          <!-- --- -->
-          <span class="triangle item_icon">
-            <font-awesome-icon icon="fa-solid fa-play" />
-          </span>
-          <p class="item_text">Answer 3</p>
-        </div>
+      <div class="points">100 Points</div>
+    </div>
+
+    -->
+    <!-- Если ответ игрока верный -->
+    <div class="result">
+      <div class="result_text">Correct</div>
+      <div class="correct_icon">
+        <font-awesome-icon icon="fa-solid fa-face-laugh-beam" />
       </div>
+      <div class="plus_points">+ 240</div>
+      <div class="points">340 Points</div>
     </div>
   </div>
 </template>
@@ -84,112 +43,32 @@ export default {
 </script>
 
 <style lang="css" scoped>
-.result_bls {
-  display: grid;
-  grid-template-columns: 120px 120px 120px 120px;
-  justify-content: space-around;
+.results {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
-.item_result {
-  padding: 5px 10px;
-}
-.circle_result {
-  background: #d7a307;
-}
-.square_result {
-  background: #5eb53f;
-}
-.rhombus_result {
-  background: #3f51b5;
-}
-.triangle_result {
-  background: #b92020;
-}
-.triangle_result > svg {
-  transform: rotate(-90deg);
-}
-.next_btn {
-  cursor: pointer;
+.result {
   position: absolute;
-  top: 20px;
-  right: 10%;
-  background: #3f51b5;
-  font-size: 20px;
-  padding: 0.3rem 1rem;
-  border-radius: 7px;
-  border: none;
-  color: #fff;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 34px;
   font-family: "Nunito", sans-serif;
+  line-height: 70px;
 }
-.result_info {
-  margin: 0 auto;
-  padding: 13%;
-}
-.question_bl {
-  width: 100%;
-  background: #fff;
-  color: #2c2c2c;
-  font-size: 28px;
-  font-weight: 600;
-  font-family: "Nunito", sans-serif;
-  padding: 20px 0;
-}
-.answers_bl {
-  width: 80%;
-  margin: 0 auto;
-  color: #222;
-  position: absolute;
-  bottom: 40px;
-  left: 10%;
-}
-.row {
-  display: grid;
-  grid-template-columns: 50% 50%;
+.incorrect_icon > svg {
+  color: white;
+  background: red;
+  width: 150px;
   padding: 10px;
-}
-.item {
-  padding: 2rem 1rem 2rem 4rem;
-  margin: 4px;
   border-radius: 7px;
-  position: relative;
-  box-shadow: 3px 3px 4px #222222bf;
-  color: #fff;
-  font-family: sans-serif;
 }
-.item_text {
-  padding: 20px 0;
-  text-align: center;
-  font-size: 16px;
-}
-.item_icon {
-  position: absolute;
-  left: 15px;
-  font-size: 35px;
-  top: 15px;
-  z-index: 100;
-}
-span.triangle.item_icon {
-  transform: rotate(-90deg);
-}
-.circle_answer {
-  background: #d7a307;
-}
-.square_answer {
-  background: #5eb53f;
-}
-.rhombus_answer {
-  background: #3f51b5;
-}
-.triangle_answer {
-  background: #b92020;
-}
-.uncorrect_answer {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+.correct_icon > svg {
+  color: white;
+  background: #8bc34a;
+  width: 150px;
+  padding: 10px;
   border-radius: 7px;
-  z-index: 200;
-  background: #ffffff6b;
 }
 </style>

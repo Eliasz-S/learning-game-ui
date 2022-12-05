@@ -16,8 +16,11 @@ import ReportsComponent from "@/components/Profile/ReportsComponent.vue";
 import HomeComponent from "@/components/Profile/HomeComponent.vue";
 import GameOwnerView from "@/views/GameOwnerView.vue";
 import OwnerQuestionComponent from "@/components/game/OwnerQuestionComponent.vue";
+import UserQuestionComponent from "@/components/game/UserQuestionComponent.vue";
 import LobbyComponent from "@/components/game/LobbyComponent.vue";
+import LobbyComponentUser from "@/components/game/LobbyComponentUser.vue";
 import OwnerQuestionResultComponentVue from "@/components/game/OwnerQuestionResultComponent.vue";
+import UserQuestionResultComponentVue from "@/components/game/UserQuestionResultComponent.vue";
 import AllResultsComponentVue from "@/components/game/AllResultsComponent.vue";
 
 const routes = [
@@ -51,6 +54,31 @@ const routes = [
     ],
   },
   // END Game pages (Only for owner)
+  // Game pages (Only for users)
+  {
+    path: "/game-user",
+    redirect: { name: "lobbyUser" },
+    name: "gameuser",
+    component: GameOwnerView,
+    children: [
+      {
+        path: "lobby",
+        name: "lobbyUser",
+        component: LobbyComponentUser,
+      },
+      {
+        path: "question",
+        name: "questionUser",
+        component: UserQuestionComponent,
+      },
+      {
+        path: "question-result",
+        name: "questionresultUser",
+        component: UserQuestionResultComponentVue,
+      },
+    ],
+  },
+  // END Game pages (Only for users)
   {
     path: "/game-result",
     name: "gameresult",

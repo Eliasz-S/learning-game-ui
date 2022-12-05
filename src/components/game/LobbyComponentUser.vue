@@ -7,10 +7,10 @@
 
 <script>
 import LoadingUi from "../UI/LoadingUI.vue";
-import ConnectedUsersComponent from "./../ConnectedUsersComponent";
+import ConnectedUsersComponent from "./../ConnectedUsersComponentForUser";
 
 export default {
-  name: "LobbyComponent",
+  name: "LobbyComponentUser",
   components: {
     LoadingUi,
     ConnectedUsersComponent,
