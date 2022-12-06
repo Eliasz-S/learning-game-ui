@@ -128,7 +128,7 @@ export default {
       this.games = response.data;
     },
     startGame(gameId) {
-      this.$router.push({ name: "lobbyUser", params: { gameId } });
+      this.$router.push(`/game-owner/lobby/${gameId}`);
     },
   },
 };

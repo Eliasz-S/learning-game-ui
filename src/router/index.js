@@ -18,7 +18,7 @@ import GameOwnerView from "@/views/GameOwnerView.vue";
 import OwnerQuestionComponent from "@/components/game/OwnerQuestionComponent.vue";
 import UserQuestionComponent from "@/components/game/UserQuestionComponent.vue";
 import LobbyComponent from "@/components/game/LobbyComponent.vue";
-import LobbyComponentUser from "@/components/game/LobbyComponentUser.vue";
+import LobbyGathering from "@/components/game/LobbyGathering.vue";
 import OwnerQuestionResultComponentVue from "@/components/game/OwnerQuestionResultComponent.vue";
 import UserQuestionResultComponentVue from "@/components/game/UserQuestionResultComponent.vue";
 import AllResultsComponentVue from "@/components/game/AllResultsComponent.vue";
@@ -40,6 +40,11 @@ const routes = [
         path: "lobby",
         name: "lobby",
         component: LobbyComponent,
+      },
+      {
+        path: "lobby/:gameId",
+        name: "lobby-gathering",
+        component: LobbyGathering,
       },
       {
         path: "question",
@@ -64,7 +69,7 @@ const routes = [
       {
         path: "lobby/:gameId",
         name: "lobbyUser",
-        component: LobbyComponentUser,
+        component: LobbyGathering,
       },
       {
         path: "question",

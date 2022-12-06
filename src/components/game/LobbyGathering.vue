@@ -1,18 +1,15 @@
 <template>
   <div>
-    <LoadingUi v-if="loading" />
-    <ConnectedUsersComponent v-else :users="users" :pin="pin" />
+    <ConnectedUsersComponent :users="users" :pin="pin" />
   </div>
 </template>
 
 <script>
-import LoadingUi from "../UI/LoadingUI.vue";
 import ConnectedUsersComponent from "./../ConnectedUsersComponentForUser";
 
 export default {
-  name: "LobbyComponentUser",
+  name: "LobbyGathering",
   components: {
-    LoadingUi,
     ConnectedUsersComponent,
   },
   props: {
