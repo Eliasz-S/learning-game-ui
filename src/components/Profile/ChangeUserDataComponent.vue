@@ -13,21 +13,21 @@
     <el-row>
       <el-col :span="12">
         <el-form-item label="Login">
-          <el-input disabled :value="userData.login" />
+          <el-input disabled :value="userData?.login" />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="12">
         <el-form-item label="Name">
-          <el-input v-model="name" :value="userData.name" />
+          <el-input v-model="name" :value="userData?.name" />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row>
       <el-col :span="12">
         <el-form-item label="Email">
-          <el-input disabled :value="userData.email" />
+          <el-input disabled :value="userData?.email" />
         </el-form-item>
       </el-col>
     </el-row>
