@@ -1,15 +1,15 @@
 <template>
-  <el-form-item>
-    <el-col>
-      <h2>Password recovery</h2>
-    </el-col>
-  </el-form-item>
-  <UserDataErrorComponent />
   <el-form
     label-position="top"
     label-width="small"
     @keydown.enter.prevent="handleSendLink"
   >
+    <el-form-item>
+      <el-col>
+        <h2>Password recovery</h2>
+      </el-col>
+    </el-form-item>
+    <UserDataErrorComponent />
     <el-form-item label="Please, enter your email address">
       <el-input v-model="form.email" label-position="top"></el-input>
     </el-form-item>
@@ -28,7 +28,7 @@
 <script>
 import UserDataErrorComponent from "@/components/Errors/UserDataErrorComponent.vue";
 import { ElForm, ElFormItem, ElButton, ElInput, ElCol } from "element-plus";
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 export default {
   name: "ForgotPasswordComponent",
   components: {
@@ -38,6 +38,9 @@ export default {
     ElButton,
     ElInput,
     ElCol,
+  },
+  created() {
+    this.setError(null);
   },
   data() {
     return {
@@ -49,6 +52,8 @@ export default {
   },
   methods: {
     ...mapActions("user", ["sendResetLink"]),
+    ...mapMutations("user", ["setError"]),
+
     handleSendLink() {
       this.loading = true;
       this.sendResetLink(this.form).then(() => {
