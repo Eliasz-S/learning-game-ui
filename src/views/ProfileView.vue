@@ -40,4 +40,8 @@ button#view2 {
   width: 20rem;
   transform: translate(-50%, -50%);
 }
+.profile {
+  background: #211b2a;
+  color: #fff;
+}
 </style>

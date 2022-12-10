@@ -42,3 +42,35 @@ body, * {
   color: #fff !important;
   font-size: 14px !important;
 }
+
+.el-calendar-table,
+.el-calendar-day {
+  padding: 0px !important;
+  height: 48px !important;
+}
+.el-calendar__title {
+  margin-top: 20px !important;
+  color: #673ab7 !important;
+  font-weight: 600 !important;
+  font-size: 20px !important;
+}
+.el-calendar__header {
+  flex-wrap: wrap !important;
+}
+.el-calendar__button-group {
+  margin-top: 20px !important;
+}
+.el-calendar-table td.is-today {
+  color: #ffffff !important;
+  background: #673ab7 !important;
+  border-radius: 7px !important;
+  transition: 0.3s ease;
+  border: 1px solid #673ab7;
+}
+td.is-today:hover {
+  color: #673ab7 !important;
+  background: #fff !important;
+}
+td.current {
+  line-height: 48px !important;
+}
