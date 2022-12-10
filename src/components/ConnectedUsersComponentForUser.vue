@@ -11,7 +11,7 @@
           <img src="../../public/img/maven-logo.png" alt="Maven" />
         </div>
         <div class="lobby_users_array">
-          <div v-if="users.length > 0" class="connected_users">
+          <div v-if="users.length" class="connected_users">
             <div v-for="user in users" :key="user.id" class="connected_user">
               <p>
                 <span>
@@ -29,7 +29,7 @@
       <div class="lobby_bottom">
         <div class="lobby_bottom_flex">
           <div class="users_count">
-            <font-awesome-icon icon="fa-solid fa-user" /> 7
+            <font-awesome-icon icon="fa-solid fa-user" /> {{ users.length }}
           </div>
           <button class="fullscreen">
             <font-awesome-icon icon="fa-solid fa-expand" />
