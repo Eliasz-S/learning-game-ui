@@ -1,36 +1,38 @@
 <template>
-  <el-dropdown :hide-on-click="true" trigger="click" size="large">
-    <span class="el-dropdown-link">
-      <font-awesome-icon icon="fa-solid fa-circle-user" />
-      &nbsp;
-      {{ userData.login }}
-      &nbsp;
-      <font-awesome-icon icon="fa-solid fa-chevron-down" />
-    </span>
-    <template #dropdown>
-      <el-dropdown-menu>
-        <el-dropdown-item>
-          <el-button
-            class="link"
-            native-type="submit"
-            @click="$router.push('/profile/settings')"
-            link
-          >
-            <font-awesome-icon icon="fa-solid fa-user" />
-            &nbsp; &nbsp; Profile settings
-          </el-button>
-        </el-dropdown-item>
-        <el-dropdown-item divided>
-          <el-form @click.prevent="signOut">
-            <el-button class="link" native-type="submit" link>
-              <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
-              &nbsp; Log out
+  <div>
+    <el-dropdown :hide-on-click="true" trigger="click" size="large">
+      <span class="el-dropdown-link">
+        <font-awesome-icon icon="fa-solid fa-circle-user" />
+        &nbsp;
+        {{ userData?.login }}
+        &nbsp;
+        <font-awesome-icon icon="fa-solid fa-chevron-down" />
+      </span>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item>
+            <el-button
+              class="link"
+              native-type="submit"
+              @click="$router.push('/profile/settings')"
+              link
+            >
+              <font-awesome-icon icon="fa-solid fa-user" />
+              &nbsp; &nbsp; Profile settings
             </el-button>
-          </el-form>
-        </el-dropdown-item>
-      </el-dropdown-menu>
-    </template>
-  </el-dropdown>
+          </el-dropdown-item>
+          <el-dropdown-item divided>
+            <el-form @submit.prevent="signOut">
+              <el-button class="link" native-type="submit" link>
+                <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
+                &nbsp; Log out
+              </el-button>
+            </el-form>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
+  </div>
 </template>
 
 <script>

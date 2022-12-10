@@ -154,7 +154,7 @@ const routes = [
         component: ForgotPasswordComponent,
       },
       {
-        path: "reset-password",
+        path: "reset-password/:token",
         name: "reset-password",
         component: ResetPasswordComponent,
       },

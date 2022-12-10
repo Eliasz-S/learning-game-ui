@@ -1,5 +1,8 @@
 <template>
   <div class="profile-top-menu">
+    <div class="profile-logo" @click="redirectToHomePage">
+      <h1>Maven</h1>
+    </div>
     <div class="profile-nav">
       <router-link to="/profile/home" class="top-nav-link">
         <font-awesome-icon icon="fa-solid fa-house-chimney" />
@@ -43,6 +46,9 @@ export default {
     redirectToCreator() {
       this.$router.push("/test-creator");
     },
+    redirectToHomePage() {
+      this.$router.push("/home");
+    },
   },
 };
 </script>
@@ -64,6 +70,16 @@ export default {
   align-items: center;
   position: absolute;
   right: 1rem;
+}
+.profile-logo {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 1rem;
+  cursor: pointer;
+}
+.profile-logo:hover {
+  color: blueviolet;
 }
 .user-menu {
   margin: 2.5rem;

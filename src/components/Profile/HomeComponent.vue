@@ -1,18 +1,20 @@
 <template>
-  <h1>Home</h1>
-  <el-button
-    v-if="!userData.name"
-    @click="dialogTableVisible = !dialogTableVisible"
-  >
-    Add name &nbsp; <font-awesome-icon icon="fa-solid fa-plus" />
-  </el-button>
-  <p v-else>{{ userData.name }}</p>
-  <SetNameDialog
-    v-model="dialogTableVisible"
-    @handle-submit="handleChangeName"
-    @handle-close="handleDialogClose"
-  />
-  <p>{{ userData.login }}</p>
+  <div>
+    <h1>Home</h1>
+    <el-button
+      v-if="!userData?.name"
+      @click="dialogTableVisible = !dialogTableVisible"
+    >
+      Add name &nbsp; <font-awesome-icon icon="fa-solid fa-plus" />
+    </el-button>
+    <p v-else>{{ userData?.name }}</p>
+    <SetNameDialog
+      v-model="dialogTableVisible"
+      @handle-submit="handleChangeName"
+      @handle-close="handleDialogClose"
+    />
+    <p>{{ userData?.login }}</p>
+  </div>
 </template>
 
 <script>
@@ -29,6 +31,7 @@ export default {
   data() {
     return {
       dialogTableVisible: false,
+      name: "",
     };
   },
   computed: {
