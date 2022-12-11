@@ -299,12 +299,25 @@ img.torus_img {
   position: absolute;
   left: 20px;
   top: 40px;
+  animation: squiggly_anim 4s infinite;
 }
 img.squiggly_img {
   height: 500px;
   position: absolute;
   right: 20px;
   top: -53px;
+  animation: squiggly_anim 4s infinite;
+}
+@keyframes squiggly_anim {
+  0% {
+    transform: skew(8deg, 0deg);
+  }
+  50% {
+    transform: skew(0deg, 0deg);
+  }
+  100% {
+    transform: skew(8deg, 0deg);
+  }
 }
 .section_title > h2:after {
   content: "";
@@ -513,6 +526,7 @@ button.btn_white:hover {
   );
   height: 490px;
   overflow: hidden;
+  position: relative;
 }
 .banner_flex {
   display: flex;
@@ -524,12 +538,32 @@ button.btn_white:hover {
   left: 20px;
   top: 103px;
   z-index: 900;
+  animation-name: bg_title;
+  animation-duration: 1s;
 }
 img.banner_img {
   height: 490px;
   position: absolute;
   right: 0px;
   top: 0px;
+  animation-name: bg_anim;
+  animation-duration: 1s;
+}
+@keyframes bg_title {
+  from {
+    transform: translate(-1000px, 0px);
+  }
+  to {
+    transform: translate(0, 0);
+  }
+}
+@keyframes bg_anim {
+  from {
+    transform: translate(803px, 500px);
+  }
+  to {
+    transform: translate(0, 0);
+  }
 }
 .banner_title > h2 {
   color: #fff;

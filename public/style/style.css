@@ -74,3 +74,19 @@ td.is-today:hover {
 td.current {
   line-height: 48px !important;
 }
+.el-step__title.is-wait {
+  color: #fff !important;
+}
+div#app {
+  overflow: hidden;
+}
+.el-calendar-table thead th {
+  font-size: 10px;
+}
+.el-calendar-table, .el-calendar-day {
+  font-size: 10px;
+  height: 20px !important;
+}
+td.current {
+  line-height: 20px !important;
+}

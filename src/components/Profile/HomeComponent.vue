@@ -42,7 +42,7 @@
         </div>
       </div>
       <div class="creater">
-        <div class="dashed">
+        <div class="dashed" @click="$router.push('/test-creator')">
           <h2>
             <font-awesome-icon icon="fa-solid fa-folder-plus" />
             Create the game
@@ -51,6 +51,52 @@
       </div>
       <div class="calendar">
         <el-calendar v-model="value" />
+      </div>
+      <div class="games">
+        <div class="games_title">
+          <h3>Last games</h3>
+          <div class="cards">
+            <div class="card" v-for="game in searchedGames" :key="game.id">
+              <div class="front">
+                <h4>{{ game.title }}</h4>
+                <div class="elements">
+                  <span class="circle">
+                    <font-awesome-icon icon="fa-solid fa-circle" />
+                  </span>
+                  <span class="square">
+                    <font-awesome-icon icon="fa-solid fa-square" />
+                  </span>
+                  <span class="triangle">
+                    <font-awesome-icon icon="fa-solid fa-play" />
+                  </span>
+                  <span class="rhombus">
+                    <font-awesome-icon icon="fa-solid fa-diamond" />
+                  </span>
+                </div>
+              </div>
+              <div class="back">
+                <div class="info">
+                  <h4>Plays: 0 times</h4>
+                  <h4>Questions: {{ game.questions }}</h4>
+                </div>
+                <div class="elements">
+                  <span class="circle">
+                    <font-awesome-icon icon="fa-solid fa-circle" />
+                  </span>
+                  <span class="square">
+                    <font-awesome-icon icon="fa-solid fa-square" />
+                  </span>
+                  <span class="triangle">
+                    <font-awesome-icon icon="fa-solid fa-play" />
+                  </span>
+                  <span class="rhombus">
+                    <font-awesome-icon icon="fa-solid fa-diamond" />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -61,6 +107,7 @@ import SetNameDialog from "@/components/Profile/SetNameDialogComponent.vue";
 import { mapActions, mapGetters } from "vuex";
 import { ElButton, ElCarousel, ElCarouselItem, ElCalendar } from "element-plus";
 import { ref } from "vue";
+import { api } from "@/utils/axios";
 
 export default {
   name: "HomeComponent",
@@ -73,6 +120,7 @@ export default {
   },
   data() {
     return {
+      games: [],
       value: ref(new Date()),
       dialogTableVisible: false,
       events: [
@@ -89,6 +137,12 @@ export default {
   },
   computed: {
     ...mapGetters("user", ["userData"]),
+    searchedGames() {
+      return this.games.slice(-3);
+    },
+  },
+  created() {
+    this.fetchGames();
   },
   methods: {
     ...mapActions("user", ["updateUser"]),
@@ -100,10 +154,95 @@ export default {
     handleDialogClose() {
       this.dialogTableVisible = false;
     },
+    async fetchGames() {
+      const response = await api.get("games/user");
+      this.games = response.data;
+    },
   },
 };
 </script>
 <style scoped>
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.card {
+  cursor: pointer;
+  width: 150px;
+  height: 260px;
+  margin: 20px;
+  transform-style: preserve-3d;
+  transition: 0.3s ease;
+  position: relative;
+}
+.elements > span {
+  position: absolute;
+}
+span.circle {
+  top: 10px;
+  left: 10px;
+  color: yellow;
+}
+span.square {
+  top: 10px;
+  right: 10px;
+  color: rgb(15, 247, 27);
+}
+span.rhombus {
+  bottom: 10px;
+  left: 10px;
+  color: #00c4ff;
+}
+span.triangle {
+  bottom: 10px;
+  right: 10px;
+  color: rgb(245, 52, 52);
+  transform: rotate(-90deg);
+}
+.front,
+.back {
+  vertical-align: middle;
+  display: grid;
+  align-items: center;
+  align-content: center;
+  width: 150px;
+  height: 260px;
+}
+.back {
+  text-align: center;
+  font-size: 13px;
+  border-radius: 7px;
+  box-shadow: 5px 4px 12px -4px #9976d7;
+  border: 2px solid #ffffff6b;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #fff;
+  color: #673ab7;
+}
+.front {
+  text-align: center;
+  font-size: 13px;
+  border-radius: 7px;
+  box-shadow: 5px 4px 12px -4px #9976d7;
+  border: 2px solid #ffffff6b;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #673ab7;
+  color: #fff;
+}
+.card:hover {
+  transform: rotateY(180deg);
+}
+.card:hover .back {
+  z-index: 5;
+  transform: rotateY(-180deg);
+}
+
 .change_btn {
   color: #fff;
   background: #673ab7;
@@ -129,7 +268,7 @@ p.profile_info_p {
 p.profile_info_t > span {
   display: block;
   font-weight: 700;
-  color: #673ab7;
+  color: #fff;
   font-size: 20px;
   margin-bottom: 20px;
 }
@@ -148,15 +287,14 @@ p.profile_info_t > span {
 }
 .user_info {
   padding: 1rem 2rem;
-  background: #fff;
   margin-right: 40px;
-  color: #242424;
-  border: 1px solid #fff3;
+  color: #ffffff;
   border-radius: 7px;
   min-height: 267px;
   font-size: 14px;
   text-align: left;
-  box-shadow: 5px 5px 10px #ffffff75, -5px -5px 10px #c7a3e72e;
+  box-shadow: 5px 5px 10px #ffffff0d, -5px -5px 10px #c7a3e71f;
+  min-width: -moz-fit-content;
   min-width: fit-content;
 }
 section.section {
@@ -168,20 +306,42 @@ section.section {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: auto;
-  grid-template-areas: "sidebar main main main" "creater creater creater calendar";
+  grid-template-areas: "sidebar main main main" "creater creater creater calendar" "games games games .";
   padding: 0 40px;
   grid-gap: 40px 0;
+}
+.games_title > h3 {
+  position: relative;
+  font-family: "Paytone One";
+  font-size: 25px;
+  margin-left: 60px;
+}
+.games_title > h3:after {
+  content: "";
+  background: #09f309;
+  height: 2px;
+  width: 50px;
+  position: absolute;
+  top: 20px;
+  left: -60px;
+  border-radius: 7px;
 }
 .calendar {
   grid-area: calendar;
   color: #222;
 }
+.games {
+  grid-area: games;
+  color: #fff;
+  text-align: left;
+  margin: 20px 40px;
+}
 .el-calendar {
   border-radius: 7px;
 }
-@media screen and (max-width: 970px) {
+@media screen and (max-width: 970px) and (min-width: 630px) {
   .grid {
-    grid-template-areas: "sidebar creater creater creater" "main main main main" "calendar calendar . .";
+    grid-template-areas: "sidebar creater creater creater" "main main main main" "calendar games games games";
   }
   .user_info {
     min-height: 200px;
@@ -189,6 +349,24 @@ section.section {
   .creater {
     margin-left: 80px !important;
     margin-right: 0 !important;
+  }
+}
+@media screen and (max-width: 810px) {
+  .grid {
+    grid-template-areas: "sidebar creater creater creater" "main main main main" "games games games games";
+  }
+  .calendar {
+    display: none;
+  }
+}
+@media screen and (max-width: 630px) {
+  .grid {
+    grid-template-areas: "sidebar sidebar sidebar sidebar" "creater creater creater creater" "main main main main" "games games games games";
+  }
+  .user_info,
+  .games,
+  .creater {
+    margin: 0 !important;
   }
 }
 .main {

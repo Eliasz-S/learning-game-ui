@@ -133,6 +133,7 @@ export default {
 .el-dropdown {
   color: #fff;
   font-size: 30px;
+  line-height: 50px;
 }
 .mobile-nav {
   width: 80%;
@@ -153,6 +154,15 @@ export default {
   .profile-nav,
   .nav-right {
     display: none !important;
+  }
+  .right_fl {
+    font-size: 12px;
+  }
+  .el-dropdown {
+    font-size: 24px !important;
+  }
+  .profile-top-menu {
+    padding: 0 20px !important;
   }
 }
 .create_btn {
