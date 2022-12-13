@@ -36,9 +36,7 @@
           &nbsp; Library
         </router-link>
       </div>
-      <!-- Сэндвич-меню для маленьких экранов -->
       <UserSandwichMenuComponent />
-      <!-- Конец сэндвич-меню -->
     </div>
     <div class="nav-right">
       <el-button class="create_btn" size="large" @click="redirectToCreator">

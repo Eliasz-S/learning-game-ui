@@ -179,7 +179,7 @@
       <div class="section_flex between">
         <img src="../../public/img/maven-logo.png" alt="logo" />
         <h2 class="desc_txt">
-          &copy;2022 This application was created for diplom project by
+          &copy;2022 This application was created for graduation project by
           GeekBrains University students.
         </h2>
       </div>
