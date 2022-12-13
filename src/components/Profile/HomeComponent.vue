@@ -13,14 +13,16 @@
             Add name &nbsp; <font-awesome-icon icon="fa-solid fa-plus" />
           </el-button>
           <p v-else class="profile_info_p">
-            <span>Name: </span>{{ userData?.name }}
+            <span class="profile-prop">Name: </span>{{ userData?.name }}
           </p>
           <SetNameDialog
             v-model="dialogTableVisible"
             @handle-submit="handleChangeName"
             @handle-close="handleDialogClose"
           />
-          <p class="profile_info_p"><span>Email: </span>{{ userData?.login }}</p>
+          <p class="profile_info_p">
+            <span class="profile-prop">Login: </span>{{ userData?.login }}
+          </p>
           <button @click="$router.push('/profile/settings')" class="change_btn">
             <font-awesome-icon icon="fa-solid fa-user-pen" />
             Edit profile
@@ -257,6 +259,12 @@ span.triangle {
 .change_btn:hover {
   color: #673ab7;
   background: #fff;
+}
+.profile_info_p {
+  margin: 1rem;
+}
+.profile-prop {
+  margin-bottom: 0.5rem;
 }
 p.profile_info_p > span {
   display: block;

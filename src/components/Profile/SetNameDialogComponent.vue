@@ -5,7 +5,7 @@
     width="40%"
   >
     <template #header>
-      <el-form>
+      <el-form class="set-name-dialog">
         <el-form-item>
           <h2>Edit your name</h2>
         </el-form-item>
@@ -92,3 +92,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.set-name-dialog {
+  color: black;
+}
+</style>

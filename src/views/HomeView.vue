@@ -77,16 +77,6 @@
       </div>
     </section>
     <section class="section carousel">
-      <div class="bg_img">
-        <img
-          class="squiggly_img"
-          src="../../public/img/squiggly.png"
-          alt="squiggly"
-        />
-      </div>
-      <div class="section_title">
-        <h2>How to create your own Maven?</h2>
-      </div>
       <el-carousel class="carousel" type="card" :interval="9000" height="60vh">
         <el-carousel-item>
           <h3>Welcome to our wonderful world!</h3>
@@ -101,6 +91,16 @@
           <h3>Our mission</h3>
         </el-carousel-item>
       </el-carousel>
+      <div class="bg_img">
+        <img
+          class="squiggly_img"
+          src="../../public/img/squiggly.png"
+          alt="squiggly"
+        />
+      </div>
+      <div class="section_title">
+        <h2>How to create your own Maven?</h2>
+      </div>
     </section>
     <section class="section steps">
       <div class="torus">
@@ -123,7 +123,7 @@
         />
       </div>
     </section>
-    <section class="section login">
+    <section v-if="!userData" class="section login">
       <div class="bg_img">
         <img class="entry_img" src="../../public/img/entry.png" alt="entry" />
       </div>
@@ -175,7 +175,7 @@
         </form>
       </div>
     </section>
-    <section class="section footer">
+    <section v-if="userData" class="section footer">
       <div class="section_flex between">
         <img src="../../public/img/maven-logo.png" alt="logo" />
         <h2 class="desc_txt">
@@ -195,6 +195,9 @@ import {
   ElButton,
   ElSteps,
   ElStep,
+  ElCol,
+  ElRow,
+  ElFormItem,
 } from "element-plus";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 
@@ -207,6 +210,9 @@ export default {
     ElButton,
     ElSteps,
     ElStep,
+    ElCol,
+    ElRow,
+    ElFormItem,
   },
   computed: {
     ...mapGetters("user", ["userData"]),

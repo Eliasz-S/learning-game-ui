@@ -1,9 +1,13 @@
 <template>
   <div class="profile-top-menu">
-    <div class="profile-logo" @click="redirectToHomePage">
-      <h1>Maven</h1>
-    </div>
     <div class="profile-nav">
+      <div class="profile-logo" @click="redirectToHomePage">
+        <img
+          class="logo-img"
+          src="../../../public/img/maven-logo.png"
+          alt="logo"
+        />
+      </div>
       <router-link to="/profile/home" class="top-nav-link">
         <font-awesome-icon icon="fa-solid fa-house-chimney" />
         &nbsp; Home
@@ -22,56 +26,6 @@
       </router-link>
     </div>
     <div class="mobile-nav">
-      <el-dropdown :hide-on-click="true" trigger="click" size="large">
-        <span class="el-dropdown-link">
-          <font-awesome-icon icon="fa-solid fa-bars" />
-        </span>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item>
-              <el-button
-                class="link"
-                native-type="submit"
-                @click="$router.push('/profile/reports')"
-                link
-              >
-                <font-awesome-icon icon="fa-solid fa-chart-column" />
-                &nbsp; &nbsp; Reports
-              </el-button>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <el-button
-                class="link"
-                native-type="submit"
-                @click="$router.push('/profile/groups')"
-                link
-              >
-                <font-awesome-icon icon="fa-solid fa-users-line" />
-                &nbsp; &nbsp; Groups
-              </el-button>
-            </el-dropdown-item>
-            <el-dropdown-item divided>
-              <el-button
-                class="link"
-                native-type="submit"
-                @click="$router.push('/profile/settings')"
-                link
-              >
-                <font-awesome-icon icon="fa-solid fa-user" />
-                &nbsp; &nbsp; Profile settings
-              </el-button>
-            </el-dropdown-item>
-            <el-dropdown-item>
-              <el-form @click.prevent="signOut">
-                <el-button class="link" native-type="submit" link>
-                  <font-awesome-icon icon="fa-solid fa-right-from-bracket" />
-                  &nbsp; Log out
-                </el-button>
-              </el-form>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
       <div class="right_fl">
         <router-link to="/profile/home" class="top-nav-link">
           <font-awesome-icon icon="fa-solid fa-house-chimney" />
@@ -82,6 +36,9 @@
           &nbsp; Library
         </router-link>
       </div>
+      <!-- Сэндвич-меню для маленьких экранов -->
+      <UserSandwichMenuComponent />
+      <!-- Конец сэндвич-меню -->
     </div>
     <div class="nav-right">
       <el-button class="create_btn" size="large" @click="redirectToCreator">
@@ -96,23 +53,15 @@
 
 <script>
 import UserMenuComponent from "@/components/Profile/UserMenuComponent.vue";
-import {
-  ElButton,
-  ElForm,
-  ElDropdown,
-  ElDropdownItem,
-  ElDropdownMenu,
-} from "element-plus";
+import UserSandwichMenuComponent from "@/components/Profile/UserSandwichMenuComponent.vue";
+import { ElButton } from "element-plus";
 
 export default {
   name: "ProfileTopMenuComponent",
   components: {
     UserMenuComponent,
+    UserSandwichMenuComponent,
     ElButton,
-    ElForm,
-    ElDropdown,
-    ElDropdownItem,
-    ElDropdownMenu,
   },
   methods: {
     redirectToCreator() {
@@ -142,27 +91,26 @@ export default {
   line-height: 50px;
 }
 .mobile-nav {
-  width: 80%;
-  margin: 10px auto;
+  width: 100%;
   justify-content: space-between !important;
 }
-@media screen and (max-width: 890px) {
+@media screen and (max-width: 970px) {
   .create_btn {
     display: none !important;
   }
 }
-@media screen and (min-width: 780px) {
+@media screen and (min-width: 841px) {
   .mobile-nav {
     display: none !important;
   }
 }
-@media screen and (max-width: 779px) {
+@media screen and (max-width: 840px) {
   .profile-nav,
   .nav-right {
     display: none !important;
   }
   .right_fl {
-    font-size: 12px;
+    font-size: 14px;
   }
   .el-dropdown {
     font-size: 24px !important;
@@ -199,11 +147,13 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 0 40px;
+  height: 3.5rem;
 }
 .profile-nav,
 .mobile-nav {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
 .nav-right {
   display: flex;
@@ -214,9 +164,12 @@ export default {
 .profile-logo {
   display: flex;
   align-items: center;
-  position: absolute;
-  left: 1rem;
   cursor: pointer;
+  margin-right: 4rem;
+  height: inherit;
+}
+.logo-img {
+  height: 3rem;
 }
 .profile-logo:hover {
   color: blueviolet;

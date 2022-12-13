@@ -1,6 +1,11 @@
 <template>
   <el-header class="auth-header">
-    <h1 class="auth-logo" @click="redirectToHome">Maven</h1>
+    <img
+      src="../../public/img/maven-logo.png"
+      alt="logo"
+      class="auth-logo"
+      @click="redirectToHome"
+    />
   </el-header>
   <div class="auth">
     <router-view />
@@ -24,12 +29,14 @@ export default {
 
 <style scoped>
 .auth-logo {
-  color: blueviolet;
-  font-style: italic;
   cursor: pointer;
-}
-.auth-logo:hover {
-  opacity: 70%;
+  height: 3rem;
+  background: linear-gradient(
+    109.6deg,
+    rgb(157, 75, 199) 11.2%,
+    rgb(119, 81, 204) 83.1%
+  );
+  border-radius: 10% 10%;
 }
 .auth-header {
   box-shadow: rgb(0 0 0 / 10%) 0px 2px 4px 0px;
