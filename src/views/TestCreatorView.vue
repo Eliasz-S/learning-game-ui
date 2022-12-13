@@ -1,13 +1,17 @@
 <template>
   <div class="test-creator">
     <el-header class="test-creator-header">
-      <el-row justify="space-between">
+      <el-row justify="space-between" class="test-header-section">
         <el-col :span="8">
           <el-row justify="space-between">
             <el-col :span="4">
-              <h1>Maven</h1>
+              <img
+                class="logo-img"
+                src="../../public/img/maven-logo.png"
+                alt="logo"
+              />
             </el-col>
-            <el-col :span="16">
+            <el-col :span="16" class="game-details-dialog">
               <el-button
                 size="large"
                 style="width: 80%"
@@ -276,5 +280,20 @@ export default {
 }
 .question-link:hover {
   opacity: 80%;
+}
+.logo-img {
+  height: 3rem;
+  background: linear-gradient(
+    109.6deg,
+    rgb(157, 75, 199) 11.2%,
+    rgb(119, 81, 204) 83.1%
+  );
+}
+.test-header-section {
+  align-items: center;
+}
+.game-details-dialog {
+  display: flex;
+  align-items: center;
 }
 </style>
