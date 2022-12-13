@@ -695,7 +695,6 @@ button.btn_up:hover {
   width: 20%;
   align-items: center;
 }
-
 .login-box {
   width: 400px;
   padding: 40px;

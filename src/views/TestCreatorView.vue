@@ -60,11 +60,12 @@
             </el-button>
           </el-row>
         </el-col>
-        <el-button @click="addItem">Add new question</el-button>
+        <el-button @click="addNewQuestion">Add new question</el-button>
       </el-aside>
       <el-main>
         <GameDataDialogComponent
           v-model="dialogTableVisible"
+          :game-data="game"
           @handle-submit="handleGameData"
           @handle-close="handleDialogClose"
         />
@@ -138,23 +139,26 @@ export default {
     ElSelect,
     ElOption,
   },
-  data() {
-    return {
-      dialogTableVisible: false,
-      currentQuestionId: 1,
-      game: {
-        title: "",
-        description: "",
-      },
-      timeLimit: "20",
-      questionType: "Quiz", // только для v-model этого компонента, на бэк пока хардкодом
-    };
+  created() {
+    this.setInitialQuestionData();
   },
   beforeUnmount() {
     this.resetState();
   },
+  data() {
+    return {
+      dialogTableVisible: false,
+      currentQuestionId: null,
+      game: {
+        title: "",
+        description: "",
+      },
+      timeLimit: null,
+      questionType: "Quiz", // только для v-model этого компонента, на бэк пока хардкодом
+    };
+  },
   computed: {
-    ...mapGetters("creator", ["questions"]),
+    ...mapGetters("creator", ["questions", "error"]),
   },
   methods: {
     ...mapActions("creator", [
@@ -171,7 +175,12 @@ export default {
         game: this.game,
         questions: this.questions,
       }).then(() => {
-        this.game = {};
+        if (!this.error) {
+          this.game = { title: "", description: "" };
+          this.resetState().then(() => {
+            this.setInitialQuestionData();
+          });
+        }
       });
     },
     handleQuestionData(data) {
@@ -188,7 +197,7 @@ export default {
         timeLimit: this.timeLimit,
       });
     },
-    addItem() {
+    addNewQuestion() {
       this.addQuestion({
         questionId: (this.currentQuestionId += Date.now()),
         timeLimit: this.timeLimit,
@@ -223,6 +232,13 @@ export default {
       }
 
       this.deleteQuestion(question);
+    },
+    setInitialQuestionData() {
+      const initialQuestionId =
+        this.$store.state.creator.questions[0].questionId;
+      const initialTimeLimit = this.$store.state.creator.questions[0].timeLimit;
+      this.currentQuestionId = initialQuestionId;
+      this.timeLimit = initialTimeLimit;
     },
   },
 };

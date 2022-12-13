@@ -7,20 +7,20 @@
             <span>Profile</span>
           </p>
           <el-button
-            v-if="!userData.name"
+            v-if="!userData?.name"
             @click="dialogTableVisible = !dialogTableVisible"
           >
             Add name &nbsp; <font-awesome-icon icon="fa-solid fa-plus" />
           </el-button>
           <p v-else class="profile_info_p">
-            <span>Name: </span>{{ userData.name }}
+            <span>Name: </span>{{ userData?.name }}
           </p>
           <SetNameDialog
             v-model="dialogTableVisible"
             @handle-submit="handleChangeName"
             @handle-close="handleDialogClose"
           />
-          <p class="profile_info_p"><span>Email: </span>{{ userData.login }}</p>
+          <p class="profile_info_p"><span>Email: </span>{{ userData?.login }}</p>
           <button @click="$router.push('/profile/settings')" class="change_btn">
             <font-awesome-icon icon="fa-solid fa-user-pen" />
             Edit profile
@@ -133,6 +133,7 @@ export default {
           image: require("../../../public/img/education2.png"),
         },
       ],
+      name: "",
     };
   },
   computed: {

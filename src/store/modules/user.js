@@ -3,6 +3,14 @@ import { RESPONSE_STATUS_CODES } from "@/utils/constants";
 import router from "@/router/index";
 import { ElMessage } from "element-plus";
 
+const messageSuccess = (message) => {
+  ElMessage({
+    type: "success",
+    message: message,
+    duration: 6000,
+  });
+};
+
 export default {
   namespaced: true,
   state() {
@@ -101,6 +109,33 @@ export default {
               type: "success",
               message: "Your password has been changed!",
             });
+          }
+        })
+        .catch((error) => {
+          commit("setError", error.response.data.errors);
+        });
+    },
+    async sendResetLink({ commit }, userEmail) {
+      commit("setError", null);
+      await api
+        .post("forgot-password", userEmail)
+        .then((response) => {
+          if (response.statusText === "OK") {
+            messageSuccess(response.data.message);
+          }
+        })
+        .catch((error) => {
+          commit("setError", error.response.data.errors);
+        });
+    },
+    async resetPassword({ commit }, newPasswordData) {
+      commit("setError", null);
+      await api
+        .post("/reset-password", newPasswordData)
+        .then((response) => {
+          if (response.statusText === "OK") {
+            router.push("/auth/login");
+            messageSuccess(response.data.message);
           }
         })
         .catch((error) => {
