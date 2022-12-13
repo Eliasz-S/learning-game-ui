@@ -68,8 +68,9 @@ export default {
 
 <style scoped>
 .el-dropdown-link {
+  font-size: 16px !important;
   cursor: pointer;
-  color: var(--el-color-primary);
+  color: #fff !important;
   display: flex;
   align-items: center;
   color: initial;

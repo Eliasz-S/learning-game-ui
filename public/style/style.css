@@ -1,7 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Paytone+One&display=swap");
 body, * {
     margin: 0;
     padding: 0;
 }
 .game {
     overflow: hidden;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  background: #211b2a;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(109.6deg, rgb(157, 75, 199) 11.2%, rgb(119, 81, 204) 83.1%);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(109.6deg, rgb(157, 75, 199) 11.2%, rgb(119, 81, 204) 83.1%);
+}
+
+.el-step.is-vertical .el-step__line {
+  background: linear-gradient(
+    109.6deg,
+    rgb(157, 75, 199) 11.2%,
+    rgb(119, 81, 204) 83.1%
+  ) !important;
+}
+.el-step__icon-inner {
+  color: #333 !important;
+}
+.is-process {
+  color: #fff !important;
+  font-size: 14px !important;
+}
+
+.el-calendar-table,
+.el-calendar-day {
+  padding: 0px !important;
+  height: 48px !important;
+}
+.el-calendar__title {
+  margin-top: 20px !important;
+  color: #673ab7 !important;
+  font-weight: 600 !important;
+  font-size: 20px !important;
+}
+.el-calendar__header {
+  flex-wrap: wrap !important;
+}
+.el-calendar__button-group {
+  margin-top: 20px !important;
+}
+.el-calendar-table td.is-today {
+  color: #ffffff !important;
+  background: #673ab7 !important;
+  border-radius: 7px !important;
+  transition: 0.3s ease;
+  border: 1px solid #673ab7;
+}
+td.is-today:hover {
+  color: #673ab7 !important;
+  background: #fff !important;
+}
+td.current {
+  line-height: 48px !important;
+}
+.el-step__title.is-wait {
+  color: #fff !important;
+}
+div#app {
+  overflow: hidden;
+}
+.el-calendar-table thead th {
+  font-size: 10px;
+}
+.el-calendar-table, .el-calendar-day {
+  font-size: 10px;
+  height: 20px !important;
+}
+td.current {
+  line-height: 20px !important;
 }
