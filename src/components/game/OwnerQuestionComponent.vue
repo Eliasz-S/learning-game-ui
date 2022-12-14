@@ -13,7 +13,7 @@
       </div>
       <div v-else class="question_answer_component">
         <div class="question_bl">{{ question.text }}</div>
-        <button @click="handleNext" class="next_btn">Next</button>
+        <!-- <button @click="handleNext" class="next_btn">Next</button> -->
         <div class="helpful_info">
           <div class="helpful_info__row">
             <div class="timer">{{ gameTimer }}</div>
@@ -59,16 +59,20 @@ export default {
       type: Object,
       required: true,
     },
+    lobbyChannel: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
-      gameTimerStart: false,
       currentTime: 5,
+      counter: false,
+      gameTimerStart: false,
+      gameTimer: this.question.timeLimit,
+      loadingStartBlock: true,
       timer: null,
       questionShow: false,
-      loadingStartBlock: true,
-      counter: false,
-      gameTimer: this.question.timeLimit,
     };
   },
 
@@ -80,7 +84,7 @@ export default {
 
   methods: {
     handleNext() {
-      this.$router.push({ name: "questionresult" });
+      this.$router.push({ name: "questionResult" });
     },
     startTimer() {
       this.timer = setInterval(() => {
@@ -119,7 +123,7 @@ export default {
           this.gameTimer--;
         }, 1000);
       } else {
-        this.$router.push({ name: "questionresult" });
+        this.$router.push({ name: "questionResult" });
       }
     },
     currentTime(time) {

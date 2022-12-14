@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ConnectedUsersComponent :users="users" :pin="pin" />
+    <ConnectedUsersComponent :users="users" :pin="pin" @next="$emit('next')" />
   </div>
 </template>
 
@@ -14,7 +14,14 @@ export default {
   },
   props: {
     users: Array,
-    pin: String,
+    pin: {
+      type: Number,
+      required: true,
+    },
+    lobbyId: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
