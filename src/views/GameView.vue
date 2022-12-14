@@ -17,7 +17,7 @@
         <img src="img/maven-logo.png" />
       </div>
       <p>**Game (player side) - game pin. nickname. Score+**</p>
-      <form class="input_pin" action="#">
+      <form v-if="!lobbyId" class="input_pin" action="#" @submit.prevent>
         <input
           @keydown.enter="handlePin"
           v-model="pin"
@@ -31,6 +31,20 @@
           Enter
         </button>
       </form>
+      <form v-else class="input_pin" action="#" @submit.prevent>
+        <input
+          @keydown.enter="joinGame"
+          v-model="nickname"
+          class="input_pin_child"
+          type="text"
+          id="nickname"
+          name="nickname"
+          placeholder="Your Nickname"
+        />
+        <button @click="joinGame" class="input_pin_child" type="submit">
+          Join game
+        </button>
+      </form>
     </div>
     <div class="screen_footer">
       <p class="screen_footer__info">
@@ -42,17 +56,51 @@
 </template>
 
 <script>
+import { api } from "@/utils/axios";
+
 export default {
   name: "GameView",
   data() {
     return {
+      lobbyId: null,
+      nickname: "",
       pin: "",
     };
   },
   methods: {
     handlePin() {
-      alert(`You entered the game pin ${this.pin}`);
-      this.pin = "";
+      if (!this.pin) return;
+      api
+        .post("lobby/check-pincode", { pincode: this.pin })
+        .then((response) => {
+          if (response.status === 200) {
+            this.lobbyId = response.data.lobbyId;
+          }
+        });
+    },
+    joinGame() {
+      if (!this.nickname) return;
+      api
+        .post("lobby/join", {
+          lobbyId: this.lobbyId,
+          nickname: this.nickname,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            sessionStorage.setItem(
+              "userLobby",
+              JSON.stringify({ lobbyId: this.lobbyId, nickname: this.nickname })
+            );
+            this.$router.push({
+              name: "lobbyUser",
+            });
+          }
+        })
+        .catch((e) => {
+          if (e.response.status === 409) {
+            alert(e.response.data.message);
+          }
+        });
     },
   },
 };
