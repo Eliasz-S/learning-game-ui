@@ -47,16 +47,18 @@
 </template>
 
 <script>
-import router from "@/router";
 export default {
   name: "ConnectedUsersComponent",
   props: {
     users: Array,
-    pin: String,
+    pin: {
+      type: Number,
+      required: true,
+    },
   },
   methods: {
     start() {
-      router.push({ name: "question" });
+      this.$emit("next");
     },
   },
 };
