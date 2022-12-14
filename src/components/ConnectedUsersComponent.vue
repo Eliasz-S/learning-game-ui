@@ -11,7 +11,7 @@
           <div class="hidden_bl"></div>
           <img src="../../public/img/maven-logo.png" alt="Maven" />
           <div class="start_game">
-            <button @click="handlecli">
+            <button @click="start">
               <font-awesome-icon icon="fa-solid fa-gamepad" />
               Start
             </button>
@@ -22,7 +22,6 @@
             <div v-for="user in users" :key="user.id" class="connected_user">
               <p>
                 <span>
-                  {{ user.id }}
                   <font-awesome-icon icon="fa-solid fa-user" />
                   :
                 </span>
@@ -56,8 +55,8 @@ export default {
     pin: String,
   },
   methods: {
-    handlecli() {
-      router.push({ path: "question" });
+    start() {
+      router.push({ name: "question" });
     },
   },
 };
