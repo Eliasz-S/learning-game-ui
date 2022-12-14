@@ -1,11 +1,11 @@
 <template>
   <div>
-    <ConnectedUsersComponent users="users" :pin="pin" />
+    <ConnectedUsersComponent :nickname="nickname" :pin="pin" />
   </div>
 </template>
 
 <script>
-import ConnectedUsersComponent from "./../ConnectedUsersComponent";
+import ConnectedUsersComponent from "./../ConnectedUsersComponentForUser.vue";
 
 export default {
   name: "LobbyComponent",
@@ -13,7 +13,10 @@ export default {
     ConnectedUsersComponent,
   },
   props: {
-    users: Array,
+    nickname: {
+      type: String,
+      required: true,
+    },
     pin: String,
   },
 };

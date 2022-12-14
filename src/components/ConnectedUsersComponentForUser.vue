@@ -1,40 +1,17 @@
 <template>
   <div class="lobby">
-    <section class="information">
-      <div class="lobby_header">
-        <p>Join at maven with Game PIN: {{ pin }}</p>
-      </div>
-    </section>
     <section class="lobby_main">
-      <div class="lobby_users">
-        <div class="lobby_users__logo">
-          <img src="../../public/img/maven-logo.png" alt="Maven" />
-        </div>
-        <div class="lobby_users_array">
-          <div v-if="users.length" class="connected_users">
-            <div v-for="user in users" :key="user.id" class="connected_user">
-              <p>
-                <span>
-                  {{ user.id }}
-                  <font-awesome-icon icon="fa-solid fa-user" />
-                  :
-                </span>
-                &nbsp; {{ user.nickname }}
-              </p>
-            </div>
-          </div>
-          <div v-else class="no-users">Waiting for players…</div>
-        </div>
+      <div class="lobby_users__logo">
+        <img src="../../public/img/maven-logo.png" alt="Maven" />
       </div>
-      <div class="lobby_bottom">
-        <div class="lobby_bottom_flex">
-          <div class="users_count">
-            <font-awesome-icon icon="fa-solid fa-user" /> {{ users.length }}
-          </div>
-          <button class="fullscreen">
-            <font-awesome-icon icon="fa-solid fa-expand" />
-          </button>
+      <div class="connected_user__container">
+        <div class="connected_user">
+          <span>
+            <font-awesome-icon icon="fa-solid fa-user" />
+          </span>
+          &nbsp; {{ nickname }}
         </div>
+        <div class="no-users">Waiting for start game...</div>
       </div>
     </section>
   </div>
@@ -44,10 +21,15 @@
 import router from "@/router";
 export default {
   name: "ConnectedUsersComponent",
+
   props: {
-    users: Array,
+    nickname: {
+      type: String,
+      required: true,
+    },
     pin: String,
   },
+
   methods: {
     handlecli() {
       router.push({ path: "question" });
@@ -132,21 +114,15 @@ button.fullscreen {
   border: none;
   font-size: 23px;
 }
-.connected_users {
-  display: flex;
-  width: 80%;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-content: space-around;
-  margin: 0 auto;
-  padding-top: 20px;
+.connected_user__container {
+  margin: 30px auto;
 }
 .connected_user {
-  min-width: 137px;
-  background: #22222259;
-  margin: 10px 15px;
+  width: 150px;
+  margin: 0 auto;
   padding: 10px 10px;
   border-radius: 7px;
+  background: #22222259;
   animation: connected-user 2.5s infinite;
 }
 @keyframes connected-user {
