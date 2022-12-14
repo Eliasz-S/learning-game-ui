@@ -8,11 +8,11 @@
       <p class="timer_counter">{{ currentTime }}</p>
     </div>
     <div v-else class="game_bl">
-      <div v-if="questionShow === true" class="question_bl question_bl__anim">
-        {{ currentQuestion }}
+      <div v-if="questionShow" class="question_bl question_bl__anim">
+        {{ question.text }}
       </div>
       <div v-else class="question_answer_component">
-        <div class="question_bl">{{ currentQuestion }}</div>
+        <div class="question_bl">{{ question.text }}</div>
         <button @click="handleNext" class="next_btn">Next</button>
         <div class="helpful_info">
           <div class="helpful_info__row">
@@ -25,25 +25,25 @@
             <span class="circle item_icon">
               <font-awesome-icon icon="fa-solid fa-circle" />
             </span>
-            <p class="item_text">Answer 1</p>
+            <p class="item_text">{{ answers[0].text }}</p>
           </div>
           <div class="square_answer item">
             <span class="square item_icon">
               <font-awesome-icon icon="fa-solid fa-square" />
             </span>
-            <p class="item_text">Answer 2</p>
+            <p class="item_text">{{ answers[1].text }}</p>
           </div>
           <div class="rhombus_answer item">
             <span class="rhombus item_icon">
               <font-awesome-icon icon="fa-solid fa-diamond" />
             </span>
-            <p class="item_text">Answer 3</p>
+            <p class="item_text">{{ answers[2].text }}</p>
           </div>
           <div class="triangle_answer item">
             <span class="triangle item_icon">
               <font-awesome-icon icon="fa-solid fa-play" />
             </span>
-            <p class="item_text">Answer 3</p>
+            <p class="item_text">{{ answers[3].text }}</p>
           </div>
         </div>
       </div>
@@ -55,10 +55,10 @@
 export default {
   name: "OwnerQuestionComponent",
   props: {
-    users: Array,
-    pin: String,
-    gameQuestions: Array,
-    gameAnswers: Array,
+    question: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {
@@ -68,10 +68,16 @@ export default {
       questionShow: false,
       loadingStartBlock: true,
       counter: false,
-      currentQuestion: "Какой-то вопрос 2?",
-      gameTimer: 30,
+      gameTimer: this.question.timeLimit,
     };
   },
+
+  computed: {
+    answers() {
+      return this.question.answers;
+    },
+  },
+
   methods: {
     handleNext() {
       this.$router.push({ name: "questionresult" });

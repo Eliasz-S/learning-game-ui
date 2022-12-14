@@ -19,8 +19,7 @@
           v-else
           :users="users"
           :pin="lobby.pincode.toString()"
-          :gameAnswers="gameAnswers"
-          :gameQuestions="gameQuestions"
+          :question="currentQuestion"
         />
       </div>
     </div>
@@ -39,68 +38,28 @@ export default {
   },
   data() {
     return {
-      gameQuestions: [
-        {
-          id: "1",
-          text: "First question",
-          question_type_id: "1",
-          time_limit: "30",
-        },
-        {
-          id: "1",
-          text: "Second question",
-          question_type_id: "1",
-          time_limit: "10",
-        },
-      ],
-      gameAnswers: [
-        {
-          id: "1",
-          question_id: "1",
-          text: "Some answer 1",
-          is_correct: "1",
-        },
-        {
-          id: "2",
-          question_id: "1",
-          text: "Some answer 2",
-          is_correct: "0",
-        },
-        {
-          id: "3",
-          question_id: "1",
-          text: "Some answer 3",
-          is_correct: "0",
-        },
-        {
-          id: "4",
-          question_id: "1",
-          text: "Some answer 4",
-          is_correct: "0",
-        },
-        {
-          id: "5",
-          question_id: "2",
-          text: "Some answer 1",
-          is_correct: "0",
-        },
-        {
-          id: "6",
-          question_id: "2",
-          text: "Some answer 2",
-          is_correct: "1",
-        },
-      ],
+      currentQuestionNumber: 1,
       loading: true,
       lobby: {},
       lobbyChannel: null,
       pin: "",
+      questions: [],
       users: [],
     };
   },
 
+  computed: {
+    gameId() {
+      return this.$route.params.gameId;
+    },
+    currentQuestion() {
+      return this.questions[this.currentQuestionNumber - 1];
+    },
+  },
+
   created() {
     this.createLobby();
+    this.fetchQuestions();
   },
 
   beforeUnmount() {
@@ -111,7 +70,7 @@ export default {
     async createLobby() {
       try {
         this.loading = true;
-        const response = await api.post(`lobby/${this.$route.params.gameId}`);
+        const response = await api.post(`lobby/${this.gameId}`);
         if (response.status === 201) {
           this.lobby = response.data;
           this.subscribeToChannel();
@@ -134,6 +93,19 @@ export default {
         })
         .error((error) => {
           console.error(error);
+        });
+    },
+    fetchQuestions() {
+      api
+        .get(`games/${this.gameId}`)
+        .then((response) => {
+          if (response.data) {
+            this.questions = response.data.questions;
+          }
+        })
+        .catch((e) => {
+          console.error("Не удалось получить игру с вопросами");
+          console.error(e.message);
         });
     },
   },
