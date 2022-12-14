@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import ConnectedUsersComponent from "./../ConnectedUsersComponentForUser";
+import ConnectedUsersComponent from "./../ConnectedUsersComponent.vue";
 
 export default {
   name: "LobbyGathering",
