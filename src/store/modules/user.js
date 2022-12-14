@@ -59,6 +59,9 @@ export default {
     },
     async fetchUser({ commit }) {
       try {
+        const authResponse = await api.get("check-auth");
+        if (!(authResponse.data && authResponse.data.isAuth)) return;
+
         const response = await api.get("user");
         if (response.data) {
           commit("setUser", response.data);
