@@ -29,6 +29,7 @@
 
 <script>
 import { api } from "@/utils/axios";
+import Echo from "@/utils/echo";
 import LoadingUi from "@/components/UI/LoadingUI.vue";
 
 export default {
@@ -38,10 +39,6 @@ export default {
   },
   data() {
     return {
-      loading: true,
-      lobby: {},
-      users: [],
-      pin: "",
       gameQuestions: [
         {
           id: "1",
@@ -94,11 +91,20 @@ export default {
           is_correct: "1",
         },
       ],
+      loading: true,
+      lobby: {},
+      lobbyChannel: null,
+      pin: "",
+      users: [],
     };
   },
 
   created() {
     this.createLobby();
+  },
+
+  beforeUnmount() {
+    api.post(`lobby/close/${this.lobby.id}`);
   },
 
   methods: {
@@ -108,10 +114,27 @@ export default {
         const response = await api.post(`lobby/${this.$route.params.gameId}`);
         if (response.status === 201) {
           this.lobby = response.data;
+          this.subscribeToChannel();
         }
+      } catch (e) {
+        console.log("error", e);
       } finally {
         this.loading = false;
       }
+    },
+    subscribeToChannel() {
+      this.lobbyChannel = Echo.join(`lobby.${this.lobby.id}`);
+
+      this.lobbyChannel
+        .joining((user) => {
+          console.log("joining", user);
+        })
+        .leaving((user) => {
+          console.log("leaving", user);
+        })
+        .error((error) => {
+          console.error(error);
+        });
     },
   },
 };
