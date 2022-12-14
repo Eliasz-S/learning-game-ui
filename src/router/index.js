@@ -15,6 +15,7 @@ import LibraryComponent from "@/components/Profile/LibraryComponent.vue";
 import ReportsComponent from "@/components/Profile/ReportsComponent.vue";
 import HomeComponent from "@/components/Profile/HomeComponent.vue";
 import GameOwnerView from "@/views/GameOwnerView.vue";
+import GameUserView from "@/views/GameUserView.vue";
 import OwnerQuestionComponent from "@/components/game/OwnerQuestionComponent.vue";
 import UserQuestionComponent from "@/components/game/UserQuestionComponent.vue";
 import LobbyComponent from "@/components/game/LobbyComponent.vue";
@@ -36,11 +37,6 @@ const routes = [
     name: "gameowner",
     component: GameOwnerView,
     children: [
-      {
-        path: "lobby",
-        name: "lobby",
-        component: LobbyComponent,
-      },
       {
         path: "lobby/:gameId",
         name: "lobby-gathering",
@@ -64,12 +60,12 @@ const routes = [
     path: "/game-user",
     redirect: { name: "lobbyUser" },
     name: "gameuser",
-    component: GameOwnerView,
+    component: GameUserView,
     children: [
       {
-        path: "lobby/:gameId",
+        path: "lobby",
         name: "lobbyUser",
-        component: LobbyGathering,
+        component: LobbyComponent,
       },
       {
         path: "question",
