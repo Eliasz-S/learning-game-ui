@@ -127,10 +127,10 @@ export default {
 
       this.lobbyChannel
         .joining((user) => {
-          console.log("joining", user);
+          this.users.push(user);
         })
         .leaving((user) => {
-          console.log("leaving", user);
+          this.users = this.users.filter((u) => u.id !== user.id);
         })
         .error((error) => {
           console.error(error);
