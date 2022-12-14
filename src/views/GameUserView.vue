@@ -29,6 +29,7 @@
 <script>
 import Echo from "@/utils/echo";
 import LoadingUi from "@/components/UI/LoadingUI.vue";
+import { api } from "@/utils/axios";
 
 export default {
   name: "GameUserView",
@@ -65,8 +66,11 @@ export default {
     },
     subscribeToChannel() {
       this.lobbyChannel = Echo.join(`lobby.${this.lobbyId}`);
-      this.lobbyChannel.here((users) => {
-        console.log("users", users);
+      this.lobbyChannel.leaving((user) => {
+        if (user.isHost) {
+          api.post("broadcasting/logout");
+          this.$router.push("/");
+        }
       });
     },
   },
