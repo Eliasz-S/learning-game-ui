@@ -2,12 +2,14 @@
   <LoadingUi v-if="loading" />
   <div v-else class="results">
     <div class="question_bl">{{ question.text }}</div>
-    <button @click="handleNext" class="next_btn">Next</button>
+    <button v-if="!isLastQuestion" @click="handleNext" class="next_btn">
+      Next
+    </button>
     <div class="result_info">
       <div class="result_bls">
         <div class="circle_result item_result">
           <font-awesome-icon icon="fa-solid fa-circle" />
-          2
+          {{ answerDistribution[0] }}
           <font-awesome-icon
             v-if="answers[0].isCorrect"
             icon="fa-solid fa-check"
@@ -15,7 +17,7 @@
         </div>
         <div class="square_result item_result">
           <font-awesome-icon icon="fa-solid fa-square" />
-          1
+          {{ answerDistribution[1] }}
           <font-awesome-icon
             v-if="answers[1].isCorrect"
             icon="fa-solid fa-check"
@@ -23,7 +25,7 @@
         </div>
         <div class="rhombus_result item_result">
           <font-awesome-icon icon="fa-solid fa-diamond" />
-          0
+          {{ answerDistribution[2] }}
           <font-awesome-icon
             v-if="answers[2].isCorrect"
             icon="fa-solid fa-check"
@@ -31,7 +33,7 @@
         </div>
         <div class="triangle_result item_result">
           <font-awesome-icon icon="fa-solid fa-play" />
-          0
+          {{ answerDistribution[3] }}
           <font-awesome-icon
             v-if="answers[3].isCorrect"
             icon="fa-solid fa-check"
@@ -90,6 +92,14 @@ export default {
       type: Object,
       required: true,
     },
+    answerDistribution: {
+      type: Array,
+      required: true,
+    },
+    isLastQuestion: {
+      type: Boolean,
+      required: true,
+    },
   },
 
   data() {
@@ -106,6 +116,12 @@ export default {
 
   created() {
     setTimeout(() => (this.loading = false), 2000);
+  },
+
+  methods: {
+    handleNext() {
+      this.$emit("next");
+    },
   },
 };
 </script>

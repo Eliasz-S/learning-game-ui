@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import { api } from "@/utils/axios";
+
 export default {
   name: "OwnerQuestionComponent",
   props: {
@@ -61,6 +63,10 @@ export default {
     },
     lobbyChannel: {
       type: Object,
+      required: true,
+    },
+    lobbyId: {
+      type: Number,
       required: true,
     },
   },
@@ -124,12 +130,14 @@ export default {
         }, 1000);
       } else {
         this.$router.push({ name: "questionResult" });
+        api.post(`lobby/show-question-result/${this.lobbyId}`);
       }
     },
     currentTime(time) {
       if (time === 0) {
         this.stopTimer();
         this.questionShowMethod();
+        api.post(`lobby/show-question/${this.lobbyId}`);
       }
     },
   },

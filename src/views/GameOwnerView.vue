@@ -18,8 +18,13 @@
         <router-view
           v-else
           :users="users"
-          :pin="lobby.pincode.toString()"
+          :lobbyId="lobby.id"
+          :pin="lobby.pincode"
           :question="currentQuestion"
+          :lobby-channel="lobbyChannel"
+          :is-last-question="isLastQuestion"
+          :answer-distribution="answerDistributions[currentQuestionNumber - 1]"
+          @next="toNextQuestion"
         />
       </div>
     </div>
@@ -38,13 +43,14 @@ export default {
   },
   data() {
     return {
-      currentQuestionNumber: 1,
+      currentQuestionNumber: 0,
       loading: true,
       lobby: {},
       lobbyChannel: null,
       pin: "",
       questions: [],
       users: [],
+      userAnswers: [],
     };
   },
 
@@ -54,6 +60,25 @@ export default {
     },
     currentQuestion() {
       return this.questions[this.currentQuestionNumber - 1];
+    },
+    questionQty() {
+      return this.questions.length;
+    },
+    isLastQuestion() {
+      return this.currentQuestionNumber >= this.questionQty;
+    },
+    answerDistributions() {
+      const result = [];
+      for (let i = 0; i < this.questionQty; i++) {
+        result[i] = [0, 0, 0, 0];
+      }
+
+      for (let i = 0; i < this.userAnswers.length; i++) {
+        Object.values(this.userAnswers[i]).forEach((index) => {
+          result[i][index] += 1;
+        });
+      }
+      return result;
     },
   },
 
@@ -91,9 +116,7 @@ export default {
         .leaving((user) => {
           this.users = this.users.filter((u) => u.id !== user.id);
         })
-        .error((error) => {
-          console.error(error);
-        });
+        .listen("SendUserAnswer", this.onSendUserAnswer);
     },
     fetchQuestions() {
       api
@@ -107,6 +130,20 @@ export default {
           console.error("Не удалось получить игру с вопросами");
           console.error(e.message);
         });
+    },
+    toNextQuestion() {
+      this.currentQuestionNumber += 1;
+      api.post(
+        `lobby/next-question/${this.lobby.id}/${this.currentQuestion.id}`
+      );
+      this.$router.push({ name: "question" });
+    },
+    onSendUserAnswer(data) {
+      if (!this.userAnswers[this.currentQuestionNumber - 1]) {
+        this.userAnswers[this.currentQuestionNumber - 1] = {};
+      }
+      this.userAnswers[this.currentQuestionNumber - 1][data.playerId] =
+        data.answerIndex;
     },
   },
 };
