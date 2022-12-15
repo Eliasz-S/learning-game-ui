@@ -1,43 +1,54 @@
 <template>
-  <LoadingUi v-if="loading" />
-  <div v-else class="results">
-    <!-- Если ответ игрока неверный
-
-    <div class="result">
-      <div class="result_text">Incorrect</div>
-      <div class="incorrect_icon">
-        <font-awesome-icon icon="fa-solid fa-face-sad-tear" />
-      </div>
-      <div class="points">100 Points</div>
-    </div>
-
-    -->
-    <!-- Если ответ игрока верный -->
-    <div class="result">
+  <div class="results">
+    <div v-if="isCorrect" class="result">
       <div class="result_text">Correct</div>
       <div class="correct_icon">
         <font-awesome-icon icon="fa-solid fa-face-laugh-beam" />
       </div>
-      <div class="plus_points">+ 240</div>
-      <div class="points">340 Points</div>
+      <div class="plus_points">+ {{ pointsForCorrect }}</div>
+      <div class="points">{{ points }} Points</div>
+    </div>
+
+    <div v-else class="result">
+      <div class="result_text">Incorrect</div>
+      <div class="incorrect_icon">
+        <font-awesome-icon icon="fa-solid fa-face-sad-tear" />
+      </div>
+      <div class="points">{{ points }} Points</div>
     </div>
   </div>
 </template>
 
 <script>
-import LoadingUi from "../UI/LoadingUI.vue";
 export default {
   name: "OwnerQuestionResultComponent",
-  components: {
-    LoadingUi,
+
+  props: {
+    lobbyId: {
+      type: Number,
+      required: true,
+    },
+    points: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {
       loading: true,
+      isCorrect: false,
+      pointsForCorrect: 500,
     };
   },
   created() {
-    setTimeout(() => (this.loading = false), 2000);
+    this.checkAnswer();
+  },
+  methods: {
+    checkAnswer() {
+      const answer = sessionStorage.getItem(`answer-${this.lobbyid}`);
+      if (answer) this.isCorrect = JSON.parse(answer);
+      sessionStorage.removeItem(`answer-${this.lobbyid}`);
+    },
   },
 };
 </script>

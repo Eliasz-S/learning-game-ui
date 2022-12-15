@@ -14,11 +14,17 @@
         height="500"
       />
       <div class="content">
+        <LoadingUi v-if="loading" />
         <router-view
+          v-else
           :users="users"
-          :pin="pin"
-          :gameAnswers="gameAnswers"
-          :gameQuestions="gameQuestions"
+          :lobbyId="lobby.id"
+          :pin="lobby.pincode"
+          :question="currentQuestion"
+          :lobby-channel="lobbyChannel"
+          :is-last-question="isLastQuestion"
+          :answer-distribution="answerDistributions[currentQuestionNumber - 1]"
+          @next="toNextQuestion"
         />
       </div>
     </div>
@@ -26,90 +32,119 @@
 </template>
 
 <script>
+import { api } from "@/utils/axios";
+import Echo from "@/utils/echo";
+import LoadingUi from "@/components/UI/LoadingUI.vue";
+
 export default {
   name: "GameOwnerView",
+  components: {
+    LoadingUi,
+  },
   data() {
     return {
-      users: [
-        {
-          id: "1",
-          nickname: "Nadja",
-        },
-        {
-          id: "2",
-          nickname: "Ilia",
-        },
-        {
-          id: "3",
-          nickname: "Max",
-        },
-        {
-          id: "4",
-          nickname: "Alex",
-        },
-        {
-          id: "5",
-          nickname: "Lana",
-        },
-        {
-          id: "6",
-          nickname: "Katja",
-        },
-      ],
-      pin: "1238549",
-      gameQuestions: [
-        {
-          id: "1",
-          text: "First question",
-          question_type_id: "1",
-          time_limit: "30",
-        },
-        {
-          id: "1",
-          text: "Second question",
-          question_type_id: "1",
-          time_limit: "10",
-        },
-      ],
-      gameAnswers: [
-        {
-          id: "1",
-          question_id: "1",
-          text: "Some answer 1",
-          is_correct: "1",
-        },
-        {
-          id: "2",
-          question_id: "1",
-          text: "Some answer 2",
-          is_correct: "0",
-        },
-        {
-          id: "3",
-          question_id: "1",
-          text: "Some answer 3",
-          is_correct: "0",
-        },
-        {
-          id: "4",
-          question_id: "1",
-          text: "Some answer 4",
-          is_correct: "0",
-        },
-        {
-          id: "5",
-          question_id: "2",
-          text: "Some answer 1",
-          is_correct: "0",
-        },
-        {
-          id: "6",
-          question_id: "2",
-          text: "Some answer 2",
-          is_correct: "1",
-        },
-      ],
+      currentQuestionNumber: 0,
+      loading: true,
+      lobby: {},
+      lobbyChannel: null,
+      pin: "",
+      questions: [],
+      users: [],
+      userAnswers: [],
     };
+  },
+
+  computed: {
+    gameId() {
+      return this.$route.params.gameId;
+    },
+    currentQuestion() {
+      return this.questions[this.currentQuestionNumber - 1];
+    },
+    questionQty() {
+      return this.questions.length;
+    },
+    isLastQuestion() {
+      return this.currentQuestionNumber >= this.questionQty;
+    },
+    answerDistributions() {
+      const result = [];
+      for (let i = 0; i < this.questionQty; i++) {
+        result[i] = [0, 0, 0, 0];
+      }
+
+      for (let i = 0; i < this.userAnswers.length; i++) {
+        Object.values(this.userAnswers[i]).forEach((index) => {
+          result[i][index] += 1;
+        });
+      }
+      return result;
+    },
+  },
+
+  created() {
+    this.createLobby();
+    this.fetchQuestions();
+  },
+
+  beforeUnmount() {
+    api.post(`lobby/close/${this.lobby.id}`);
+  },
+
+  methods: {
+    async createLobby() {
+      try {
+        this.loading = true;
+        const response = await api.post(`lobby/${this.gameId}`);
+        if (response.status === 201) {
+          this.lobby = response.data;
+          this.subscribeToChannel();
+        }
+      } catch (e) {
+        console.log("error", e);
+      } finally {
+        this.loading = false;
+      }
+    },
+    subscribeToChannel() {
+      this.lobbyChannel = Echo.join(`lobby.${this.lobby.id}`);
+
+      this.lobbyChannel
+        .joining((user) => {
+          this.users.push(user);
+        })
+        .leaving((user) => {
+          this.users = this.users.filter((u) => u.id !== user.id);
+        })
+        .listen("SendUserAnswer", this.onSendUserAnswer);
+    },
+    fetchQuestions() {
+      api
+        .get(`games/${this.gameId}`)
+        .then((response) => {
+          if (response.data) {
+            this.questions = response.data.questions;
+          }
+        })
+        .catch((e) => {
+          console.error("Не удалось получить игру с вопросами");
+          console.error(e.message);
+        });
+    },
+    toNextQuestion() {
+      this.currentQuestionNumber += 1;
+      api.post(
+        `lobby/next-question/${this.lobby.id}/${this.currentQuestion.id}`
+      );
+      this.$router.push({ name: "question" });
+    },
+    onSendUserAnswer(data) {
+      if (!this.userAnswers[this.currentQuestionNumber - 1]) {
+        this.userAnswers[this.currentQuestionNumber - 1] = {};
+      }
+      this.userAnswers[this.currentQuestionNumber - 1][data.playerId] =
+        data.answerIndex;
+    },
   },
 };
 </script>

@@ -15,12 +15,13 @@ import LibraryComponent from "@/components/Profile/LibraryComponent.vue";
 import ReportsComponent from "@/components/Profile/ReportsComponent.vue";
 import HomeComponent from "@/components/Profile/HomeComponent.vue";
 import GameOwnerView from "@/views/GameOwnerView.vue";
+import GameUserView from "@/views/GameUserView.vue";
 import OwnerQuestionComponent from "@/components/game/OwnerQuestionComponent.vue";
 import UserQuestionComponent from "@/components/game/UserQuestionComponent.vue";
 import LobbyComponent from "@/components/game/LobbyComponent.vue";
-import LobbyComponentUser from "@/components/game/LobbyComponentUser.vue";
-import OwnerQuestionResultComponentVue from "@/components/game/OwnerQuestionResultComponent.vue";
-import UserQuestionResultComponentVue from "@/components/game/UserQuestionResultComponent.vue";
+import LobbyGathering from "@/components/game/LobbyGathering.vue";
+import OwnerQuestionResultComponent from "@/components/game/OwnerQuestionResultComponent.vue";
+import UserQuestionResultComponent from "@/components/game/UserQuestionResultComponent.vue";
 import AllResultsComponentVue from "@/components/game/AllResultsComponent.vue";
 
 const routes = [
@@ -37,9 +38,9 @@ const routes = [
     component: GameOwnerView,
     children: [
       {
-        path: "lobby",
-        name: "lobby",
-        component: LobbyComponent,
+        path: "lobby/:gameId",
+        name: "lobby-gathering",
+        component: LobbyGathering,
       },
       {
         path: "question",
@@ -48,8 +49,8 @@ const routes = [
       },
       {
         path: "question-result",
-        name: "questionresult",
-        component: OwnerQuestionResultComponentVue,
+        name: "questionResult",
+        component: OwnerQuestionResultComponent,
       },
     ],
   },
@@ -59,12 +60,12 @@ const routes = [
     path: "/game-user",
     redirect: { name: "lobbyUser" },
     name: "gameuser",
-    component: GameOwnerView,
+    component: GameUserView,
     children: [
       {
         path: "lobby",
         name: "lobbyUser",
-        component: LobbyComponentUser,
+        component: LobbyComponent,
       },
       {
         path: "question",
@@ -73,15 +74,15 @@ const routes = [
       },
       {
         path: "question-result",
-        name: "questionresultUser",
-        component: UserQuestionResultComponentVue,
+        name: "questionResultUser",
+        component: UserQuestionResultComponent,
       },
     ],
   },
   // END Game pages (Only for users)
   {
     path: "/game-result",
-    name: "gameresult",
+    name: "gameResult",
     component: AllResultsComponentVue,
   },
   // End game pages

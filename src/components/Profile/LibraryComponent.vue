@@ -23,12 +23,22 @@
       <el-table-column label="Author" prop="author" width="120">
       </el-table-column>
       <el-table-column label="Questions" prop="questions" width="100">
+        <template #default="scope">
+          <span>{{ scope.row.questions.length }}</span>
+        </template>
       </el-table-column>
       <el-table-column label="Plays" prop="plays" width="100">
       </el-table-column>
-      <el-table-column label="Operations" fixed="right">
+      <el-table-column label="Operations">
         <template #default="scope">
           <AnimatedBtnUI @click="handleDialogOpen(scope.$index)" />
+        </template>
+      </el-table-column>
+      <el-table-column fixed="right" width="200">
+        <template #default="scope">
+          <el-button type="primary" plain @click="startGame(scope.row.id)">
+            Start
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,7 +59,7 @@
       <div class="item">
         <p>Author: {{ games[dialogItem].author }}</p>
         <p>Date: {{ games[dialogItem].date }}</p>
-        <p>Questions: {{ games[dialogItem].questions }}</p>
+        <p>Questions: {{ games[dialogItem].questions.length }}</p>
       </div>
       <template #footer>
         <span class="dialog-footer">
@@ -120,6 +130,9 @@ export default {
       const response = await api.get("games/user");
       this.games = response.data;
     },
+    startGame(gameId) {
+      this.$router.push(`/game-owner/lobby/${gameId}`);
+    },
   },
 };
 </script>
@@ -139,6 +152,7 @@ li {
 }
 a,
 .link {
+  padding: 0;
   color: #5d73d8 !important;
 }
 a,

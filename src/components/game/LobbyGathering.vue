@@ -1,23 +1,27 @@
 <template>
   <div>
-    <LoadingUi v-if="loading" />
-    <ConnectedUsersComponent v-else :users="users" :pin="pin" />
+    <ConnectedUsersComponent :users="users" :pin="pin" @next="$emit('next')" />
   </div>
 </template>
 
 <script>
-import LoadingUi from "../UI/LoadingUI.vue";
-import ConnectedUsersComponent from "./../ConnectedUsersComponentForUser";
+import ConnectedUsersComponent from "./../ConnectedUsersComponent.vue";
 
 export default {
-  name: "LobbyComponentUser",
+  name: "LobbyGathering",
   components: {
-    LoadingUi,
     ConnectedUsersComponent,
   },
   props: {
     users: Array,
-    pin: String,
+    pin: {
+      type: Number,
+      required: true,
+    },
+    lobbyId: {
+      type: Number,
+      required: true,
+    },
   },
   data() {
     return {

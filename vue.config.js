@@ -10,5 +10,6 @@ module.exports = {
         // options
       }),
     ],
+    devtool: "source-map",
   },
 };

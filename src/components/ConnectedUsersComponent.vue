@@ -11,18 +11,17 @@
           <div class="hidden_bl"></div>
           <img src="../../public/img/maven-logo.png" alt="Maven" />
           <div class="start_game">
-            <button @click="handlecli">
+            <button @click="start">
               <font-awesome-icon icon="fa-solid fa-gamepad" />
               Start
             </button>
           </div>
         </div>
         <div class="lobby_users_array">
-          <div v-if="users.length > 0" class="connected_users">
+          <div v-if="users.length" class="connected_users">
             <div v-for="user in users" :key="user.id" class="connected_user">
               <p>
                 <span>
-                  {{ user.id }}
                   <font-awesome-icon icon="fa-solid fa-user" />
                   :
                 </span>
@@ -36,7 +35,7 @@
       <div class="lobby_bottom">
         <div class="lobby_bottom_flex">
           <div class="users_count">
-            <font-awesome-icon icon="fa-solid fa-user" /> 7
+            <font-awesome-icon icon="fa-solid fa-user" /> {{ users.length }}
           </div>
           <button class="fullscreen">
             <font-awesome-icon icon="fa-solid fa-expand" />
@@ -48,16 +47,18 @@
 </template>
 
 <script>
-import router from "@/router";
 export default {
   name: "ConnectedUsersComponent",
   props: {
     users: Array,
-    pin: String,
+    pin: {
+      type: Number,
+      required: true,
+    },
   },
   methods: {
-    handlecli() {
-      router.push({ path: "question" });
+    start() {
+      this.$emit("next");
     },
   },
 };

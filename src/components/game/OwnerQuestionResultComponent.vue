@@ -1,64 +1,79 @@
 <template>
   <LoadingUi v-if="loading" />
   <div v-else class="results">
-    <div class="question_bl">Какой-то вопрос?</div>
-    <button @click="handleNext" class="next_btn">Next</button>
+    <div class="question_bl">{{ question.text }}</div>
+    <button v-if="!isLastQuestion" @click="handleNext" class="next_btn">
+      Next
+    </button>
     <div class="result_info">
       <div class="result_bls">
         <div class="circle_result item_result">
           <font-awesome-icon icon="fa-solid fa-circle" />
-          <!-- Кол-во ответов -->
-          2
-          <!-- Сделать проверку, если ответ верный -->
-          <font-awesome-icon icon="fa-solid fa-check" />
-          <!-- --- -->
+          {{ answerDistribution[0] }}
+          <font-awesome-icon
+            v-if="answers[0].isCorrect"
+            icon="fa-solid fa-check"
+          />
         </div>
         <div class="square_result item_result">
           <font-awesome-icon icon="fa-solid fa-square" />
-          1
+          {{ answerDistribution[1] }}
+          <font-awesome-icon
+            v-if="answers[1].isCorrect"
+            icon="fa-solid fa-check"
+          />
         </div>
         <div class="rhombus_result item_result">
           <font-awesome-icon icon="fa-solid fa-diamond" />
-          0
+          {{ answerDistribution[2] }}
+          <font-awesome-icon
+            v-if="answers[2].isCorrect"
+            icon="fa-solid fa-check"
+          />
         </div>
         <div class="triangle_result item_result">
           <font-awesome-icon icon="fa-solid fa-play" />
-          0
+          {{ answerDistribution[3] }}
+          <font-awesome-icon
+            v-if="answers[3].isCorrect"
+            icon="fa-solid fa-check"
+          />
         </div>
       </div>
       <div class="answers_bl row">
         <div class="circle_answer item">
+          <div v-if="!answers[0].isCorrect" class="uncorrect_answer"></div>
           <span class="circle item_icon">
             <font-awesome-icon icon="fa-solid fa-circle" />
           </span>
-          <p class="item_text">Answer 1</p>
+          <p class="item_text">{{ answers[0].text }}</p>
         </div>
         <div class="square_answer item">
           <!-- Сделать проверку, если ответ НЕверный, то показать блок uncorrect_answer -->
-          <div class="uncorrect_answer"></div>
+          <div v-if="!answers[1].isCorrect" class="uncorrect_answer"></div>
           <!-- --- -->
           <span class="square item_icon">
             <font-awesome-icon icon="fa-solid fa-square" />
           </span>
-          <p class="item_text">Answer 2</p>
+          <p class="item_text">{{ answers[1].text }}</p>
         </div>
         <div class="rhombus_answer item">
           <!-- Сделать проверку, если ответ НЕверный, то показать блок uncorrect_answer -->
-          <div class="uncorrect_answer"></div>
+          <div v-if="!answers[2].isCorrect" class="uncorrect_answer"></div>
           <!-- --- -->
           <span class="rhombus item_icon">
             <font-awesome-icon icon="fa-solid fa-diamond" />
           </span>
-          <p class="item_text">Answer 3</p>
+          <p class="item_text">{{ answers[2].text }}</p>
         </div>
         <div class="triangle_answer item">
           <!-- Сделать проверку, если ответ НЕверный, то показать блок uncorrect_answer -->
-          <div class="uncorrect_answer"></div>
+          <div v-if="!answers[3].isCorrect" class="uncorrect_answer"></div>
           <!-- --- -->
           <span class="triangle item_icon">
             <font-awesome-icon icon="fa-solid fa-play" />
           </span>
-          <p class="item_text">Answer 3</p>
+          <p class="item_text">{{ answers[3].text }}</p>
         </div>
       </div>
     </div>
@@ -72,13 +87,41 @@ export default {
   components: {
     LoadingUi,
   },
+  props: {
+    question: {
+      type: Object,
+      required: true,
+    },
+    answerDistribution: {
+      type: Array,
+      required: true,
+    },
+    isLastQuestion: {
+      type: Boolean,
+      required: true,
+    },
+  },
+
   data() {
     return {
       loading: true,
     };
   },
+
+  computed: {
+    answers() {
+      return this.question.answers;
+    },
+  },
+
   created() {
     setTimeout(() => (this.loading = false), 2000);
+  },
+
+  methods: {
+    handleNext() {
+      this.$emit("next");
+    },
   },
 };
 </script>
@@ -104,7 +147,7 @@ export default {
 .triangle_result {
   background: #b92020;
 }
-.triangle_result > svg {
+.triangle_result > svg:first-child {
   transform: rotate(-90deg);
 }
 .next_btn {
