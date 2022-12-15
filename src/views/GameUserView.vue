@@ -14,12 +14,15 @@
         height="500"
       />
       <div class="content">
-        <LoadingUi v-if="loading && nickname" />
+        <LoadingUi v-if="isLoading && nickname" />
         <router-view
-          v-else
+          v-else-if="lobbyId"
           :nickname="nickname"
-          :gameAnswers="gameAnswers"
-          :gameQuestions="gameQuestions"
+          :question="question"
+          :lobby-id="lobbyId"
+          :points="points"
+          @set-loading="setLoading"
+          @add-points="addPoints"
         />
       </div>
     </div>
@@ -39,13 +42,13 @@ export default {
 
   data() {
     return {
-      gameAnswers: [],
-      gameQuestions: [],
-      loading: false,
+      question: {},
+      isLoading: false,
       lobbyId: null,
       lobbyChannel: null,
       nickname: "",
       pin: "",
+      points: 0,
     };
   },
 
@@ -66,12 +69,41 @@ export default {
     },
     subscribeToChannel() {
       this.lobbyChannel = Echo.join(`lobby.${this.lobbyId}`);
-      this.lobbyChannel.leaving((user) => {
-        if (user.isHost) {
-          api.post("broadcasting/logout");
-          this.$router.push("/");
-        }
-      });
+      this.lobbyChannel
+        .leaving(this.onUserLeft)
+        .listen("NextQuestion", this.onNextQuestion)
+        .listen("ShowQuestion", this.onShowQuestion)
+        .listen("ShowQuestionResult", this.onShowQuestionResult)
+        .listen("ShowFinalResults", this.onShowFinalResults);
+    },
+    onUserLeft(user) {
+      if (user.isHost) {
+        api.post("broadcasting/logout");
+        this.$router.push("/");
+      }
+    },
+    onNextQuestion(question) {
+      this.question = question;
+      this.isLoading = true;
+      this.$router.push({ name: "questionUser" });
+    },
+    onShowQuestion() {
+      this.isLoading = false;
+    },
+    onShowQuestionResult() {
+      this.$router.push({ name: "questionResultUser" });
+      setTimeout(() => {
+        this.isLoading = false;
+      }, 1000);
+    },
+    onShowFinalResults() {
+      this.$router.push({ name: "gameResult" });
+    },
+    addPoints(value) {
+      this.points += value;
+    },
+    setLoading(value) {
+      this.isLoading = value;
     },
   },
 };
