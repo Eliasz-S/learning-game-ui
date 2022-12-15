@@ -20,8 +20,8 @@ import OwnerQuestionComponent from "@/components/game/OwnerQuestionComponent.vue
 import UserQuestionComponent from "@/components/game/UserQuestionComponent.vue";
 import LobbyComponent from "@/components/game/LobbyComponent.vue";
 import LobbyGathering from "@/components/game/LobbyGathering.vue";
-import OwnerQuestionResultComponentVue from "@/components/game/OwnerQuestionResultComponent.vue";
-import UserQuestionResultComponentVue from "@/components/game/UserQuestionResultComponent.vue";
+import OwnerQuestionResultComponent from "@/components/game/OwnerQuestionResultComponent.vue";
+import UserQuestionResultComponent from "@/components/game/UserQuestionResultComponent.vue";
 import AllResultsComponentVue from "@/components/game/AllResultsComponent.vue";
 
 const routes = [
@@ -49,8 +49,8 @@ const routes = [
       },
       {
         path: "question-result",
-        name: "questionresult",
-        component: OwnerQuestionResultComponentVue,
+        name: "questionResult",
+        component: OwnerQuestionResultComponent,
       },
     ],
   },
@@ -74,15 +74,15 @@ const routes = [
       },
       {
         path: "question-result",
-        name: "questionresultUser",
-        component: UserQuestionResultComponentVue,
+        name: "questionResultUser",
+        component: UserQuestionResultComponent,
       },
     ],
   },
   // END Game pages (Only for users)
   {
     path: "/game-result",
-    name: "gameresult",
+    name: "gameResult",
     component: AllResultsComponentVue,
   },
   // End game pages
