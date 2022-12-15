@@ -23,6 +23,9 @@
       <el-table-column label="Author" prop="author" width="120">
       </el-table-column>
       <el-table-column label="Questions" prop="questions" width="100">
+        <template #default="scope">
+          <span>{{ scope.row.questions.length }}</span>
+        </template>
       </el-table-column>
       <el-table-column label="Plays" prop="plays" width="100">
       </el-table-column>
@@ -56,7 +59,7 @@
       <div class="item">
         <p>Author: {{ games[dialogItem].author }}</p>
         <p>Date: {{ games[dialogItem].date }}</p>
-        <p>Questions: {{ games[dialogItem].questions }}</p>
+        <p>Questions: {{ games[dialogItem].questions.length }}</p>
       </div>
       <template #footer>
         <span class="dialog-footer">
