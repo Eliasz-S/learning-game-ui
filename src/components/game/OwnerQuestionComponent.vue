@@ -88,6 +88,39 @@ export default {
     },
   },
 
+  watch: {
+    // Здесь таймер игры, который начинает меняться, если поменялось знчение gameTimer
+    gameTimer() {
+      if (this.gameTimer > 0) {
+        setTimeout(() => {
+          this.gameTimer--;
+        }, 1000);
+      } else {
+        this.$router.push({ name: "questionResult" });
+        api.post(`lobby/show-question-result/${this.lobbyId}`);
+      }
+    },
+    currentTime(time) {
+      if (time === 0) {
+        this.stopTimer();
+        this.questionShowMethod();
+        api.post(`lobby/show-question/${this.lobbyId}`);
+      }
+    },
+  },
+
+  created() {
+    setTimeout(() => (this.loadingStartBlock = false), 2000);
+  },
+
+  mounted() {
+    this.startTimer();
+  },
+
+  unmounted() {
+    this.stopTimer();
+  },
+
   methods: {
     handleNext() {
       this.$router.push({ name: "questionResult" });
@@ -114,35 +147,6 @@ export default {
         }, 1000);
       }
     },
-  },
-  mounted() {
-    this.startTimer();
-  },
-  unmounted() {
-    this.stopTimer();
-  },
-  watch: {
-    // Здесь таймер игры, который начинает меняться, если поменялось знчение gameTimer
-    gameTimer() {
-      if (this.gameTimer > 0) {
-        setTimeout(() => {
-          this.gameTimer--;
-        }, 1000);
-      } else {
-        this.$router.push({ name: "questionResult" });
-        api.post(`lobby/show-question-result/${this.lobbyId}`);
-      }
-    },
-    currentTime(time) {
-      if (time === 0) {
-        this.stopTimer();
-        this.questionShowMethod();
-        api.post(`lobby/show-question/${this.lobbyId}`);
-      }
-    },
-  },
-  created() {
-    setTimeout(() => (this.loadingStartBlock = false), 2000);
   },
 };
 </script>
