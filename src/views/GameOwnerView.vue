@@ -59,7 +59,11 @@ export default {
       return this.$route.params.gameId;
     },
     currentQuestion() {
-      return this.questions[this.currentQuestionNumber - 1];
+      const index =
+        this.currentQuestionNumber > 0
+          ? this.currentQuestionNumber - 1
+          : this.currentQuestionNumber;
+      return this.questions[index];
     },
     questionQty() {
       return this.questions.length;
@@ -132,11 +136,13 @@ export default {
         });
     },
     toNextQuestion() {
-      this.currentQuestionNumber += 1;
-      api.post(
-        `lobby/next-question/${this.lobby.id}/${this.currentQuestion.id}`
-      );
       this.$router.push({ name: "question" });
+      setTimeout(() => {
+        this.currentQuestionNumber += 1;
+        api.post(
+          `lobby/next-question/${this.lobby.id}/${this.currentQuestion.id}`
+        );
+      }, 1000);
     },
     onSendUserAnswer(data) {
       if (!this.userAnswers[this.currentQuestionNumber - 1]) {
