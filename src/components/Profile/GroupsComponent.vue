@@ -1,6 +1,6 @@
 <template>
   <div class="profile-nav favourites">
-    <p>Groups component</p>
+    <p>Work in progress...</p>
   </div>
 </template>
 <script>

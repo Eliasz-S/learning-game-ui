@@ -1,6 +1,5 @@
 <template>
   <div class="profile-nav test-library">
-    <p>Library component</p>
     <el-row :gutter="20" class="search">
       <el-col :span="6">
         <InputUI v-model="search" placeholder="Search by title..." />
@@ -12,10 +11,10 @@
       type="primary"
     >
       <el-table-column type="index" width="50" />
-      <el-table-column label="Date" prop="date"> </el-table-column>
+      <el-table-column label="Date" prop="date" />
       <el-table-column label="Title">
         <template #default="scope">
-          <el-button class="link" text @click="handleDialogOpen(scope.$index)">
+          <el-button class="link" text @click="handleDialogOpen(scope.row.id)">
             <b>{{ scope.row.title }}</b>
           </el-button>
         </template>
@@ -27,11 +26,10 @@
           <span>{{ scope.row.questions.length }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Plays" prop="plays" width="100">
-      </el-table-column>
+      <!-- <el-table-column label="Plays" prop="plays" width="100" /> -->
       <el-table-column label="Operations">
         <template #default="scope">
-          <AnimatedBtnUI @click="handleDialogOpen(scope.$index)" />
+          <AnimatedBtnUI @click="handleDialogOpen(scope.row.id)" />
         </template>
       </el-table-column>
       <el-table-column fixed="right" width="200">
@@ -51,15 +49,16 @@
         <el-row>
           <el-col :span="6">
             <p>
-              <b>{{ games[dialogItem].title }} </b>
+              <b>{{ dialogItem.title }} </b>
             </p>
           </el-col>
         </el-row>
       </template>
       <div class="item">
-        <p>Author: {{ games[dialogItem].author }}</p>
-        <p>Date: {{ games[dialogItem].date }}</p>
-        <p>Questions: {{ games[dialogItem].questions.length }}</p>
+        <p><b>Test title:</b> {{ dialogItem.title }}</p>
+        <p><b>Author:</b> {{ dialogItem.author }}</p>
+        <p><b>Date of creation:</b> {{ dialogItem.date }}</p>
+        <p><b>Amount of questions:</b> {{ dialogItem.questions.length }}</p>
       </div>
       <template #footer>
         <span class="dialog-footer">
@@ -87,7 +86,6 @@ import {
 
 export default {
   name: "LibraryComponent",
-  props: ["swapComponent"],
   components: {
     InputUI,
     AnimatedBtnUI,
@@ -118,9 +116,10 @@ export default {
     this.fetchGames();
   },
   methods: {
-    handleDialogOpen(item) {
-      this.dialogItem = ref(item);
-      this.dialogItemTitle = ref(item);
+    handleDialogOpen(itemId) {
+      const target = this.searchedPosts.find((game) => game.id === itemId);
+      this.dialogItem = target;
+      this.dialogItemTitle = target.title;
       this.dialogVisible = ref(true);
     },
     handleDialogClose() {
@@ -137,7 +136,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
   margin: 40px 0 0;

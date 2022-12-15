@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import { ElMessage } from "element-plus";
 import LoadingUi from "../UI/LoadingUI.vue";
 export default {
   name: "OwnerQuestionResultComponent",
@@ -116,6 +117,18 @@ export default {
 
   created() {
     setTimeout(() => (this.loading = false), 2000);
+
+    if (this.isLastQuestion) {
+      ElMessage({
+        type: "success",
+        message:
+          "This is the end of your test! You will be redirected to home page in 30 seconds",
+        duration: 8000,
+      });
+      setTimeout(() => {
+        this.$router.push("/profile/home");
+      }, 30000);
+    }
   },
 
   methods: {
