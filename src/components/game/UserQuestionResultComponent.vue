@@ -14,7 +14,7 @@
       <div class="incorrect_icon">
         <font-awesome-icon icon="fa-solid fa-face-sad-tear" />
       </div>
-      <div class="points">Total score: {{ points }} points</div>
+      <div class="points">{{ points }} Points</div>
     </div>
   </div>
 </template>
