@@ -30,6 +30,7 @@ button {
 button.learn-more {
   width: 12rem;
   height: auto;
+  background: transparent;
 }
 
 button.learn-more .circle {
@@ -79,7 +80,7 @@ button.learn-more .button-text {
   right: 0;
   bottom: 0;
   margin-left: 15px;
-  color: #282936;
+  color: #fff;
   font-weight: 700;
   line-height: 2.3;
   text-align: center;

@@ -1,16 +1,11 @@
 <template>
   <div class="profile-nav test-library">
-    <p>Library component</p>
     <el-row :gutter="20" class="search">
       <el-col :span="6">
         <InputUI v-model="search" placeholder="Search by title..." />
       </el-col>
     </el-row>
-    <el-table
-      :data="searchedPosts"
-      style="width: 100%; margin-top: 10px"
-      type="primary"
-    >
+    <el-table :data="searchedPosts" style="width: 100%; margin-top: 10px">
       <el-table-column type="index" width="50" />
       <el-table-column label="Date" prop="date"> </el-table-column>
       <el-table-column label="Title">
@@ -27,18 +22,18 @@
           <span>{{ scope.row.questions.length }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="Plays" prop="plays" width="100">
+      <el-table-column label="Operations" width="100">
+        <el-table-column fixed="right" width="200">
+          <template #default="scope">
+            <el-button type="primary" plain @click="startGame(scope.row.id)">
+              Start
+            </el-button>
+          </template>
+        </el-table-column>
       </el-table-column>
-      <el-table-column label="Operations">
+      <el-table-column label="">
         <template #default="scope">
           <AnimatedBtnUI @click="handleDialogOpen(scope.$index)" />
-        </template>
-      </el-table-column>
-      <el-table-column fixed="right" width="200">
-        <template #default="scope">
-          <el-button type="primary" plain @click="startGame(scope.row.id)">
-            Start
-          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -158,5 +153,31 @@ a,
 a,
 .link:hover {
   color: #42b983 !important;
+}
+.el-table[data-v-022faa78] {
+  --el-table-tr-bg-color: #211b2a;
+  --el-table-border-color: #211b2a;
+  --el-table-border: 0px solid var(--el-table-border-color);
+  --el-table-text-color: #ffffff;
+  --el-table-header-text-color: #211b2a;
+  --el-table-row-hover-bg-color: #3e324e;
+  --el-table-current-row-bg-color: #5c4a76;
+  --el-table-header-bg-color: #211b2a;
+  --el-table-fixed-box-shadow: none;
+  --el-table-bg-color: #211b2a;
+  --el-table-expanded-cell-bg-color: #211b2a;
+  --el-table-fixed-left-column: inset 10px 0 10px -10px #211b2a;
+  --el-table-fixed-right-column: inset -10px 0 10px -10px #211b2a;
+}
+td.el-table_1_column_8.el-table-fixed-column--right.is-first-column.el-table__cell {
+  background: #211b2a !important;
+}
+.el-button.is-text:not(.is-disabled):focus,
+.el-button.is-text:not(.is-disabled):hover {
+  background-color: #3e324e;
+}
+a,
+.link[data-v-022faa78]:hover {
+  color: #2eb752 !important;
 }
 </style>

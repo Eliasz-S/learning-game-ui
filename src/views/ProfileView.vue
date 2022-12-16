@@ -43,5 +43,6 @@ button#view2 {
 .profile {
   background: #211b2a;
   color: #fff;
+  min-height: 100vh;
 }
 </style>
