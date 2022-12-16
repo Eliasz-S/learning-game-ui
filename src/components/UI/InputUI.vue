@@ -1,5 +1,5 @@
 <template>
-  <el-input :value="modelValue" @input="updateInput" class="input" />
+  <el-input @input="updateInput" class="input" />
 </template>
 
 <script>
@@ -10,11 +10,13 @@ export default {
     ElInput,
   },
   props: {
-    modelValue: [String, Number],
+    value: {
+      type: [String, Number],
+    },
   },
   methods: {
-    updateInput(event) {
-      this.$emit("update:modelValue", event.target.value);
+    updateInput(value) {
+      this.$emit("input", value);
     },
   },
 };

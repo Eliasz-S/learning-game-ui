@@ -179,17 +179,12 @@ export default {
   text-decoration: none;
   margin: 1rem;
   transition: 0.3s ease;
-}
-
-.top-nav-link:visited {
   color: inherit;
 }
-
 .top-nav-link:hover {
   color: rgb(32, 32, 32);
 }
-
 .router-link-active {
-  color: rgb(255, 255, 255);
+  color: rgb(32, 32, 32);
 }
 </style>

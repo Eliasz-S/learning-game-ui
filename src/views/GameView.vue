@@ -16,7 +16,6 @@
       <div class="logo">
         <img src="img/maven-logo.png" />
       </div>
-      <p>**Game (player side) - game pin. nickname. Score+**</p>
       <form v-if="!lobbyId" class="input_pin" action="#" @submit.prevent>
         <input
           @keydown.enter="handlePin"

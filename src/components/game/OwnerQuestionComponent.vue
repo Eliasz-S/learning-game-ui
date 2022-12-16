@@ -9,15 +9,15 @@
     </div>
     <div v-else class="game_bl">
       <div v-if="questionShow" class="question_bl question_bl__anim">
-        {{ question.text }}
+        {{ question?.text }}
       </div>
       <div v-else class="question_answer_component">
-        <div class="question_bl">{{ question.text }}</div>
+        <div class="question_bl">{{ question?.text }}</div>
         <!-- <button @click="handleNext" class="next_btn">Next</button> -->
         <div class="helpful_info">
           <div class="helpful_info__row">
             <div class="timer">{{ gameTimer }}</div>
-            <div class="answers">0</div>
+            <div class="answers">{{ answersQuantity }}</div>
           </div>
         </div>
         <div class="answers_bl row">
@@ -25,25 +25,25 @@
             <span class="circle item_icon">
               <font-awesome-icon icon="fa-solid fa-circle" />
             </span>
-            <p class="item_text">{{ answers[0].text }}</p>
+            <p class="item_text">{{ answers[0]?.text }}</p>
           </div>
           <div class="square_answer item">
             <span class="square item_icon">
               <font-awesome-icon icon="fa-solid fa-square" />
             </span>
-            <p class="item_text">{{ answers[1].text }}</p>
+            <p class="item_text">{{ answers[1]?.text }}</p>
           </div>
           <div class="rhombus_answer item">
             <span class="rhombus item_icon">
               <font-awesome-icon icon="fa-solid fa-diamond" />
             </span>
-            <p class="item_text">{{ answers[2].text }}</p>
+            <p class="item_text">{{ answers[2]?.text }}</p>
           </div>
           <div class="triangle_answer item">
             <span class="triangle item_icon">
               <font-awesome-icon icon="fa-solid fa-play" />
             </span>
-            <p class="item_text">{{ answers[3].text }}</p>
+            <p class="item_text">{{ answers[3]?.text }}</p>
           </div>
         </div>
       </div>
@@ -69,6 +69,10 @@ export default {
       type: Number,
       required: true,
     },
+    answerDistribution: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
@@ -85,6 +89,11 @@ export default {
   computed: {
     answers() {
       return this.question.answers;
+    },
+    answersQuantity() {
+      return this.answerDistribution.reduce((acc, value) => {
+        return acc + value;
+      }, 0);
     },
   },
 

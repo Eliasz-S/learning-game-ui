@@ -79,7 +79,7 @@
               <div class="back">
                 <div class="info">
                   <h4>Plays: 0 times</h4>
-                  <h4>Questions: {{ game.questions }}</h4>
+                  <h4>Questions amount: {{ game.questions.length }}</h4>
                 </div>
                 <div class="elements">
                   <span class="circle">

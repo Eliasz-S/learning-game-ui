@@ -1,6 +1,6 @@
 <template>
   <div class="profile-nav reports">
-    <p>Reports component</p>
+    <p>Game reports table coming soon!</p>
   </div>
 </template>
 
