@@ -122,8 +122,8 @@ export default {
       ElMessage({
         type: "success",
         message:
-          "This is the end of your test! You will be redirected to home page in 30 seconds",
-        duration: 8000,
+          "This is the end of your test! You will be redirected to your profile in 30 seconds...",
+        duration: 10000,
       });
       setTimeout(() => {
         this.$router.push("/profile/home");

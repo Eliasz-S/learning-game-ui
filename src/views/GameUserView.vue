@@ -33,6 +33,7 @@
 import Echo from "@/utils/echo";
 import LoadingUi from "@/components/UI/LoadingUI.vue";
 import { api } from "@/utils/axios";
+import Swal from "sweetalert2";
 
 export default {
   name: "GameUserView",
@@ -95,6 +96,20 @@ export default {
       setTimeout(() => {
         this.isLoading = false;
       }, 1000);
+      if (this.question.currentQuestion === this.question.questionQty) {
+        setTimeout(() => {
+          Swal.fire({
+            title: "Nicely done!",
+            html: `Your total score is <b>${this.points}</b> points.<br><i>We will gently teleport you to our home page in 15 seconds...</i>`,
+            timer: 15000,
+            timerProgressBar: true,
+            showConfirmButton: false,
+            icon: "success",
+          }).then(() => {
+            this.$router.push("/home");
+          });
+        }, 4000);
+      }
     },
     onShowFinalResults() {
       this.$router.push({ name: "gameResult" });
