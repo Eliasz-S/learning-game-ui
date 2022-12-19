@@ -1,10 +1,20 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
   <router-view />
 </template>
+
+<script>
+import { http } from "@/utils/axios";
+import { mapActions } from "vuex";
+
+export default {
+  created() {
+    http.get("/sanctum/csrf-cookie");
+  },
+  methods: {
+    ...mapActions("user", ["fetchUser"]),
+  },
+};
+</script>
 
 <style>
 #app {
@@ -17,6 +27,8 @@
 
 nav {
   padding: 30px;
+  display: flex;
+  justify-content: space-between;
 }
 
 nav a {
